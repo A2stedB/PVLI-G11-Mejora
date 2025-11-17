@@ -3,6 +3,10 @@ import Event from "../Event/Event.js";
 import { SubmarineComplete } from "../Submarine/SubmarineComplete.js";
 import { KeySet } from "./KeySet.js";
 
+//TODO
+// - Quitar todo lo que tenga que ver con la logica del juego, togle del mapa incluido
+// - Los keysets ya no deberian ser necesario, ya que el propio estado sabe que teclas se va a utilizar
+// - Este script probablemente se vacie
 
 const Key = Object.freeze({
     W:Symbol("W"),

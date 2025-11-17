@@ -1,4 +1,6 @@
+import EventDispatch from "../../Event/EventDispatch.js";
 import State from "../State.js";
+import Event from "../../Event/Event.js";
 
 export class CheckState extends State{
     constructor(stateMachine){
@@ -8,6 +10,7 @@ export class CheckState extends State{
 
     onStateEnter(){
         this.stateMachine.updateTurn();
+        EventDispatch.emit(Event.UPDATE_ROUND,this.stateMachine.round)
         console.log("Updating information")
         console.log(`Ronda ${this.stateMachine.turn}`)
     }

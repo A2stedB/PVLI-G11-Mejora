@@ -1,5 +1,9 @@
 import State from "./State.js";
 
+//TODO
+// - Subscribir las teclas en su correspondiente estado que lo necesita
+// - La transicion ponerlo en el onStateEnter(), poner la comprobacion de transicion del estado dentro del onStateEnter(), puede no haber transicion
+
 export class StateMachine{
     constructor(){
         // /**

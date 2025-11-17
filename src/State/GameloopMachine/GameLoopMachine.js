@@ -24,7 +24,7 @@ export class GameLoopMachine extends StateMachine{
     }
 
     updateTurn(){
-        ++this._turn;
+        ++this._round;
         this.transition();
     }
 

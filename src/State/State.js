@@ -1,18 +1,29 @@
+import { StateMachine } from "./StateMachine.js";
+
 export default class State{
+
+    /**
+     * @type {StateMachine}
+     */
+    _stateMachine
+
     constructor(stateMachine){
         this._stateMachine = stateMachine
         this._name;
     }
+
+    /**
+     * @abstract
+     */
     onStateEnter(){
-        console.log("No hay metodos para ejecutar en este estado")
+
     }
 
+    /**
+     * @abstract
+     */
     onStateExit(){
-        console.log("No hay metodos a ejecutar cuando sales de este estado")
-    }
 
-    transition(){
-        console.log("No hay transicion al siguiente estado")
     }
 
     get name(){

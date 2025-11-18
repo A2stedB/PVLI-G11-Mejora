@@ -3,8 +3,8 @@ import { Player1 } from "./Player1.js";
 import { Player2 } from "./Player2.js";
 import { CheckState } from "./CheckState.js";
 export class GameLoopMachine extends StateMachine{
-    constructor(){
-        super();
+    constructor(scene){
+        super(scene);
         this._round = 0;
         this._name = "Gameloop Machine"
         this._player1 = new Player1(this);

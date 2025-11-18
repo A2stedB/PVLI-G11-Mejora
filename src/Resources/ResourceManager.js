@@ -78,7 +78,7 @@ export class ResourceManager_Complete {
      * @param {Number} y - Posición Y
      */
     createResourceSprite(resource, x, y) {
-        const cellSize = this.board.data.cellSize;
+        const cellSize = this.board.config.cellSize;
         
         // Crear un círculo dorado para representar el recurso
         const sprite = this.scene.add.circle(

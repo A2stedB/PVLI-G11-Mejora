@@ -103,7 +103,7 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
 
     // ========== ACTUALIZACIÓN VISUAL ==========
     updateSprite() {
-        const cellSize = this.container.data.cellSize;
+        const cellSize = this.container.config.cellSize;
         this.setPosition(this.position.x * cellSize, this.position.y * cellSize);
         this.setAngle(this.orientation -90); 
         // this.positionReferenceCheck();

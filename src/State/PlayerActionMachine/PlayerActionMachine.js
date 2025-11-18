@@ -6,8 +6,8 @@ import { AirAttackState } from "./AirAttackState.js"
 import { EndState } from "./EndState.js";
 export class PlayerActionMachine extends StateMachine{
 
-    constructor(gameLoopMachine){
-        super();
+    constructor(scene,gameLoopMachine){
+        super(scene);
         this._name = "PlayerAction Machine"
         this._context = gameLoopMachine;
         this._moveState = new MoveState(this);

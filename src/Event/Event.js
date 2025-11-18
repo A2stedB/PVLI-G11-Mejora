@@ -1,6 +1,8 @@
 //TODO
 // - Todos los eventos aqui
-
+/**
+ * @enum
+ */
 const Event = Object.freeze({
     TOGGLE_MAP:Symbol("Toggle Map"),
     SHOOT:Symbol("Shoot"),
@@ -8,7 +10,8 @@ const Event = Object.freeze({
     DISABLE_KEY:Symbol("Disable key"),
     ENABLE_KEY:Symbol("Enable key"),
     UPDATE_ROUND:Symbol("Update round"),
-    UPDATE_PLAYER_TEXT:Symbol("Update player text")
+    UPDATE_PLAYER_TEXT:Symbol("Update player text"),
+    UPDATE_PLAYER_ACTION_TEXT:Symbol("Update player action text")
 })
 
 export default Event;

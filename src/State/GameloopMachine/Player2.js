@@ -1,10 +1,10 @@
 import Event from "../../Event/Event.js";
 import EventDispatch from "../../Event/EventDispatch.js";
-import State from "../State.js";
+import { PlayerState } from "./PlayerState.js";
 
-export class Player2 extends State{
-    constructor(stateMachine){
-        super(stateMachine);
+export class Player2 extends PlayerState{
+    constructor(stateMachine,id){
+        super(stateMachine,id);
         this._name = "Player 2"
     }
 

@@ -1,5 +1,6 @@
 import EventDispatch from "../../Event/EventDispatch.js";
 import State from "../State.js";
+import Event from "../../Event/Event.js";
 
 export class FireState extends State{
     constructor(stateMachine){
@@ -9,7 +10,7 @@ export class FireState extends State{
 
     onStateEnter(){
         // console.log("Fire Phase");
-        EventDispatch.emit("Firing");
+        EventDispatch.emit(Event.UPDATE_PLAYER_ACTION_TEXT,"Fire");
     }
 
     onStateExit(){

@@ -8,6 +8,7 @@ import Event from "../Event/Event.js";
 import { ResourceManager_Complete } from "../Resources/ResourceManager.js";
 // import { SubmarineInventory } from "../SubmarineInventory.js";
 import { SubmarineHUD } from "../Submarine/SubmarineHUD.js";
+import config from "./config.json" with {type:"json"}
 
 //TODO
 //Hacer limpieza del los eventos, ir poniendo comentarios a las cosas
@@ -30,24 +31,26 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         this.GRAPHIC = scene.add.graphics({ lineStyle: { width: 1, color: 0x00ff00 } });
         this.add(this.GRAPHIC)
 
-        this.data = {
-            x: x,
-            y: y,
-            boardWidth: boardWidth,
-            boardHeight: boardHeight,
-            cellSize: cellSize,
-            submarineLimit: {
-                x: Math.round(boardWidth / 2),
-                y: Math.round(boardHeight / 2),
-            }
-        }
+        this.config = config;
+
+        // this.data = {
+        //     x: x,
+        //     y: y,
+        //     boardWidth: boardWidth,
+        //     boardHeight: boardHeight,
+        //     cellSize: cellSize,
+        //     submarineLimit: {
+        //         x: Math.round(boardWidth / 2),
+        //         y: Math.round(boardHeight / 2),
+        //     }
+        // }
 
         this.matrix = {
-            logic: new LogicBoard(boardWidth, boardHeight),
+            logic: new LogicBoard(config.boardWidth*2-1, config.boardHeight*2-1),
             graphic: null
         }
 
-        this.matrix.graphic = this.graphicMatrixInitialize(boardWidth, boardHeight, this.matrix.logic)
+        this.matrix.graphic = this.graphicMatrixInitialize(config.boardWidth*2-1, config.boardHeight*2-1, this.matrix.logic)
 
         // Crear submarinos con la nueva clase
         this.submarines = {
@@ -93,6 +96,7 @@ export default class GameBoard extends Phaser.GameObjects.Container {
             console.log("Refreshed");
         })
 
+        //Esto fuera
         EventDispatch.on(Event.MOVE,(player,direction)=>{
             if(direction == 0) player.moveFront();
             if(direction == 90) player.moveRight();
@@ -100,34 +104,6 @@ export default class GameBoard extends Phaser.GameObjects.Container {
             this.resourceManager.checkAndCollectResource(player);
             this.huds[this.currentTurn].update()
         })
-
-        // EventDispatch.on(Event.MOVE,(direction,player)=>{
-            
-        // })
-
-        // EventDispatch.on(Event.MOVE_RIGHT, () => {
-        //     const submarine = this.submarines[this.currentTurn];
-        //     if (submarine.moveRight()) {
-        //         this.resourceManager.checkAndCollectResource(submarine);
-        //         this.huds[this.currentTurn].update();
-        //     }
-        // })
-
-        // EventDispatch.on(Event.MOVE_FRONT, () => {
-        //     const submarine = this.submarines[this.currentTurn];
-        //     if (submarine.moveFront()) {
-        //         this.resourceManager.checkAndCollectResource(submarine);
-        //         this.huds[this.currentTurn].update();
-        //     }
-        // })
-
-        // EventDispatch.on(Event.MOVE_LEFT, () => {
-        //     const submarine = this.submarines[this.currentTurn];
-        //     if (submarine.moveLeft()) {
-        //         this.resourceManager.checkAndCollectResource(submarine);
-        //         this.huds[this.currentTurn].update();
-        //     }
-        // })
 
         EventDispatch.on(Event.SHOOT, () => {
             const attacker = this.submarines[this.currentTurn];
@@ -204,13 +180,13 @@ export default class GameBoard extends Phaser.GameObjects.Container {
     }
 
     initializeBackground(x, y, image) {
-        let centerX = ((this.data.boardWidth - 1) * this.data.cellSize) / 2
-        let centerY = ((this.data.boardHeight - 1) * this.data.cellSize) / 2  
+        let centerX = (((this.config.boardWidth*2) ) * this.config.cellSize) / 2
+        let centerY = (((this.config.boardHeight*2) ) * this.config.cellSize) / 2  
         this.background_image = new Phaser.GameObjects.Image(this.scene, 0, 0, image);
         this.background_image.setPosition(centerX, centerY)
 
-        let width = ((this.data.boardWidth - 1) * this.data.cellSize);
-        let height = ((this.data.boardHeight - 1) * this.data.cellSize);
+        let width = ((this.config.boardWidth*2 -1) * this.config.cellSize);
+        let height = ((this.config.boardHeight*2 -1) * this.config.cellSize);
         this.background_image.setDisplaySize(width, height)
         this.scene.add.existing(this.background_image);
         this.background_image.setAlpha(0.2);
@@ -221,10 +197,10 @@ export default class GameBoard extends Phaser.GameObjects.Container {
 
     createGraphicPoint(m, i, j, logic) {
         if ((i % 2 === 0) && (j % 2 === 0)) {
-            m[i][j] = new GraphicVertex(this.scene, this.GRAPHIC, this.data.cellSize, logic.matrix[i][j], this.data.x, this.data.y);
+            m[i][j] = new GraphicVertex(this.scene, this.GRAPHIC, this.config.cellSize, logic.matrix[i][j], this.config.x, this.config.y);
         }
         else if ((i % 2 === 1) && (j % 2 === 1)) {
-            m[i][j] = new GraphicSquare(this.scene, logic.matrix[i][j], "Square", this.data.cellSize, this.data.x, this.data.y);
+            m[i][j] = new GraphicSquare(this.scene, logic.matrix[i][j], "Square", this.config.cellSize, this.config.x, this.config.y);
             this.add(m[i][j])
         }
         else {

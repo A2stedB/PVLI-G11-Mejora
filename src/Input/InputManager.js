@@ -7,6 +7,7 @@ import { KeySet } from "./KeySet.js";
 // - Quitar todo lo que tenga que ver con la logica del juego, togle del mapa incluido
 // - Los keysets ya no deberian ser necesario, ya que el propio estado sabe que teclas se va a utilizar
 // - Este script probablemente se vacie
+// - Un array de teclas para facilitar el paso de las cosas
 
 const Key = Object.freeze({
     W:Symbol("W"),

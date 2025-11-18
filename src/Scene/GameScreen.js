@@ -31,15 +31,20 @@ export class GameScreen extends Phaser.Scene{
     
     //La dimension de la tabla tiene que ser un numero impar
     create(){
-        this.gameloopMachine = new GameLoopMachine;
-        this.playerActionMachine = new PlayerActionMachine(this.gameloopMachine);
+        this.gameloopMachine = new GameLoopMachine(this);
+        this.playerActionMachine = new PlayerActionMachine(this,this.gameloopMachine);
         let texturas = ["Square","BG", "Submarine"];
-      //  this.submarineView = new SubmarineView(this,0,0)
+        // this.submarineView = new SubmarineView(this,0,0)
         this.tablero = new GameBoard(this,11,11,200,0,texturas,40);
         this.inputManager = new InputManager(this, this.tablero.submarines.red, this.tablero.submarines.blue,this.gameloopMachine,this.playerActionMachine);
 
+
+
+        
+
         let roundText = this.add.text(350,400,"Round 0",{fontFamily:"inconsolata",fontSize:32})
         let playerText = this.add.text(350,450,"Turno del submarino rojo",{fontFamily:"inconsolata",fontSize:32})
+        let playerActionText = this.add.text(350,500,"Fase actual:",{fontFamily:"inconsolata",fontSize:32})
 
         EventDispatch.on(Event.UPDATE_ROUND,(round)=>{
             roundText.setText(`Round ${round}`)
@@ -47,6 +52,10 @@ export class GameScreen extends Phaser.Scene{
 
         EventDispatch.on(Event.UPDATE_PLAYER_TEXT,(player)=>{
             playerText.setText(`Turno del submarino ${player}`);
+        })
+
+        EventDispatch.on(Event.UPDATE_PLAYER_ACTION_TEXT,(state)=>{
+            playerActionText.setText(`Fase actual: ${state}`)
         })
     }
 

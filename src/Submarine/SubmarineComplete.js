@@ -36,11 +36,12 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
      * @param {LogicBoard} board - Tablero del juego
      * @param {Phaser.GameObjects.Container} container - Contenedor del tablero
      */
-    constructor(scene, x, y, board, container, name) {
+    constructor(scene, x, y, board, container, name,id) {
         super(scene, 100, 100, "Submarine", 0);
 
         // Nombre(color) del submarino
         this.name = name
+        this.id = id;
 
         // Referencias externas
         this.container = container;
@@ -89,6 +90,16 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
 
         console.log("Submarine created at", this.position);
 
+        EventDispatch.on(Event.MOVE,(player,direction)=>{
+            if(player == this.id){
+                console.log(this.name);
+                if(direction == 0) this.moveFront();
+                if(direction == 90) this.moveRight();
+                if(direction == -90) this.moveLeft();
+                this.container.resourceManager.checkAndCollectResource(this);
+                this.container.huds[this.container.currentTurn].update()
+            }
+        })
     }
 
     // ========== GETTERS ==========

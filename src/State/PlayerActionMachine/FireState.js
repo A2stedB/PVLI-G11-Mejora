@@ -27,9 +27,15 @@ export class FireState extends State{
      */
     right
 
+    /**
+     * @type {Phaser.Scene} Para facilitar el acceso a la escena
+     */
+    scene
+
     constructor(stateMachine){
         super(stateMachine);
         this._name = "Fire State"
+        this.scene = this.stateMachine.scene;
     }
 
     onStateEnter(){
@@ -79,5 +85,9 @@ export class FireState extends State{
 
     transition(){
         this.stateMachine.transition(this.stateMachine.stateList.airAttackState)
+    }
+
+    shoot(){
+        
     }
 }

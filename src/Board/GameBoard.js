@@ -44,8 +44,8 @@ export default class GameBoard extends Phaser.GameObjects.Container {
 
         // Crear submarinos con la nueva clase
         this.submarines = {
-            blue: new SubmarineComplete(scene, 3, 3, this.matrix.logic, this,"blue"),   
-            red:  new SubmarineComplete(scene, 2, 2, this.matrix.logic, this,"red")  
+            blue: new SubmarineComplete(scene, 3, 3, this.matrix.logic, this,"blue",2),   
+            red:  new SubmarineComplete(scene, 2, 2, this.matrix.logic, this,"red",1)  
         };
 
         this.submarines.blue.setTint(0x00aaff);
@@ -84,17 +84,6 @@ export default class GameBoard extends Phaser.GameObjects.Container {
 
         this.toggleKey.on("down",()=>{
             this.refresh();
-        })
-
-        //Mejorar esto
-        EventDispatch.on(Event.MOVE,(player,direction)=>{
-            if(player == 1) player = this.submarines.red;
-            else if(player == 2) player = this.submarines.blue;
-            if(direction == 0) player.moveFront();
-            if(direction == 90) player.moveRight();
-            if(direction == -90) player.moveLeft();
-            this.resourceManager.checkAndCollectResource(player);
-            this.huds[this.currentTurn].update()
         })
 
 

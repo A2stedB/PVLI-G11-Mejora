@@ -8,14 +8,14 @@ export class Vertex{
 
     exit(){
         this.submarine = null;
-        console.log(`${this.position.position}: ${this.submarine}`)
+        // console.log(`${this.position.position}: ${this.submarine}`)
     }
 
     enter(submarine){
-        console.log("Entered")
+        // console.log("Entered")
         this.submarine = submarine;
-        console.log(this.submarine)
-        console.log(this.submarine.name)
-        console.log(`${this.position.position}: ${this.submarine.name}`)
+        // console.log(this.submarine)
+        // console.log(this.submarine.name)
+        // console.log(`${this.position.position}: ${this.submarine.name}`)
     }
 }

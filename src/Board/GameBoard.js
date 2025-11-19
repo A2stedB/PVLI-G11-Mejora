@@ -4,9 +4,7 @@ import { GraphicSquare } from "../Board/GraphicSquare.js";
 import EventDispatch from "../Event/EventDispatch.js"
 import { SubmarineComplete} from "../Submarine/SubmarineComplete.js";
 import Event from "../Event/Event.js";
-// import { Orientation } from "../Submarine/Orientation.js";
 import { ResourceManager_Complete } from "../Resources/ResourceManager.js";
-// import { SubmarineInventory } from "../SubmarineInventory.js";
 import { SubmarineHUD } from "../Submarine/SubmarineHUD.js";
 import config from "./config.json" with {type:"json"}
 
@@ -24,26 +22,18 @@ export default class GameBoard extends Phaser.GameObjects.Container {
      * @param {Number} cellSize El tamaño de la celda
      */
     constructor(scene, boardWidth, boardHeight, x, y, texture, cellSize) {
-        super(scene, x, y);
+        super(scene, config.x, config.y);
+
+        this.scene = scene;
         this.active = true;
         
         this.texture = texture
         this.GRAPHIC = scene.add.graphics({ lineStyle: { width: 1, color: 0x00ff00 } });
         this.add(this.GRAPHIC)
 
-        this.config = config;
+        this.toggleKey = this.scene.input.keyboard.addKey('M');
 
-        // this.data = {
-        //     x: x,
-        //     y: y,
-        //     boardWidth: boardWidth,
-        //     boardHeight: boardHeight,
-        //     cellSize: cellSize,
-        //     submarineLimit: {
-        //         x: Math.round(boardWidth / 2),
-        //         y: Math.round(boardHeight / 2),
-        //     }
-        // }
+        this.config = config;
 
         this.matrix = {
             logic: new LogicBoard(config.boardWidth*2-1, config.boardHeight*2-1),
@@ -91,13 +81,15 @@ export default class GameBoard extends Phaser.GameObjects.Container {
     }
 
     setupEvents() {
-        EventDispatch.on(Event.TOGGLE_MAP, () => {
+
+        this.toggleKey.on("down",()=>{
             this.refresh();
-            console.log("Refreshed");
         })
 
-        //Esto fuera
+        //Mejorar esto
         EventDispatch.on(Event.MOVE,(player,direction)=>{
+            if(player == 1) player = this.submarines.red;
+            else if(player == 2) player = this.submarines.blue;
             if(direction == 0) player.moveFront();
             if(direction == 90) player.moveRight();
             if(direction == -90) player.moveLeft();
@@ -105,6 +97,8 @@ export default class GameBoard extends Phaser.GameObjects.Container {
             this.huds[this.currentTurn].update()
         })
 
+
+        //Esto fuera，o no, depende
         EventDispatch.on(Event.SHOOT, () => {
             const attacker = this.submarines[this.currentTurn];
             const target = this.currentTurn === "red" ? this.submarines.blue : this.submarines.red;
@@ -180,13 +174,13 @@ export default class GameBoard extends Phaser.GameObjects.Container {
     }
 
     initializeBackground(x, y, image) {
-        let centerX = (((this.config.boardWidth*2) ) * this.config.cellSize) / 2
-        let centerY = (((this.config.boardHeight*2) ) * this.config.cellSize) / 2  
+        let centerX = (((this.config.boardWidth*2-2) ) * this.config.cellSize) / 2
+        let centerY = (((this.config.boardHeight*2-2) ) * this.config.cellSize) / 2  
         this.background_image = new Phaser.GameObjects.Image(this.scene, 0, 0, image);
         this.background_image.setPosition(centerX, centerY)
 
-        let width = ((this.config.boardWidth*2 -1) * this.config.cellSize);
-        let height = ((this.config.boardHeight*2 -1) * this.config.cellSize);
+        let width = ((this.config.boardWidth*2 -2) * this.config.cellSize);
+        let height = ((this.config.boardHeight*2 -2) * this.config.cellSize);
         this.background_image.setDisplaySize(width, height)
         this.scene.add.existing(this.background_image);
         this.background_image.setAlpha(0.2);
@@ -305,5 +299,13 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         
         // Actualizar recursos
         this.resourceManager.update();
+    }
+
+    get player1(){
+        return this.submarines.red;
+    }
+
+    get player2(){
+        return this.submarines.blue;
     }
 }

@@ -12,18 +12,15 @@ export class Player1 extends PlayerState{
     }
 
     onStateEnter(){
-        //Bloquear teclas del jugador 2
-        EventDispatch.emit(Event.ENABLE_KEY,1);
         EventDispatch.emit(Event.UPDATE_PLAYER_TEXT,"rojo")
         console.log("Player 1 key activated")
     }
     onStateExit(){
-        EventDispatch.emit(Event.DISABLE_KEY,1);
         console.log("Player 1 key desactivated")
     }
     
 
     transition(){
-        return this.stateMachine.stateList.player2;
+        this.stateMachine.transition(this.stateMachine.stateList.player2)
     }
 }

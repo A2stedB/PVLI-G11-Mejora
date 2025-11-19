@@ -7,11 +7,12 @@ export class GameLoopMachine extends StateMachine{
         super(scene);
         this._round = 0;
         this._name = "Gameloop Machine"
-        this._player1 = new Player1(this);
-        this._player2 = new Player2(this);
+        this._player1 = new Player1(this,1);
+        this._player2 = new Player2(this,2);
         this._checkState = new CheckState(this);
 
         this._currentState = this._player1;
+        this._currentState.onStateEnter();
     }
 
     get stateList(){
@@ -23,9 +24,9 @@ export class GameLoopMachine extends StateMachine{
         return availableStates;
     }
 
-    updateTurn(){
+    updateRound(){
         ++this._round;
-        this.transition();
+        // this.transition();
     }
 
     get round(){

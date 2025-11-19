@@ -16,6 +16,7 @@ export class PlayerActionMachine extends StateMachine{
         this._endState = new EndState(this);
 
         this._currentState = this._moveState;
+        this._currentState.onStateEnter();
     }
 
     get stateList(){

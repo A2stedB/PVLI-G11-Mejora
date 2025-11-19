@@ -289,7 +289,7 @@ export class ResourceManager_Complete {
      * @param {Number} y - Posición Y
      */
     createCollectionEffect(x, y) {
-        const cellSize = this.board.data.cellSize;
+        const cellSize = this.board.config.cellSize;
         
         // Crear círculo expansivo
         const effect = this.scene.add.circle(

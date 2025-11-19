@@ -9,16 +9,18 @@ export class CheckState extends State{
     }
 
     onStateEnter(){
-        this.stateMachine.updateTurn();
+        this.stateMachine.updateRound();
         EventDispatch.emit(Event.UPDATE_ROUND,this.stateMachine.round)
         console.log("Updating information")
-        console.log(`Ronda ${this.stateMachine.turn}`)
+        console.log(`Ronda ${this.stateMachine.round}`)
+        this.stateMachine.transition(this.stateMachine.stateList.player1);
     }
     onStateExit(){
         
     }
 
     transition(){
+        this.stateMachine.transition(this.stateMachine.stateList.player1)
         return this.stateMachine.stateList.player1;
     }
 }

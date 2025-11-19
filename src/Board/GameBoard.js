@@ -44,8 +44,8 @@ export default class GameBoard extends Phaser.GameObjects.Container {
 
         // Crear submarinos con la nueva clase
         this.submarines = {
-            blue: new SubmarineComplete(scene, 3, 3, this.matrix.logic, this),   
-            red:  new SubmarineComplete(scene, 2, 2, this.matrix.logic, this)  
+            blue: new SubmarineComplete(scene, 3, 3, this.matrix.logic, this,"blue"),   
+            red:  new SubmarineComplete(scene, 2, 2, this.matrix.logic, this,"red")  
         };
 
         this.submarines.blue.setTint(0x00aaff);

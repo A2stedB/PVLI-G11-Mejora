@@ -10,6 +10,9 @@ import { PlayerActionMachine } from "../State/PlayerActionMachine/PlayerActionMa
 // import { SubmarineInventory } from "../Resources/SubmarineInventory.js";
 
 export class GameScreen extends Phaser.Scene{
+
+    chain
+
     constructor(){
         super({key:"GameScreen"})
 
@@ -32,8 +35,11 @@ export class GameScreen extends Phaser.Scene{
     //La dimension de la tabla tiene que ser un numero impar
     create(){
         let roundText = this.add.text(350,400,"Round 0",{fontFamily:"inconsolata",fontSize:32})
+        this.roundTextAnimation = this.add.text(-150,300,"Round 0",{fontFamily:"inconsolata",fontSize:32})
         let playerText = this.add.text(350,450,"Turno del submarino rojo",{fontFamily:"inconsolata",fontSize:32})
         let playerActionText = this.add.text(350,500,"Fase actual:",{fontFamily:"inconsolata",fontSize:32})
+
+        this.createTextTween();
 
         this.gameloopMachine = new GameLoopMachine(this);
         this.playerActionMachine = new PlayerActionMachine(this,this.gameloopMachine);
@@ -42,10 +48,28 @@ export class GameScreen extends Phaser.Scene{
         this.tablero = new GameBoard(this);
         this.inputManager = new InputManager(this, this.tablero.submarines.red, this.tablero.submarines.blue,this.gameloopMachine,this.playerActionMachine);
 
+        this.chain.play();
 
+        // this.leftAnimation.play();
+
+        // this.leftAnimation.on("complete",()=>{
+        //     this.rightAnimation.play();
+        // })
+
+        // this.add.tween({
+        //     targets:roundTextAnimation,
+        //     duration:2000,
+        //     props:{
+        //         x:{value:350}
+        //     },
+        //     ease:"Quart.easeInOut", //Quart
+        // })
 
         EventDispatch.on(Event.UPDATE_ROUND,(round)=>{
-            roundText.setText(`Round ${round}`)
+            let text = `Round ${round}`
+            roundText.setText(text)
+            this.roundTextAnimation.setText(text);
+            this.chain.play();
         })
 
         EventDispatch.on(Event.UPDATE_PLAYER_TEXT,(player)=>{
@@ -59,6 +83,46 @@ export class GameScreen extends Phaser.Scene{
 
     update(){}
 
-    
+    createTextTween(){
 
+        this.leftAnimation = this.add.tween({
+            targets:this.roundTextAnimation,
+            duration:1500,
+            props:{
+                x:{value:350}
+            },
+            ease:"Quart.easeInOut", //Quart
+            persist:true,
+        })
+
+        this.rightAnimation = this.add.tween({
+            targets:this.roundTextAnimation,
+            duration:1500,
+            props:{
+                x:{value:1000}
+            },
+            ease:"Quart.easeInOut", //Quart
+            delay:1000,
+            persist:true
+        })
+
+        this.rightAnimation.on("complete",()=>{
+            this.roundTextAnimation.setPosition(-150,300)
+        })
+
+        this.chain = this.tweens.chain({
+            targets:this.roundTextAnimation,
+            tweens:[
+                this.leftAnimation,this.rightAnimation
+            ],
+            persist:true,
+        })
+
+        // this.rightAnimation = new Phaser.Tweens.Tween()
+
+    }
+
+    playChain(){
+        this.chain.play();
+    }
 }

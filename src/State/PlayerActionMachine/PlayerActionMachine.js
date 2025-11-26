@@ -1,9 +1,13 @@
-// import { State } from "./State.js";
 import {StateMachine} from "../StateMachine.js";
 import { MoveState } from "./MoveState.js"
 import { FireState } from "./FireState.js"
 import { AirAttackState } from "./AirAttackState.js"
 import { EndState } from "./EndState.js";
+
+/**
+ * La maquina de estado de las acciones del jugador en su turno
+ * @class
+ */
 export class PlayerActionMachine extends StateMachine{
 
     constructor(scene,gameLoopMachine){

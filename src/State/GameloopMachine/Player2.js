@@ -1,8 +1,19 @@
 import Event from "../../Event/Event.js";
 import EventDispatch from "../../Event/EventDispatch.js";
+import { StateMachine } from "../StateMachine.js";
 import { PlayerState } from "./PlayerState.js";
 
+/**
+ * El "jugador" con submarino azul
+ * @extends {PlayerState}
+ * @class
+ */
 export class Player2 extends PlayerState{
+    /**
+     * 
+     * @param {StateMachine} stateMachine
+     * @param {Number} id El id del jugador 
+     */
     constructor(stateMachine,id){
         super(stateMachine,id);
         this._name = "Player 2"
@@ -10,12 +21,9 @@ export class Player2 extends PlayerState{
 
     onStateEnter(){
         EventDispatch.emit(Event.UPDATE_PLAYER_TEXT,"azul")
-        console.log("Player 2 key activated")
     }
     onStateExit(){
-        // EventDispatch.emit(Event.DISABLE_KEY,2);
         EventDispatch.emit(Event.END_TURN);
-        console.log("Player 2 key desactivated")
     }
 
     transition(){

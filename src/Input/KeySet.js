@@ -1,21 +1,21 @@
-export class KeySet{
-    /**
-     * 
-     * @param {Array.<Phaser.Input.Keyboard.Key>} keys 
-     */
-    constructor(keys){
-        this.keys = keys;
-    }
+// export class KeySet{
+//     /**
+//      * 
+//      * @param {Array.<Phaser.Input.Keyboard.Key>} keys 
+//      */
+//     constructor(keys){
+//         this.keys = keys;
+//     }
 
-    enable(){
-        this.keys.forEach(key =>{
-            key.enabled = true;
-        })
-    }
+//     enable(){
+//         this.keys.forEach(key =>{
+//             key.enabled = true;
+//         })
+//     }
 
-    disable(){
-        this.keys.forEach(key =>{
-            key.enabled = false;
-        })
-    }
-}
+//     disable(){
+//         this.keys.forEach(key =>{
+//             key.enabled = false;
+//         })
+//     }
+// }

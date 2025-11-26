@@ -2,7 +2,7 @@
 import { SubmarineComplete } from "../Submarine/SubmarineComplete.js";
 import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
-import { InputManager } from "../Input/InputManager.js";
+// import { InputManager } from "../Input/InputManager.js";
 import SubmarineView from "../Scene/SubmarineViewObject.js";
 import { GameLoopMachine } from "../State/GameloopMachine/GameLoopMachine.js";
 import { PlayerActionMachine } from "../State/PlayerActionMachine/PlayerActionMachine.js";
@@ -49,24 +49,6 @@ export class GameScreen extends Phaser.Scene{
         let texturas = ["Square","BG", "Submarine"];
         // this.submarineView = new SubmarineView(this,0,0)
         this.tablero = new GameBoard(this);
-        this.inputManager = new InputManager(this, this.tablero.submarines.red, this.tablero.submarines.blue,this.gameloopMachine,this.playerActionMachine);
-
-        // this.chain.play();
-
-        // this.leftAnimation.play();
-
-        // this.leftAnimation.on("complete",()=>{
-        //     this.rightAnimation.play();
-        // })
-
-        // this.add.tween({
-        //     targets:roundTextAnimation,
-        //     duration:2000,
-        //     props:{
-        //         x:{value:350}
-        //     },
-        //     ease:"Quart.easeInOut", //Quart
-        // })
 
         EventDispatch.on(Event.UPDATE_ROUND,(round)=>{
             let text = `Round ${round}`
@@ -120,8 +102,6 @@ export class GameScreen extends Phaser.Scene{
             ],
             persist:true,
         })
-
-        // this.rightAnimation = new Phaser.Tweens.Tween()
 
     }
 

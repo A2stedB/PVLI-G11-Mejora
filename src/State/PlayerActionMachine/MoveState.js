@@ -1,33 +1,32 @@
 import EventDispatch from "../../Event/EventDispatch.js";
 import State from "../State.js";
-import { FireState } from "./FireState.js"
-import { AirAttackState } from "./AirAttackState.js"
-import { StateMachine } from "../StateMachine.js";
-import { PlayerActionMachine } from "./PlayerActionMachine.js";
 import Event from "../../Event/Event.js";
 
-//TODO
-// - Cambiar el Player 1 a un ID generico
-// - Pasar las teclas por InputManager para evitar dejar cosas en este script? Pero solo el sabe lo que necesita
-
+/**
+ * El estado de mover
+ */
 export class MoveState extends State{
 
     /**
+     * Direccion del frente
      * @type {Phaser.Input.Keyboard.Key}
      */
     up
 
     /**
+     * No mover
      * @type {Phaser.Input.Keyboard.Key}
      */
     down
 
     /**
+     * Izquierda
      * @type {Phaser.Input.Keyboard.Key}
      */
     left
 
     /**
+     * Derecha
      * @type {Phaser.Input.Keyboard.Key}
      */
     right

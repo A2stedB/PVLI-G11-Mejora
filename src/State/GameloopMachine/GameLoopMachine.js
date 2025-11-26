@@ -2,7 +2,12 @@ import {StateMachine} from "../StateMachine.js";
 import { Player1 } from "./Player1.js";
 import { Player2 } from "./Player2.js";
 import { CheckState } from "./CheckState.js";
+
+/**
+ * La maquina del estado que controla el bucle del juego principal
+ */
 export class GameLoopMachine extends StateMachine{
+
     constructor(scene){
         super(scene);
         this._round = 0;
@@ -24,11 +29,19 @@ export class GameLoopMachine extends StateMachine{
         return availableStates;
     }
 
+    /**
+     * Metodo que suma uno al numero de ronda
+     * @method
+     */
     updateRound(){
         ++this._round;
-        // this.transition();
     }
 
+    /**
+     * Devuelve la ronda actual
+     * @property
+     * @returns {Number}
+     */
     get round(){
         return this._round;
     }

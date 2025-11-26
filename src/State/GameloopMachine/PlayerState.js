@@ -12,6 +12,9 @@ export class PlayerState extends State{
         this._id = ID
     }
 
+    /**
+     *@property 
+     */
     get id(){
         return this._id;
     }

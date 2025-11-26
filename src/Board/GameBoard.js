@@ -179,65 +179,67 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         console.log(`Turno de: ${this.currentTurn}`);
     }
 
-    showShootPopup(attacker, target, callback) {
-        const scene = this.scene; 
-        let popup2 = null;
+    //Esto ya no se utiliza
 
-        const overlay = scene.add.rectangle(400, 300, 800, 600, 0x000000, 0.6)
-            .setScrollFactor(0)
-            .setDepth(1000);
+    // showShootPopup(attacker, target, callback) {
+    //     const scene = this.scene; 
+    //     let popup2 = null;
 
-        const panel = scene.add.rectangle(400, 300, 300, 220, 0xffffff, 1)
-            .setStrokeStyle(2, 0x000000)
-            .setScrollFactor(0)
-            .setDepth(1001);
+    //     const overlay = scene.add.rectangle(400, 300, 800, 600, 0x000000, 0.6)
+    //         .setScrollFactor(0)
+    //         .setDepth(1000);
 
-        const popup = scene.add.container(0, 0, [overlay, panel]).setDepth(1002);
+    //     const panel = scene.add.rectangle(400, 300, 300, 220, 0xffffff, 1)
+    //         .setStrokeStyle(2, 0x000000)
+    //         .setScrollFactor(0)
+    //         .setDepth(1001);
 
-        const boton = (text, y, action) => {
-            const btn = scene.add.text(400, y, text, { fontSize: '20px', color: '#000' })
-                .setOrigin(0.5)
-                .setScrollFactor(0)
-                .setInteractive({ useHandCursor: true })
-                .setDepth(1003)
-                .on("pointerdown", () => action());
-            popup.add(btn);
-        };
+    //     const popup = scene.add.container(0, 0, [overlay, panel]).setDepth(1002);
 
-        boton("Derecha", 260, () => choose("right"));
-        boton("Izquierda", 290, () => choose("left"));
-        boton("Delante", 320, () => choose("front"));
-        boton("No disparar", 350, () => close(null, null));
+    //     const boton = (text, y, action) => {
+    //         const btn = scene.add.text(400, y, text, { fontSize: '20px', color: '#000' })
+    //             .setOrigin(0.5)
+    //             .setScrollFactor(0)
+    //             .setInteractive({ useHandCursor: true })
+    //             .setDepth(1003)
+    //             .on("pointerdown", () => action());
+    //         popup.add(btn);
+    //     };
 
-        const choose = (direction) => {
-            popup.removeAll(true);
-            popup.destroy(true); 
+    //     boton("Derecha", 260, () => choose("right"));
+    //     boton("Izquierda", 290, () => choose("left"));
+    //     boton("Delante", 320, () => choose("front"));
+    //     boton("No disparar", 350, () => close(null, null));
 
-            const overlay2 = scene.add.rectangle(400, 300, 800, 600, 0x000000, 0.6).setDepth(1000);
-            const panel2 = scene.add.rectangle(400, 300, 300, 160, 0xffffff, 1).setStrokeStyle(2, 0x000000).setDepth(1001);
+    //     const choose = (direction) => {
+    //         popup.removeAll(true);
+    //         popup.destroy(true); 
 
-            popup2 = scene.add.container(0, 0, [overlay2, panel2]).setDepth(1002);
+    //         const overlay2 = scene.add.rectangle(400, 300, 800, 600, 0x000000, 0.6).setDepth(1000);
+    //         const panel2 = scene.add.rectangle(400, 300, 300, 160, 0xffffff, 1).setStrokeStyle(2, 0x000000).setDepth(1001);
 
-            const boton2 = (label, y, dist) => {
-                const btn = scene.add.text(400, y, label, { fontSize: "20px", color: "#000" })
-                    .setOrigin(0.5)
-                    .setInteractive({ useHandCursor: true })
-                    .setDepth(1003)
-                    .on("pointerdown", () => close(direction, dist));
+    //         popup2 = scene.add.container(0, 0, [overlay2, panel2]).setDepth(1002);
 
-                popup2.add(btn);
-            };
+    //         const boton2 = (label, y, dist) => {
+    //             const btn = scene.add.text(400, y, label, { fontSize: "20px", color: "#000" })
+    //                 .setOrigin(0.5)
+    //                 .setInteractive({ useHandCursor: true })
+    //                 .setDepth(1003)
+    //                 .on("pointerdown", () => close(direction, dist));
 
-            boton2("Distancia 1", 290, 1);
-            boton2("Distancia 2", 330, 2);
-        };
+    //             popup2.add(btn);
+    //         };
 
-        const close = (direction, distance) => {
-            if (popup) popup.destroy(true);
-            if (popup2) popup2.destroy(true); 
-            callback(direction, distance);
-        };
-    }
+    //         boton2("Distancia 1", 290, 1);
+    //         boton2("Distancia 2", 330, 2);
+    //     };
+
+    //     const close = (direction, distance) => {
+    //         if (popup) popup.destroy(true);
+    //         if (popup2) popup2.destroy(true); 
+    //         callback(direction, distance);
+    //     };
+    // }
 
     /**
      * Update llamado cada frame

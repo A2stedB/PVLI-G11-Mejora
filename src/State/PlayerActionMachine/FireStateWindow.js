@@ -1,15 +1,28 @@
-import Event from "../../Event/Event.js";
-import EventDispatch from "../../Event/EventDispatch.js";
-
-export class FireStateWindow extends Phaser.Scene{
-
-    data
+/**
+ * Escena para mostrar el PopUp del disparo
+ */
+export class FireStateWindow extends Phaser.Scene{ 
     
+    /**
+     * @type {Number} Ancho de la canva del juego
+     */
+    screenWidth
+
+    /**
+     * @type {Number} Alto de la canva del juego
+     */
+    screenHeight
+
+
+    /**
+     * @constructor constructor de la escena
+     */
     constructor(){
         super({key:"fireStateWindow"})
     }
 
     init(){
+        //Asignar los valores de la dimension de canvas
         this.screenWidth = this.sys.game.canvas.width;
         this.screenHeight = this.sys.game.canvas.height;
     }
@@ -18,6 +31,9 @@ export class FireStateWindow extends Phaser.Scene{
 
     }
 
+    /**
+     * @param {Object} data datos que utiliza esta escena, contiene la funcion callback a devolver;
+     */
     create(data){
         this.data = data;
         
@@ -25,13 +41,13 @@ export class FireStateWindow extends Phaser.Scene{
         this.add.rectangle(this.screenWidth/2,this.screenHeight/2,this.screenWidth,this.screenHeight,0x000000,0.7);
 
         //PopUp
-
         this.createPopUp(data);
-        // this.add.rectangle(this.screenWidth/2,this.screenHeight/2,300,300,0xe31e8d,1);
-        console.log("crated fire window")
         
     }
 
+    /**
+     * Creacion de la ventana de PopUp
+     */
     createPopUp(){
         this.popUp = this.add.container(this.screenWidth/2,this.screenHeight/2);
 
@@ -50,35 +66,34 @@ export class FireStateWindow extends Phaser.Scene{
         confirmText.setPosition(-confirmText.displayWidth/2,-bg.displayHeight/2+(bg.displayHeight/6));
         distance1.setPosition(-distance1.displayWidth/2,distance1.displayHeight*1);
         distance2.setPosition(-distance2.displayWidth/2,distance2.displayHeight*3);
-
-        // let button1 = this.input.keyboard.addKey(this.data.)
             
         this.input.keyboard.addKey(this.data.confirmButton[0]).on("down",()=>{
-            // console.log("Pressed");
-            this.data.distanceCallback(1)
-            this.scene.stop();
-            this.scene.resume("GameScreen")
+            this.parse(1);
         })
 
         this.input.keyboard.addKey(this.data.confirmButton[1]).on("down",()=>{
-            // console.log("Pressed");
-            this.data.distanceCallback(2)
-            this.scene.stop();
-            this.scene.resume("GameScreen");
+            this.parse(2);
         })
 
         distance1.on("pointerdown",()=>{
-            this.data.distanceCallback(1)
-            this.scene.stop();
-            this.scene.resume("GameScreen");
+            this.parse(1);
         })
 
         distance2.on("pointerdown",()=>{
-            this.data.distanceCallback(2)
-            this.scene.stop();
-            this.scene.resume("GameScreen");
+            this.parse(2)
         })
 
         this.popUp.add([bg,confirmText,distance1,distance2])
     }
+
+    /**
+     * Metodo que hace la llamada de callback con distance y volver al estado del disparo.
+     * @param {Number} distance Distancia del disparo
+     */
+    parse(distance){
+        this.data.distanceCallback(distance);
+        this.scene.stop();
+        this.scene.resume("GameScreen")
+    }
+
 }

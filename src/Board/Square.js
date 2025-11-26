@@ -1,5 +1,9 @@
 import { Position } from "../Board/Position.js";
 import { Vertex } from "../Board/Vertex.js";
+
+/**
+ * El cuadrado logico, tiene los 4 vertices que forma este cuadrado
+ */
 export class Square{
 
     resource;

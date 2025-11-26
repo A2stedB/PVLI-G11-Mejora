@@ -2,33 +2,38 @@ import EventDispatch from "../../Event/EventDispatch.js";
 import State from "../State.js";
 import Event from "../../Event/Event.js";
 
-//TODO
-// - Meter aqui la logica del disparar, y se supone que solo este estado sabe lo que tiene que hacer, y como tiene la escena se puede meter todo lo de disparo aqui
 
+/**
+ * El estado de disparar
+ */
 export class FireState extends State{
 
     /**
+     * Frente
      * @type {Phaser.Input.Keyboard.Key}
      */
     up
 
     /**
+     * No disparar
      * @type {Phaser.Input.Keyboard.Key}
      */
     down
 
     /**
+     * Izquierda
      * @type {Phaser.Input.Keyboard.Key}
      */
     left
 
     /**
+     * Derecha
      * @type {Phaser.Input.Keyboard.Key}
      */
     right
 
     /**
-     * @type {Phaser.Scene} Para facilitar el acceso a la escena
+     * @type {Phaser.Scene}
      */
     scene
 
@@ -59,14 +64,13 @@ export class FireState extends State{
         }
 
         this.confirmButton = [this.left.keyCode,this.right.keyCode];
+
         this.setEvent();
-        // console.log(this.left);
 
         this.up.on("down",()=>{
             EventDispatch.emit(Event.SHOOT,this.confirmButton,0);
         })
         this.down.on("down",()=>{
-            // EventDispatch.emit(Event.SHOOT);
             this.transition();
         })
         this.left.on("down",()=>{
@@ -89,21 +93,22 @@ export class FireState extends State{
     }
 
     setEvent(){
-        EventDispatch.on(Event.SHOOT,(player,direction)=>{
+        EventDispatch.on(Event.SHOOT,(confirmButton,direction)=>{
             this.scene.scene.pause();
             this.scene.scene.launch("fireStateWindow",{
-                confirmButton:player, //Teclas del jugador correspondiente
+
+                //Teclas del jugador correspondiente
+                confirmButton:confirmButton, 
+
                 //cuando ya sabe la distancia que quiere disparar
                 distanceCallback: (distance)=>{
-                    console.log(`Shoot distance: ${distance}`);
                     let range = distance;
                     this.shoot(range,direction);
                 },
+
+                //El id del jugador actual
                 currentPlayer:this.stateMachine.context.currentState.id
             })
-            // console.log("Launching fire window")
-            // EventDispatch.emit(Event.GET_SUBMARINE,"blue",{callBack:(sub)=>{this.blue = sub}})
-            // EventDispatch.emit(Event.GET_SUBMARINE,"red",{callBack:(sub)=>{this.red = sub}})
         })
     }
 
@@ -155,7 +160,6 @@ export class FireState extends State{
         board.huds[board.currentTurn].update();
         const targetColor = board.currentTurn === "red" ? "blue" : "red";
         board.huds[targetColor].update();
-        // board.endTurn();
 
         this.transition();
     }

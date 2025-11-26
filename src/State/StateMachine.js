@@ -1,33 +1,35 @@
 import State from "./State.js";
 
-//TODO
-// - Subscribir las teclas en su correspondiente estado que lo necesita
-// - La transicion ponerlo en el onStateEnter(), poner la comprobacion de transicion del estado dentro del onStateEnter(), puede no haber transicion
-
+/**
+ * Clase abstracta de una maquina de estado
+ * @class
+ * @abstract
+ */
 export class StateMachine{
 
     /**
+     * La escena en el que esta la maquina del estado
      * @private
-     * @type {Phaser.Scene} La escena en el que esta la maquina del estado
+     * @type {Phaser.Scene} 
      */
     _scene;
 
     /**
+     * Nombre de la maquina del estado, undefined por defecto
      * @private
-     * @type {String} Nombre de la maquina del estado, undefined por defecto
+     * @type {String} 
      */
     _name;
 
     /**
+     * El estado actual 
      * @private
-     * @type {State} El estado actual 
      */
     _currentState;
 
     /**
+     * El contexto de la maquina del estado, null por defecto
      * @private
-     * @type {*} El contexto de la maquina del estado, null por defecto
-     * @
      */
     _context;
 
@@ -44,6 +46,7 @@ export class StateMachine{
     }
 
     /**
+     * Cambiar el estado actual a un estado dado
      * @method
      * @param {State} state 
      */
@@ -63,6 +66,11 @@ export class StateMachine{
         }
     }
 
+    /**
+     * Cambiar a un estado dado, realizando su metodo de entrada y salida
+     * @method
+     * @param {State} state  
+     */
     transition(state){
         /**
          * @type {State}
@@ -70,42 +78,49 @@ export class StateMachine{
         this._currentState.onStateExit();
         let nextState = state;
         if(nextState){
-            if(this.context){
-                console.log(`${this.context.name}: ${this.context.currentState.name}`)
-            }
-            console.log(`Changing "${this.name}" from "${this._currentState.name}" to “${nextState.name}”`)
             this.setState(nextState)
             this._currentState.onStateEnter();
         }
     }
 
     /**
+     * El nombre de la maquina del estado
      * @property
+     * @returns {String}
      */
     get name(){
         return this._name;
     }
 
     /**
+     * El estado actual en la maquina
      * @property
+     * @returns {State}
      */
     get currentState(){
         return this._currentState;
     }
 
     /**
+     * La lista de estado que tiene la maquina
      * @property
+     * @returns {Object}
      */
     get stateList(){}
 
     /**
+     * El contexto de la maquina del estado
      * @property
      */
     get context(){
         return this._context;
     }
 
-    
+    /**
+     * La escena al que pertenece este maquina del estado
+     * @property
+     * @returns {Phaser.Scene}
+     */
     get scene(){
         return this._scene;
     }

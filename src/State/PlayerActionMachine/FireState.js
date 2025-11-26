@@ -54,8 +54,8 @@ export class FireState extends State{
         else if(currentPlayer== 2){
             this.up = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
             this.down = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-            this.left = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-            this.right = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+            this.left = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+            this.right = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         }
 
         this.createEvent();
@@ -69,11 +69,9 @@ export class FireState extends State{
         })
         this.left.on("down",()=>{
             EventDispatch.emit(Event.SHOOT,currentPlayer,-90);
-            // this.transition();
         })
         this.right.on("down",()=>{
             EventDispatch.emit(Event.SHOOT,currentPlayer,90);
-            // this.transition();
         })
     }
 
@@ -96,19 +94,66 @@ export class FireState extends State{
                 //cuando ya sabe la distancia que quiere disparar
                 distanceCallback: (distance)=>{
                     console.log(`Shoot distance: ${distance}`);
-                    this.distance = distance;
-                    this.shoot("despues")
+                    let range = distance;
+                    this.shoot(range,direction);
                 }
             })
             console.log("Launching fire window")
-            EventDispatch.emit(Event.SUBMARINE,"blue",{callBack:(sub)=>{this.blue = this.getSubmarine(sub)}})
-            EventDispatch.emit(Event.SUBMARINE,"red",{callBack:(sub)=>{this.red = this.getSubmarine(sub)}})
+            EventDispatch.emit(Event.GET_SUBMARINE,"blue",{callBack:(sub)=>{this.blue = sub}})
+            EventDispatch.emit(Event.GET_SUBMARINE,"red",{callBack:(sub)=>{this.red = sub}})
         })
     }
 
-    shoot(algo){
-        this.distance = algo;
-        console.log(algo);
-        // this.transition();
+    shoot(distance, direction){
+
+        //Conversion para utilizar los metodos 
+        if(direction == 0) direction = "front";
+        else if(direction == -90) direction = "left"
+        else if(direction == 90) direction = "right"
+
+        let board = null;
+        EventDispatch.emit(Event.GET_GAMEBOARD,{boardCallback:(b)=>{board = b}})
+
+        //Logica del disparo (traslado tal cual de lo que habia en GameBoard)
+
+        const attacker = board.submarines[board.currentTurn];
+        const target = board.currentTurn === "red" ? board.submarines.blue : board.submarines.red;
+
+
+        let isTarget1 = attacker.isTarget(target.position.x, target.position.y, 1)
+        let isTarget2 = attacker.isTarget(target.position.x, target.position.y, 2)
+
+        if (isTarget1 || isTarget2) console.log("Target!");
+
+        let isTargetDir1 = isTarget1 && 
+            attacker.isTargetDir(target.position.x, target.position.y, 1, direction) && 
+            attacker.canShoot(distance);
+            
+        let isTargetDir2 = isTarget2 && 
+            attacker.isTargetDir(target.position.x, target.position.y, 2, direction) && 
+            attacker.canShoot(distance);
+
+        if (distance == 1) {
+            attacker.shoot(distance);
+            if (isTargetDir1) {
+                target.loseHealth(5);
+                console.log("¡Impacto! -5 HP");
+            }
+        }
+        if (distance == 2) {
+            attacker.shoot(distance);
+            if (isTargetDir2 || isTargetDir1) {
+                target.loseHealth(2);
+                console.log("¡Impacto! -2 HP");
+            }
+        }
+
+        // Actualizar ambos HUDs
+        board.huds[board.currentTurn].update();
+        const targetColor = board.currentTurn === "red" ? "blue" : "red";
+        board.huds[targetColor].update();
+        // board.endTurn();
+
+        this.transition();
     }
 }

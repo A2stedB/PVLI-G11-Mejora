@@ -86,56 +86,15 @@ export default class GameBoard extends Phaser.GameObjects.Container {
             this.refresh();
         }) 
 
+        EventDispatch.on(Event.GET_GAMEBOARD,(callback)=>{
+            callback.boardCallback(this);
+        })
 
-        EventDispatch.on(Event.SHOO, () => {
+        EventDispatch.on(Event.END_TURN,()=>{
+            this.endTurn();
+        })
 
-            const attacker = this.submarines[this.currentTurn];
-            const target = this.currentTurn === "red" ? this.submarines.blue : this.submarines.red;
-            
-
-            let isTarget1 = attacker.isTarget(target.position.x, target.position.y, 1)
-            let isTarget2 = attacker.isTarget(target.position.x, target.position.y, 2)
-
-            if (isTarget1 || isTarget2) console.log("Target!");
-
-            //WTF
-            this.showShootPopup(attacker, target, (direction, distance) => {
-                if (!direction) {
-                    console.log("No disparó");
-                    return;
-                }
-
-                console.log("Disparo:", direction, "Distancia:", distance);
-                
-                let isTargetDir1 = isTarget1 && 
-                    attacker.isTargetDir(target.position.x, target.position.y, 1, direction) && 
-                    attacker.canShoot(distance);
-                    
-                let isTargetDir2 = isTarget2 && 
-                    attacker.isTargetDir(target.position.x, target.position.y, 2, direction) && 
-                    attacker.canShoot(distance);
-
-                if (distance == 1) {
-                    attacker.shoot(distance);
-                    if (isTargetDir1) {
-                        target.loseHealth(5);
-                        console.log("¡Impacto! -5 HP");
-                    }
-                }
-                if (distance == 2) {
-                    attacker.shoot(distance);
-                    if (isTargetDir2 || isTargetDir1) {
-                        target.loseHealth(2);
-                        console.log("¡Impacto! -2 HP");
-                    }
-                }
-
-                // Actualizar ambos HUDs
-                this.huds[this.currentTurn].update();
-                const targetColor = this.currentTurn === "red" ? "blue" : "red";
-                this.huds[targetColor].update();
-            });
-        });
+        
     }
 
     render() {

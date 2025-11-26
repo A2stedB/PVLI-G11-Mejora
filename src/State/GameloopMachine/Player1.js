@@ -16,6 +16,7 @@ export class Player1 extends PlayerState{
         console.log("Player 1 key activated")
     }
     onStateExit(){
+        EventDispatch.emit(Event.END_TURN);
         console.log("Player 1 key desactivated")
     }
     

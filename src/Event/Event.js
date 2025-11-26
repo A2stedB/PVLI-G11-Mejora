@@ -13,9 +13,11 @@ const Event = Object.freeze({
     UPDATE_PLAYER_TEXT:Symbol("Update player text"),
     UPDATE_PLAYER_ACTION_TEXT:Symbol("Update player action text"),
     AIR_ATTACK:Symbol("Air attack"),
-    BLUE_SUBMARINE:Symbol("Blue Submarine"),
-    RED_SUBMARINE:Symbol("Red Submarine"),
+    // BLUE_SUBMARINE:Symbol("Blue Submarine"),
+    // RED_SUBMARINE:Symbol("Red Submarine"),
     GET_SUBMARINE:Symbol("Submarine"),
+    GET_GAMEBOARD:Symbol("Get GameBoard"),
+    END_TURN:Symbol("End turn"),
 })
 
 export default Event;

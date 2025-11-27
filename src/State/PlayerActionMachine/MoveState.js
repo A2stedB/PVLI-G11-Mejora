@@ -77,6 +77,8 @@ export class MoveState extends State{
     }
 
     onStateExit(){
+        EventDispatch.emit(Event.MOVE_DRAGON);
+        EventDispatch.emit(Event.UPDATE_MAP);
         this.up.off("down");
         this.down.off("down");
         this.left.off("down");

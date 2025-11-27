@@ -6,6 +6,7 @@ import { SubmarineComplete} from "../Submarine/SubmarineComplete.js";
 import Event from "../Event/Event.js";
 import { ResourceManager_Complete } from "../Resources/ResourceManager.js";
 import { SubmarineHUD } from "../Submarine/SubmarineHUD.js";
+import { Dragon } from "../Dragon/Dragon.js";
 import config from "./config.json" with {type:"json"}
 
 //TODO
@@ -47,6 +48,9 @@ export default class GameBoard extends Phaser.GameObjects.Container {
             blue: new SubmarineComplete(scene, 3, 3, this.matrix.logic, this,"blue",2),   
             red:  new SubmarineComplete(scene, 2, 2, this.matrix.logic, this,"red",1)  
         };
+
+        //Crear el dragon
+        this.dragon = new Dragon(this,true);
 
         this.submarines.blue.setTint(0x00aaff);
         this.submarines.red.setTint(0xff4444);
@@ -92,6 +96,10 @@ export default class GameBoard extends Phaser.GameObjects.Container {
 
         EventDispatch.on(Event.END_TURN,()=>{
             this.endTurn();
+        })
+
+        EventDispatch.on(Event.UPDATE_MAP,()=>{
+            this.render();
         })
 
         

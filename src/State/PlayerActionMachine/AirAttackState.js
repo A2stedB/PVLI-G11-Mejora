@@ -72,6 +72,7 @@ export class AirAttackState extends State{
     }
 
     onStateExit(){
+        EventDispatch.emit(Event.MOVE_DRAGON);
         this.up.removeAllListeners();
         this.down.removeAllListeners();
         this.left.removeAllListeners();

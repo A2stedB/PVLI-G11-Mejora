@@ -31,24 +31,20 @@ export class Menu extends Phaser.Scene {
 
 		// Cambiar a otra escena al hacer clic
 		boton.on('pointerdown', () => {
-			// this.scene.start('Submarine_View');
 			this.scene.start('GameScreen');
 		});
-
-		// TECLA P para iniciar el minijuego
-		this.input.keyboard.on('keydown-P', () => {
-			console.log("Iniciando Flappy Dragon...");
-			this.scene.start('FlappyDragon');
-		});
 		
-		// Texto de ayuda 
-		this.add.text(10, 10, 'Presiona P para jugar Flappy Dragon', {
+		// Boton para jugar al Flappy Dragon
+		let FlappyBT = this.add.text(10, 10, 'Click aquí para FLappy Dragon', {
 			fontSize: '16px',
 			fill: '#ffff00',
 			backgroundColor: '#000000',
 			padding: { x: 5, y: 3 }
+		}).setInteractive();
+
+		FlappyBT.on('pointerdown', () => {
+			this.scene.start('FlappyDragon');
 		});
-		
 	}
 
 }

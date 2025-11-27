@@ -5,20 +5,40 @@ export class Flappy_Dragon extends Phaser.Scene {
     }
 
     preload() {
-        // No necesitamos cargar nada
+		this.load.image('fondo1', 'assets/fondo_1.png');
+        this.load.image('fondo2', 'assets/fondo_2.png');
+        this.load.image('fondo3', 'assets/fondo_3.png');
+		this.load.image('suelo', 'assets/suelo.png');
     }
 
     create() {
         // Variables básicas
         this.puntos = 0;
         this.gameOver = false;
+        this.MaxBasuraRespawn = 3000;
         
        
         // FONDO (Rectángulo azul simple)
         
         this.add.rectangle(400, 300, 800, 600, 0x003366);
         
+        // PARALAX
+        
+        this.fondo1 = this.add.tileSprite(0, 100, 0, 0, 'fondo1')
+            .setOrigin(0)
+            .setScrollFactor(0, 1);
 
+        this.fondo2 = this.add.tileSprite(0, 100, 0, 0, 'fondo2')
+            .setOrigin(0)
+            .setScrollFactor(0, 1);
+
+        this.fondo3 = this.add.tileSprite(0, 100, 0, 0, 'fondo3')
+            .setOrigin(0)
+            .setScrollFactor(0, 1);
+
+
+        this.add.image(0, 360, 'suelo');
+        
         // DRAGÓN (Círculo naranja)
         // Crear sprite de física
         this.dragon = this.physics.add.sprite(150, 300);
@@ -76,17 +96,19 @@ export class Flappy_Dragon extends Phaser.Scene {
             fill: '#ffff00'
         }).setOrigin(0.5, 0);
 
-        // GENERAR BASURA CADA 2 SEGUNDOS
-        this.time.addEvent({
-            delay: 2000,
-            callback: this.generarBasura,
-            callbackScope: this,
-            loop: true
-        });
+        // GENERAR BASURA
+        this.generarBasura();
+
+        // this.time.addEvent({
+        //     delay: 2000,
+        //     callback: this.generarBasura,
+        //     callbackScope: this,
+        //     loop: true
+        // });
     }
 
     /**
-     * GENERAR BASURA
+     * GENERA BASURA CADA X CANTIDAD DE TIEMPO RECURSIVAMENTE
      */
     generarBasura() {
         if (this.gameOver) return;
@@ -99,6 +121,9 @@ export class Flappy_Dragon extends Phaser.Scene {
         
         // Mover hacia la izquierda
         basura.setVelocityX(-200);
+        
+        // Llamada recursiva
+        this.time.delayedCall(Phaser.Math.Between(500,this.MaxBasuraRespawn), this.generarBasura, [] ,this);
     }
 
     /**
@@ -128,9 +153,9 @@ export class Flappy_Dragon extends Phaser.Scene {
                 basura.destroy();
             }
         });
-        
+
         // Game over si toca el suelo
-        if (this.dragon.y >= 590) {
+        if (this.dragon.y >= 588) {
             this.gameOver = true;
             this.physics.pause();
             
@@ -149,6 +174,12 @@ export class Flappy_Dragon extends Phaser.Scene {
 				this.scene.start('menu'); 
 			});
         }
+
+        // SE SCROLLEA EL PARALAX
+        this.fondo1.setTilePosition(this.fondo1.tilePositionX + 1);
+        this.fondo2.setTilePosition(this.fondo2.tilePositionX + 2);
+        this.fondo3.setTilePosition(this.fondo3.tilePositionX + 3);
+
 
     }
 }

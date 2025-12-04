@@ -37,10 +37,10 @@ export class GameScreen extends Phaser.Scene{
     
     //La dimension de la tabla tiene que ser un numero impar
     create(){
-        let roundText = this.add.text(350,400,"Round 0",{fontFamily:"inconsolata",fontSize:32})
-        this.roundTextAnimation = this.add.text(-150,300,"Round 0",{fontFamily:"inconsolata",fontSize:32})
-        let playerText = this.add.text(350,450,"Turno del submarino rojo",{fontFamily:"inconsolata",fontSize:32})
-        let playerActionText = this.add.text(350,500,"Fase actual:",{fontFamily:"inconsolata",fontSize:32})
+        let roundText = this.add.text(40,525,"Round 0",{fontFamily:"Arial",fontSize:20})
+        this.roundTextAnimation = this.add.text(-150,300,"Round 0",{fontFamily:"Arial",fontSize:25})
+        let playerText = this.add.text(40,550,"Turno del submarino rojo",{fontFamily:"Arial",fontSize:20})
+        let playerActionText = this.add.text(40,570,"Fase actual:",{fontFamily:"Arial",fontSize:20})
 
         this.createTextTween();
 
@@ -92,7 +92,7 @@ export class GameScreen extends Phaser.Scene{
         })
 
         this.rightAnimation.on("complete",()=>{
-            this.roundTextAnimation.setPosition(-150,300)
+            this.roundTextAnimation.setPosition(-150,525)
         })
 
         this.chain = this.tweens.chain({

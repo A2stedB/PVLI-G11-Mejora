@@ -29,13 +29,13 @@ export class SubmarineHUD {
      */
     createHUD() {
         const style = {
-            fontSize: '16px',
+            fontSize: '14px',
             color: '#ffffff',
             fontFamily: 'Arial'
         };
 
         const smallStyle = {
-            fontSize: '14px',
+            fontSize: '12px',
             color: '#ffffff',
             fontFamily: 'Arial'
         };
@@ -47,7 +47,7 @@ export class SubmarineHUD {
 
         // Nombre del jugador
         this.playerNameText = this.scene.add.text(10, 10, this.playerName, {
-            fontSize: '18px',
+            fontSize: '16px',
             color: '#FFD700',
             fontFamily: 'Arial',
             fontStyle: 'bold'
@@ -81,10 +81,10 @@ export class SubmarineHUD {
         this.container.add(this.ammoText);
 
         // Ataque aéreo
-        this.aerialLabel = this.scene.add.text(10, 90, 'Ataque Aéreo:', style);
+        this.aerialLabel = this.scene.add.text(10, 93, 'Ataque Aéreo:', style);
         this.container.add(this.aerialLabel);
 
-        this.aerialText = this.scene.add.text(130, 90, 'Cooldown: 2', smallStyle);
+        this.aerialText = this.scene.add.text(130, 93, 'Cooldown: 2', smallStyle);
         this.container.add(this.aerialText);
 
         // Inventario
@@ -125,8 +125,24 @@ export class SubmarineHUD {
 
         this.hpText.setText(`${this.submarine.currentHP}/${this.submarine.maxHP}`);
 
-        // Actualizar munición
-        this.ammoText.setText(`Corta: ${this.submarine.mun1} | Larga: ${this.submarine.mun2}`);
+       // Definir máximos (ajusta si cambian)
+const MAX_M1 = 3;
+const MAX_M2 = 2;
+
+// Defensa: si submarine no existe o no tiene propiedades, evitamos crash
+const mun1Raw = (this.submarine && typeof this.submarine.mun1 === 'number') ? this.submarine.mun1 : 0;
+const mun2Raw = (this.submarine && typeof this.submarine.mun2 === 'number') ? this.submarine.mun2 : 0;
+
+// Clamp (asegura valor entre 0 y MAX)
+const m1_full = Phaser.Math.Clamp(mun1Raw, 0, MAX_M1);
+const m2_full = Phaser.Math.Clamp(mun2Raw, 0, MAX_M2);
+
+// Construir strings de forma segura
+const m1 = "●".repeat(m1_full) + "○".repeat(MAX_M1 - m1_full);
+const m2 = "●".repeat(m2_full) + "○".repeat(MAX_M2 - m2_full);
+
+this.ammoText.setText(`Mun 1: ${m1}\nMun 2: ${m2}`);
+       // this.ammoText.setText(`Corta: ${this.submarine.mun1} | Larga: ${this.submarine.mun2}`);
 
         // Actualizar ataque aéreo
         if (this.submarine.aerialCooldown <= 0) {

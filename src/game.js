@@ -4,6 +4,7 @@ import { Menu2 } from "./Scene/MenuV2.js";
 import { Submarine_View } from "./Scene/Submarine_View.js";
 import Container_Scene from "./Container_test/Container_Scene.js";
 import { Flappy_Dragon } from "./Minigames/MGFlappyDragon.js";
+import { TutorialScene } from "./Scene/TutorialScene.js";
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -25,7 +26,7 @@ let config = {
             debug: false
         }
     },
-	scene: [Menu2, Submarine_View, GameScreen, Flappy_Dragon],
+	scene: [Menu2, Submarine_View, GameScreen, Flappy_Dragon, TutorialScene],
 };
 
 new Phaser.Game(config);

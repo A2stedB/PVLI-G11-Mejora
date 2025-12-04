@@ -85,7 +85,7 @@ export class Flappy_Dragon extends Phaser.Scene {
         });
 
         this.input.keyboard.once('keydown-ESC', () => { // VOLVER AL MENU
-            this.scene.start('menu');
+            this.scene.start('menu2');
         });
         
         this.input.keyboard.once('keydown-R', () => {   // REINICIAR

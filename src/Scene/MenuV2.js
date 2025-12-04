@@ -26,33 +26,53 @@ export class Menu2 extends Phaser.Scene {
         //this.game.stage.backgroundColor = '#ebeb34'
 
 
-    let boton = this.add.text(400, 300, 'Start Game',{             
+	// Boton para empezar a jugar
+    let start = this.add.text(400, 200, 'Start Game',{             
             fontFamily: 'Comic Sans MS',
             fontSize: '32px',
             color: '#00ab28',
             align: 'center',
-            //backgroundColor: '#2d2d2d'
         }).setOrigin(0.5).setInteractive();
 		
-		boton.on('pointerover', () => boton.setFontSize('34px'));
-		boton.on('pointerout', () => boton.setFontSize('32px'));
+		start.on('pointerover', () => start.setFontSize('34px'));
+		start.on('pointerout', () => start.setFontSize('32px'));
 
 		// Cambiar a otra escena al hacer clic
-		boton.on('pointerdown', () => {
+		start.on('pointerdown', () => {
 			this.scene.start('GameScreen');
 		});
 		
 		// Boton para jugar al Flappy Dragon
-		let FlappyBT = this.add.text(10, 10, 'Click aquí para Flappy Dragon', {
-			fontSize: '16px',
-			fill: '#ffff00',
-			backgroundColor: '#000000',
-			padding: { x: 5, y: 3 }
-		}).setInteractive();
+		let FlappyBT = this.add.text(400, 300, 'Flappy Dragon', {
+            fontFamily: 'Comic Sans MS',
+            fontSize: '32px',
+            color: '#00ab28',
+            align: 'center',
+		}).setOrigin(0.5).setInteractive();
+
+		FlappyBT.on('pointerover', () => FlappyBT.setFontSize('34px'));
+		FlappyBT.on('pointerout', () => FlappyBT.setFontSize('32px'));
 
 		FlappyBT.on('pointerdown', () => {
 			this.scene.start('FlappyDragon');
 		});
+
+		// Boton para iniciar el tutorial
+		let Tutorial = this.add.text(400, 400, 'Tutorial', {
+            fontFamily: 'Comic Sans MS',
+            fontSize: '32px',
+            color: '#00ab28',
+            align: 'center',
+		}).setOrigin(0.5).setInteractive();
+
+		Tutorial.on('pointerover', () => Tutorial.setFontSize('34px'));
+		Tutorial.on('pointerout', () => Tutorial.setFontSize('32px'));
+
+		Tutorial.on('pointerdown', () => {
+			this.scene.start('tutorial');
+		});
+
+
 	}
 
 }

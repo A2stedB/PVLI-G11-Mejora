@@ -69,8 +69,8 @@ export default class GameBoard extends Phaser.GameObjects.Container {
 
         // Crear HUDs para ambos jugadores
         this.huds = {
-            blue: new SubmarineHUD(scene, this.submarines.blue, 10, 10, "Jugador Azul"),
-            red: new SubmarineHUD(scene, this.submarines.red, 530, 400, "Jugador Rojo")
+            blue: new SubmarineHUD(scene, this.submarines.blue, 530, 400, "Japon"),
+            red: new SubmarineHUD(scene, this.submarines.red, 530, 400, "China")
         };
 
         // Turno actual
@@ -170,6 +170,17 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         this.render()
     }
 
+     swapHUDS() {
+    
+        if (this.currentTurn === "red") {
+            this.huds.blue.container.setVisible(false);
+            this.huds.red.container.setVisible(true);
+        } else if (this.currentTurn === "blue") {
+          this.huds.red.container.setVisible(false);
+          this.huds.blue.container.setVisible(true);
+        }
+    }
+
     /**
      * Finaliza el turno actual
      */
@@ -185,6 +196,8 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         // Cambiar turno
         this.currentTurn = this.currentTurn === "red" ? "blue" : "red";
         console.log(`Turno de: ${this.currentTurn}`);
+
+        this.swapHUDS();
     }
 
     //Esto ya no se utiliza
@@ -256,6 +269,7 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         // Actualizar HUDs
         this.huds.blue.update();
         this.huds.red.update();
+        this.swapHUDS();
         
         // Actualizar recursos
         this.resourceManager.update();
@@ -268,4 +282,6 @@ export default class GameBoard extends Phaser.GameObjects.Container {
     get player2(){
         return this.submarines.blue;
     }
+   
 }
+

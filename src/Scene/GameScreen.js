@@ -9,9 +9,11 @@ import { PlayerActionMachine } from "../State/PlayerActionMachine/PlayerActionMa
 // import { ResourceManager } from "../Resources/ResourceManager.js";
 // import { SubmarineInventory } from "../Resources/SubmarineInventory.js";
 
+// AZUL = JAPON | ROJO = CHINA !!!
 
 //TODO
 // - Arreglar tween
+
 export class GameScreen extends Phaser.Scene{
 
     chain
@@ -37,9 +39,9 @@ export class GameScreen extends Phaser.Scene{
     
     //La dimension de la tabla tiene que ser un numero impar
     create(){
-        let roundText = this.add.text(40,525,"Round 0",{fontFamily:"Arial",fontSize:20})
+        let roundText = this.add.text(40,520,"Round 0",{fontFamily:"Arial",fontSize:20})
         this.roundTextAnimation = this.add.text(-150,300,"Round 0",{fontFamily:"Arial",fontSize:25})
-        let playerText = this.add.text(40,550,"Turno del submarino rojo",{fontFamily:"Arial",fontSize:20})
+        let playerText = this.add.text(40,545,"Turno de China",{fontFamily:"Arial",fontSize:20})
         let playerActionText = this.add.text(40,570,"Fase actual:",{fontFamily:"Arial",fontSize:20})
 
         this.createTextTween();
@@ -58,7 +60,8 @@ export class GameScreen extends Phaser.Scene{
         })
 
         EventDispatch.on(Event.UPDATE_PLAYER_TEXT,(player)=>{
-            playerText.setText(`Turno del submarino ${player}`);
+            if (this.player == 'rojo') playerText.setText(`Turno de China`);
+            else playerText.setText(`Turno de Japon`);
         })
 
         EventDispatch.on(Event.UPDATE_PLAYER_ACTION_TEXT,(state)=>{

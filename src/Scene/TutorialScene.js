@@ -4,6 +4,7 @@ import Event from "../Event/Event.js";
 import { GameLoopMachine } from "../State/GameloopMachine/GameLoopMachine.js";
 import { PlayerActionMachine } from "../State/PlayerActionMachine/PlayerActionMachine.js";
 import DialogText from "../Tutorial/dialog_plugin.js";
+import { SubmarineComplete } from "../Submarine/SubmarineComplete.js";
 
 //TODO
 // - Arreglar tween
@@ -42,8 +43,13 @@ export class TutorialScene extends Phaser.Scene{
         this.gameloopMachine = new GameLoopMachine(this);
         this.playerActionMachine = new PlayerActionMachine(this,this.gameloopMachine);
         let texturas = ["Square","BG", "Submarine"];
-        this.tablero = new GameBoard(this);
-		
+        this.tablero = new GameBoard(this);		
+        let redSubmarine = this.tablero.submarines.red;
+        let blueSubmarine = this.tablero.submarines.blue;
+
+        redSubmarine.setNewPosition(2, 6);
+        blueSubmarine.setNewPosition(4, 6);
+
         this.dialog = new DialogText(this, {
 			borderThickness: 4,
 			borderColor: 0xcb3234,
@@ -74,6 +80,7 @@ export class TutorialScene extends Phaser.Scene{
         EventDispatch.on(Event.UPDATE_PLAYER_ACTION_TEXT,(state)=>{
             playerActionText.setText(`Fase actual: ${state}`)
         })
+
     }
 
     update(){}

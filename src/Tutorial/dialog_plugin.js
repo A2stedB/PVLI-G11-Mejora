@@ -153,53 +153,53 @@ export default class DialogText{
 		this._createOuterWindow(dimensions.x, dimensions.y, dimensions.rectWidth, dimensions.rectHeight);
 		this._createInnerWindow(dimensions.x, dimensions.y, dimensions.rectWidth, dimensions.rectHeight);
 		
-		this._createCloseModalButton(); //se muestra el boton de cerrar en la ventana
-		this._createCloseModalButtonBorder(); // se muestra el borde del boton de cerrar
+		// this._createCloseModalButton(); //se muestra el boton de cerrar en la ventana
+		// this._createCloseModalButtonBorder(); // se muestra el borde del boton de cerrar
 	}
 
 	// Con el siguiente código se crea el boton de cerrar la ventana de diálogo
-	_createCloseModalButton() {
-		var self = this;
-		this.closeBtn = this.scene.make.text({
-			//se crea el boton con las posiciones x e y siguientes
-			// se calculan de forma dinámica para que funcione para diferentes tamaños de pantalla
-			x: this._getGameWidth() - this.padding - 14,
-			y: this._getGameHeight() - this.windowHeight - this.padding + 3,
+	// _createCloseModalButton() {
+	// 	var self = this;
+	// 	this.closeBtn = this.scene.make.text({
+	// 		//se crea el boton con las posiciones x e y siguientes
+	// 		// se calculan de forma dinámica para que funcione para diferentes tamaños de pantalla
+	// 		x: this._getGameWidth() - this.padding - 14,
+	// 		y: this._getGameHeight() - this.windowHeight - this.padding + 3,
 			
-			//el boton queda representado como una X con su estilo debajo
-			text: 'X',
-			style: {
-				font: 'bold 12px TimesNewRoman',
-				fill: this.closeBtnColor
-			}
-		});
+	// 		//el boton queda representado como una X con su estilo debajo
+	// 		text: 'X',
+	// 		style: {
+	// 			font: 'bold 12px TimesNewRoman',
+	// 			fill: this.closeBtnColor
+	// 		}
+	// 	});
 		
-		this.closeBtn.setInteractive(); //hace interactuable el boton de cierre
-		this.closeBtn.on('pointerover', function () {
-			this.setTint(0xff0000); //cuando el cursor se encuentra encima se cambia de color
-		});
-		this.closeBtn.on('pointerout', function () {
-			this.clearTint(); //vuelve al color original al quitar el cursor
-		});
-		this.closeBtn.on('pointerdown', function () {
-			self.toggleWindow(); //se llama al método que cierra o muestra la ventana de diálogo
+	// 	this.closeBtn.setInteractive(); //hace interactuable el boton de cierre
+	// 	this.closeBtn.on('pointerover', function () {
+	// 		this.setTint(0xff0000); //cuando el cursor se encuentra encima se cambia de color
+	// 	});
+	// 	this.closeBtn.on('pointerout', function () {
+	// 		this.clearTint(); //vuelve al color original al quitar el cursor
+	// 	});
+	// 	this.closeBtn.on('pointerdown', function () {
+	// 		self.toggleWindow(); //se llama al método que cierra o muestra la ventana de diálogo
 			
-			// elimina el game object con el texto y borra el evento
-			if (self.timedEvent) 
-				self.timedEvent.remove();
-			if (self.text) 
-				self.text.destroy();
-		});
-	}
+	// 		// elimina el game object con el texto y borra el evento
+	// 		if (self.timedEvent) 
+	// 			self.timedEvent.remove();
+	// 		if (self.text) 
+	// 			self.text.destroy();
+	// 	});
+	// }
 
 	// Se crea el borde del botón
-	_createCloseModalButtonBorder() {
-		var x = this._getGameWidth() - this.padding - 20;
-		var y = this._getGameHeight() - this.windowHeight - this.padding;
+	// _createCloseModalButtonBorder() {
+	// 	var x = this._getGameWidth() - this.padding - 20;
+	// 	var y = this._getGameHeight() - this.windowHeight - this.padding;
 		
-		//Se crea el borde del botón sin relleno
-		this.graphics.strokeRect(x, y, 20, 20);
-	}
+	// 	//Se crea el borde del botón sin relleno
+	// 	this.graphics.strokeRect(x, y, 20, 20);
+	// }
 
 	// Hace aparecer al texto lentamente en pantalla
 	_animateText() {

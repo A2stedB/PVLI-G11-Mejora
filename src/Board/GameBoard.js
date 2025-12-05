@@ -7,6 +7,8 @@ import Event from "../Event/Event.js";
 import { ResourceManager_Complete } from "../Resources/ResourceManager.js";
 import { SubmarineHUD } from "../Submarine/SubmarineHUD.js";
 import { Dragon } from "../Dragon/Dragon.js";
+import { ExitZoneSystem } from "../Systems/ExitZoneSystem.js";
+import { ZoneClosingSystem } from "../Systems/ZoneClosingSystem.js";
 import config from "./config.json" with {type:"json"}
 
 //TODO
@@ -49,6 +51,9 @@ export default class GameBoard extends Phaser.GameObjects.Container {
             red:  new SubmarineComplete(scene, 2, 2, this.matrix.logic, this,"red",1)  
         };
 
+        this.exitZoneSystem = new ExitZoneSystem(this);
+        this.exitZones = this.exitZoneSystem.createExitZones();
+
         //Crear el dragon
         this.dragon = new Dragon(this,true);
 
@@ -72,6 +77,8 @@ export default class GameBoard extends Phaser.GameObjects.Container {
             blue: new SubmarineHUD(scene, this.submarines.blue, 10, 10, "Jugador Azul"),
             red: new SubmarineHUD(scene, this.submarines.red, 510, 10, "Jugador Rojo")
         };
+
+        this.zoneClosing = new ZoneClosingSystem(this);
 
         // Turno actual
         this.currentTurn = "red"; // Empieza el rojo
@@ -160,32 +167,7 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         }
     }
 
-    refresh() {
-        this.active = !this.active;
-        if (this.active) {
-            this.setVisible(true);
-        }
-        else this.setVisible(false);
-         
-        this.render()
-    }
 
-    /**
-     * Finaliza el turno actual
-     */
-    endTurn() {
-        const currentSubmarine = this.submarines[this.currentTurn];
-        
-        // Aplicar efectos de fin de turno
-        currentSubmarine.endTurn();
-        
-        // Actualizar HUD
-        this.huds[this.currentTurn].update();
-        
-        // Cambiar turno
-        this.currentTurn = this.currentTurn === "red" ? "blue" : "red";
-        console.log(`Turno de: ${this.currentTurn}`);
-    }
 
     //Esto ya no se utiliza
 

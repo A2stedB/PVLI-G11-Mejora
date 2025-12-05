@@ -49,7 +49,7 @@ export class GameScreen extends Phaser.Scene{
         this.gameloopMachine = new GameLoopMachine(this);
         this.playerActionMachine = new PlayerActionMachine(this,this.gameloopMachine);
         let texturas = ["Square","BG", "Submarine"];
-        // this.submarineView = new SubmarineView(this,0,0)
+        this.submarineView = new SubmarineView(this,0,0)
         this.tablero = new GameBoard(this);
 
         EventDispatch.on(Event.UPDATE_ROUND,(round)=>{

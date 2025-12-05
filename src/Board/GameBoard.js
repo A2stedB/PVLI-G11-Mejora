@@ -69,8 +69,8 @@ export default class GameBoard extends Phaser.GameObjects.Container {
 
         // Crear HUDs para ambos jugadores
         this.huds = {
-            blue: new SubmarineHUD(scene, this.submarines.blue, 530, 400, "Japon"),
-            red: new SubmarineHUD(scene, this.submarines.red, 530, 400, "China")
+            blue: new SubmarineHUD(scene, this.submarines.blue, 530, 425, "Japon"),
+            red: new SubmarineHUD(scene, this.submarines.red, 530, 425, "China")
         };
 
         // Turno actual

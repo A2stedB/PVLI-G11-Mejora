@@ -52,15 +52,15 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         // const halfHeight = screenHeight / 2; // 300px por jugador
         
         //JUGADOR 1 (Parte Superior)
-        this.createPlayerViews(0, 0, this.screenWidth, this.halfHeight, 'JUGADOR 1', this.submarine1, this.submarine2);
+        this.createPlayerViews(0, 0, this.screenWidth, this.screenHeight, 'JAPON', this.submarine1, this.submarine2);
         
         // Linea divisoria
-        const line = this.scene.add.graphics();
-        line.lineStyle(2, 0xffffff, 1);
-        line.lineBetween(0, this.halfHeight, this.screenWidth, this.halfHeight);
+        // const line = this.scene.add.graphics();
+        // line.lineStyle(2, 0xffffff, 1);
+        // line.lineBetween(0, this.halfHeight, this.screenWidth, this.halfHeight);
         
         // JUGADOR 2 (Parte Inferior)
-        this.createPlayerViews(0, this.halfHeight, this.screenWidth, this.halfHeight, 'JUGADOR 2', this.submarine2, this.submarine1);
+        //this.createPlayerViews(0, this.halfHeight, this.screenWidth, this.halfHeight, 'JUGADOR 2', this.submarine2, this.submarine1);
     }
 
      /**
@@ -126,7 +126,7 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
             x + width / 2,
             y + height / 2,
             width - 10,
-            height - 20,
+            height,
             0x001a33,
             1
         );

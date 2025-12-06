@@ -101,6 +101,8 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
             }
         })
 
+        //Devuelve el submarino si coincide el nombre o ID
+        //Tony y Pablo no me mateis...
         EventDispatch.on(Event.GET_SUBMARINE,(name,callback)=>{
             if(this.name == name){
                 callback.callBack(this);

@@ -1,5 +1,6 @@
 import { Square } from "../Board/Square.js";
 import EventDispatch from "../Event/EventDispatch.js";
+import Event from "../Event/Event.js";
 export class GraphicSquare extends Phaser.GameObjects.Image{
 
     /**
@@ -9,17 +10,18 @@ export class GraphicSquare extends Phaser.GameObjects.Image{
      */
     constructor(scene,square,texture,cellSize,offsetX,offsetY){
         super(scene,(square.position.x*cellSize),square.position.y*cellSize,texture)
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
+        // this.offsetX = offsetX;
+        // this.offsetY = offsetY;
         this.cellSize = cellSize;
 
         this.square = square;
         this.texture = texture;
         this.setDisplaySize(cellSize*2,cellSize*2)
         this.setAlpha(0.01);
+        this.dragon = null;
         
         
-        this.setInteractive();
+        // this.setInteractive();
         this.addEvent();
         
         scene.add.existing(this);
@@ -34,6 +36,7 @@ export class GraphicSquare extends Phaser.GameObjects.Image{
         if(this.square.dragon != null){
             this.setDisplaySize(this.cellSize*1,this.cellSize*1);
             this.setAlpha(1);
+            console.log(`Dragon square: ${this.x} ${this.y}`)
         }
         else this.setAlpha(0.01);
         this.setDisplaySize(this.cellSize*2,this.cellSize*2);
@@ -43,6 +46,7 @@ export class GraphicSquare extends Phaser.GameObjects.Image{
         // else{
         //     this.setAlpha(0.01);
         // }
+        
     }
 
     addEvent(){
@@ -60,7 +64,3 @@ export class GraphicSquare extends Phaser.GameObjects.Image{
         console.log(this.square.active);
     }
 }
-
-// const evebts = {
-//     SUBMARINE_MOVED = subms
-// }

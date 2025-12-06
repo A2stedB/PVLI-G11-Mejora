@@ -24,7 +24,7 @@ export default class GameBoard extends Phaser.GameObjects.Container {
      * @param {Array.<string>} texture La lista de texturas que utilizara el tablero
      * @param {Number} cellSize El tamaño de la celda
      */
-    constructor(scene, boardWidth, boardHeight, x, y, texture, cellSize) {
+    constructor(scene,texture) {
         super(scene, config.x, config.y);
 
         this.scene = scene;
@@ -64,7 +64,7 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         this.submarines.blue.setDepth(100);
         this.submarines.red.setDepth(100);
 
-        this.initializeBackground(x, y, "BG");
+        this.initializeBackground(config.x, config.y, "BG");
 
         // Inicializar el ResourceManager
         this.resourceManager = new ResourceManager_Complete(scene, this);

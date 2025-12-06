@@ -10,6 +10,7 @@ export class Dragon extends Phaser.GameObjects.Container {
     board
     position;
     square;
+    invisibleBG;
     
     // Componentes visuales
     visualComponents = {
@@ -21,23 +22,30 @@ export class Dragon extends Phaser.GameObjects.Container {
     };
 
     constructor(board, randomSpawn, position) {
-        super(board.scene, 0, 0);
+        super(board.scene, 100, 100);
         this.board = board;
-        
+
         // Crear visualización del dragón
         this.createDragonGeometry();
 
         // Posicionar aleatoriamente
         this.randomSpawn(randomSpawn, position);
 
-        // Añadir al tablero
-        board.add(this);
-        this.setDepth(150); // Por encima de todo
+        // this.invisibleBG = new Phaser.GameObjects.Image(board.scene,(this.position.x),(this.position.y),"Square").setAlpha(0.3);
+        // this.invisibleBG.setDisplaySize(board.config.cellSize*2,board.config.cellSize*2)
+        // this.invisibleBG.setOrigin(0.5,0.5);
+        console.log(`Dragon t: ${this.x} ${this.y}`)
 
+        // Añadir al tablero
+        this.setDepth(150); // Por encima de todo
+        
         // Configurar eventos
         this.setupEvents();
         
+        // this.add(this.invisibleBG);
+        board.add(this);
         board.scene.add.existing(this);
+
     }
 
     /**
@@ -257,6 +265,8 @@ export class Dragon extends Phaser.GameObjects.Container {
                 callback.dragonPosition = this.position;
             }
         });
+
+        
     }
 
     /**
@@ -300,11 +310,13 @@ export class Dragon extends Phaser.GameObjects.Container {
         // Animación suave de movimiento
         this.board.scene.tweens.add({
             targets: this,
-            x: targetX,
-            y: targetY,
+            x: targetX+this.board.config.x,
+            y: targetY+this.board.config.y,
             duration: 500,
             ease: 'Quad.easeInOut'
         });
+
+        // this.setPosition(targetX+this.board.config.x,targetY+this.board.config.y);
     }
 
     /**

@@ -52,13 +52,8 @@ export class RepairMinigame extends Phaser.Scene {
             this.checkLeakClick(pointer);
         });
         
-        // AÑADIR: Soporte de teclado ESC para salir
-        this.escKey = this.input.keyboard.addKey('ESC');
-        this.escKey.on('down', () => {
-            if (!this.gameOver) {
-                console.log("Jugador salió del minijuego con ESC");
-                this.exitMinigame(false);
-            }
+        this.input.keyboard.once('keydown-ESC', () => {
+            this.exitMinigame(false);
         });
         
         // GENERACIÓN DE OBJETOS
@@ -501,13 +496,8 @@ export class RepairMinigame extends Phaser.Scene {
     /**
      * Salir del minijuego
      */
-   exitMinigame(success) {
+    exitMinigame(success) {
         console.log(`Saliendo del minigame. Éxito: ${success}`);
-        
-        // Limpiar listener de ESC
-        if (this.escKey) {
-            this.escKey.off('down');
-        }
         
         this.scene.stop();
         this.scene.resume(this.returnScene);

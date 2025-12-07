@@ -183,25 +183,32 @@ export class GameOverScene extends Phaser.Scene {
             () => {
                 console.log("=== INICIANDO REVANCHA ===");
                 
-                console.log("  Cerrando Game Over...");
                 this.scene.stop('GameOver');
                 
-                console.log("  Reanudando GameScreen...");
-                this.scene.resume('GameScreen');
+                const gameScreenScene = this.scene.get('GameScreen');
                 
-                this.time.delayedCall(50, () => {
-                    console.log("  Reiniciando GameScreen...");
+                if (gameScreenScene) {
+                    console.log("  Forzando reinicio completo...");
                     
-                    const gameScreen = this.scene.get('GameScreen');
-                    if (gameScreen) {
-                        this.scene.stop('GameScreen');
-                        
-                        this.time.delayedCall(300, () => {
-                            this.scene.start('GameScreen');
-                            console.log("Revancha iniciada");
-                        });
+                    if (typeof gameScreenScene.shutdown === 'function') {
+                        console.log("  Ejecutando shutdown...");
+                        gameScreenScene.shutdown();
                     }
-                });
+                    
+                    if (this.scene.isActive('GameScreen')) {
+                        this.scene.stop('GameScreen');
+                    } else {
+                        this.scene.manager.stop('GameScreen');
+                    }
+                    
+                    this.time.delayedCall(350, () => {
+                        console.log("  Iniciando nueva partida...");
+                        this.scene.start('GameScreen');
+                        console.log(" Revancha iniciada - Partida nueva");
+                    });
+                } else {
+                    console.error(" No se encontró GameScreen");
+                }
             },
             true,
             'R'
@@ -218,22 +225,32 @@ export class GameOverScene extends Phaser.Scene {
             () => {
                 console.log("=== VOLVIENDO AL MENÚ ===");
                 
-                console.log("  Deteniendo Game Over...");
                 this.scene.stop('GameOver');
                 
-                console.log("  Reanudando GameScreen temporalmente...");
-                this.scene.resume('GameScreen');
+                const gameScreenScene = this.scene.get('GameScreen');
                 
-                this.time.delayedCall(50, () => {
-                    console.log("  Deteniendo GameScreen...");
-                    this.scene.stop('GameScreen');
+                if (gameScreenScene) {
+                    console.log("  Limpiando GameScreen...");
                     
-                    this.time.delayedCall(300, () => {
-                        console.log("  Iniciando menú...");
+                    if (typeof gameScreenScene.shutdown === 'function') {
+                        console.log("  Ejecutando shutdown...");
+                        gameScreenScene.shutdown();
+                    }
+                    
+                    if (this.scene.isActive('GameScreen')) {
+                        this.scene.stop('GameScreen');
+                    } else {
+                        this.scene.manager.stop('GameScreen');
+                    }
+                    
+                    this.time.delayedCall(350, () => {
+                        console.log("  Iniciando menú principal...");
                         this.scene.start('menu2');
-                        console.log(" Menú cargado");
+                        console.log(" Volviendo al menú");
                     });
-                });
+                } else {
+                    console.error(" No se encontró GameScreen");
+                }
             },
             false,
             'ESC'

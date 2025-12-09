@@ -25,6 +25,9 @@ export default class LogicBoard{
         }
     }
 
+    /**
+     * Inicializa la lista de los vertices que tiene el cuadrado
+     */
     getVertexListForSquare(){
         this.matrix.forEach((row)=>{
             row.forEach((point)=>{
@@ -36,7 +39,7 @@ export default class LogicBoard{
     }
 
     /**
-     * 
+     * Inicializa todos los elementos de la matriz
      * @param {*} x 
      * @param {*} y 
      */

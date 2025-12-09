@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <help_text/>
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2387</x>
+      <y>784</y>
+      <w>315</w>
+      <h>343</h>
+    </coordinates>
+    <panel_attributes>GameBoard
+--
+- scene : Phaser.Scene
+- active : bool
+- config : Object 
+- matrix : Object {
+		logic: LogicBoard
+		graphic : Array&lt;GraphicSquare | GraphicVertex&gt;
+	}
+- submarines : Object{
+	blue : Submarine
+	red : Submarine
+}
+- exitZoneSystem ：ExitZoneSystem
+- exitZones : Object
+- huds : SubmarineHUD
+- zoneClosing : ZoneClosingSystem
+- currentTurn : string
+--
+get player1() : Submarine
+get player2() : Submarine
+--
+setupEvent() : void
+render() : void
+graphicMatrixInitialize(boardWidth, boardHeight, logic) : Array&lt;GraphicSquare | GraphicVertex&gt;
+initializeBackground(x, y, image) : void
+createGraphicPoint(m, i, j, logic) : void
+refresh() : void
+swapHUDS() : void
+endTurn() : void
+update() : void
+onRange() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1603</x>
+      <y>1169</y>
+      <w>301</w>
+      <h>511</h>
+    </coordinates>
+    <panel_attributes>Submarine
+--
+- name : string
+- id : number
+- container : Phaser.GameObjects.Container
+- board : LogicBoard
+- scene : Phaser.Scene
+- position : Position
+- orientation : Orientation
+- currentHP : number
+- maxHP : number
+- inventory : Object
+--
+get X() : Position.x
+get Y() : Position.y
+get HP() : currentHP
+get MaxHP() : maxHP
+--
+updateSprite() : void
+setNewPosition(newX : int, newY : int) : void 
+canMoveTo(newX : int, newY : int) : bool
+moveFront() : bool
+moveRight() : bool
+moveLeft() : bool
+canShoot(distance : int) :bool
+shoot(distance : int) : bool
+isTarget(x : int, y : int, distance : int) : bool
+isTargetDir(x : int, y : int, distance : int, direction : Orientation)
+loseHealth(damage : int) : void 
+isSunk() : bool
+heal(amount : int) : int
+applyLeakDamage() : void
+canUseAerialAttack() : bool
+useAerialAttack()  : bool
+reduceCooldown(amount : int) : bool 
+updateCooldown() : void
+addAmmunition(amount : int) : void
+addCooldownReducer(amount : int) : void
+useCooldownReducer() : bool
+addMovementLimiter(amount : int) : void 
+useMovementLimiter(targetSubmarine) : bool
+addRepairKit(amount : int) : void
+useRepairKit(healAmount : int) : bool
+collectResource(resource : Resource) : void 
+updateMovementRestrictions() : void
+endTurn() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1442</x>
+      <y>602</y>
+      <w>224</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>GameScreen
+--
+- header : Phaser.GameObject.Rectangle
+- roundText : Phaser.GameObject.Text
+- roundTextAnimation : Phaser.GameObject.Text
+- playerText : Phaser.GameObject.Text
+- playerActionText : Phaser.GameObject.Text
+- gameloopMachine : GameloopMachine
+- playerActionMachine : PlayerActionMachine
+- texturas : Array&lt;string&gt;
+- submarineView : SubmarineView
+- tablero = GameBoard
+--
+createTextTween();</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2450</x>
+      <y>1183</y>
+      <w>154</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>LogicBoard
+--
+- matrix : Array&lt;Square | Vertex&gt;
+--
+initialize(x : int,y : int) : void
+getVertexListForSquare() : void
+createVertex(x : int,y : int) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1239</x>
+      <y>602</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Menu</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>497</x>
+      <y>602</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>MinigameDialogScene</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>665</x>
+      <y>602</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>FireStateWindow
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>847</x>
+      <y>602</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>MGFlappyDragon</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1029</x>
+      <y>602</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>RepairMinigame
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>861</x>
+      <y>371</y>
+      <w>672</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Phaser
+--
+
+group=group-0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>875</x>
+      <y>399</y>
+      <w>140</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Phaser.Event.EventEmitter
+group=group-0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1036</x>
+      <y>399</y>
+      <w>98</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>Phaser.Scene
+--
++ init()
++ preload()
++ create()
++ update()
+group=group-0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1162</x>
+      <y>399</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Phaser.GameObjects.Container
+group=group-0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1330</x>
+      <y>399</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Phaser.GameObjects.Image
+group=group-0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1715</x>
+      <y>602</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>GameOverScene</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>721</y>
+      <w>147</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>StateMachine
+--
+- currentState : State
+- context : Object
+- name : string
+--
+- setState(State)
+--
++ transition(State)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>721</y>
+      <w>147</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Abstract&gt;&gt;
+State
+--
+- stateMachine : StateMachine
+- name : string
+--
++ onStateEnter()
++ onStateExit()
+--
+- transition()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>175</x>
+      <y>567</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Singleton&gt;&gt;
+EventDispatch
+--
++ on(Event, callback)
++ emit(Event, params)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>49</x>
+      <y>567</y>
+      <w>56</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Event</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>553</x>
+      <y>1050</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>PlayerActionMachine</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>532</x>
+      <y>1127</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>MoveState</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>651</x>
+      <y>1127</y>
+      <w>70</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>FireState
+--
++ shoot()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>1127</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>EndState</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>959</x>
+      <y>1036</y>
+      <w>147</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>GameloopMachine
+--
+- round : number
+--
++ updateRound()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1596</x>
+      <y>1050</y>
+      <w>294</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>Orientation
+--
+N : number
+E : number
+S : number
+W : number
+--
+getAvailableDirection(direction : Orientation) : Array&lt;Orientation&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1169</x>
+      <y>1141</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Player1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1267</x>
+      <y>1127</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Player2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>777</x>
+      <y>1127</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>HealState</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>119</x>
+      <y>238</y>
+      <w>98</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>EmptyPackage
+--
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>385</x>
+      <y>0</y>
+      <w>1351</w>
+      <h>308</h>
+    </coordinates>
+    <panel_attributes>Scenes
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2912</x>
+      <y>1106</y>
+      <w>329</w>
+      <h>273</h>
+    </coordinates>
+    <panel_attributes>ResourceManager
+--
+- scene : Phaser.Scene
+- board : GameBoard
+- resources : Array&lt;Resouce&gt;
+- resourceSprite : Array&lt;&gt;
+- resouceColor : hex
+- resourceTypes : Object&lt;string&gt;
+--
++ createResource(type : resourceTypes, x : int, y : int) : Resource | null
++ createResourceSprite(resource : Resource, x : int, y : int) : void
++ createRandomResource(x : int,y : int) : Resource
++ distributeRandomResources(count : int) : void
++ distributeResourcesByType(distribution : Object) : void
++ getAvailablePositions() : Array&lt;Object&gt;
++ isPositionAvailable(x : int, y : int) : boolean
++ getResourceAt(x : int, y : int) : Resource | null
++ collectResourceAt(x : int, y : int, submarine : Submarine) : boolean
++ hideResourceSprite(resource : Resource) : void
++ createCollectionEffect(x : int, y : int) : void
++ checkAndCollectResource(submarine : Submarine) : void
++ getAvailableResources() : Array&lt;Resource&gt;
++ cleanupCollectedResources() : void
++ shuffleArray(array : Array&lt;&gt;) : void
++ clear() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2338</x>
+      <y>1400</y>
+      <w>252</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>Square
+--
+- position : Position
+- nextPoint : Array&lt;Vertex&gt;
+- active : boolean
+- dragon : Dragon | null
+-- 
++ getNextPoint(matrix : Array&lt;Square | Vertex&gt;) : void
++ dragonEnter(dragon : Dragon) : this
++ dragonExit() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2646</x>
+      <y>1673</y>
+      <w>210</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>SubmarineHUD
+--
+- scene : Phaser.Scene
+- submarine : Submarine
+- x : number
+- y : number
+- playerName : string
+- screenWidth : number
+- screenHeight : number
+- container : Phaser.GameObjects.Container
+--
+createHUD() : void
+update() : void
+show() : void
+hide() : void
+destroy() : void
+setPosition() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2429</x>
+      <y>1785</y>
+      <w>175</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>Vertex
+--
+- position : Position
+- available : boolean
+- submarine : Submarine | null
+--
++ enter(submarine : Submarine) : void
++ exit() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2751</x>
+      <y>1470</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>ZoneExitSystem</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2996</x>
+      <y>1421</y>
+      <w>175</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Resource
+--
++ collected : boolean
+--
++ applyEffect(Submarine) : void
++ isAtPosition(x : int, y : int) : boolean
++ isAvailable() : boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2653</x>
+      <y>1246</y>
+      <w>245</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Dragon
+--
+- board : GameBoard
+- visualComponentes : Array&lt;Phaser.GameObjects&gt;
+--
++ createDragonGeometry() : void
++ blink() : void
++ setupEvents() : void
++ randomSpawn() : void
++ updateVisualPosition() : void
++ playMoveEffect() : void
++ isNearSubmarine(submarine ： Submarine) : boolean
++ destroy(fromScene : Phaser.Scene) : void | boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2751</x>
+      <y>1505</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>ExitZoneSystem</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2429</x>
+      <y>1603</y>
+      <w>147</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>GraphicSquare
+--
+- cellSize : number
+- square : Square
+- texture : string
+--
++ render() : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2429</x>
+      <y>1694</y>
+      <w>182</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>GraphicVertex
+--
+graphic : Phaser.GameObjects.Graphics
+cellSize : number
+vertex : Vertex
+--
++ render() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2989</x>
+      <y>1519</y>
+      <w>189</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>RepairKit
+--
+- healAmount : number
+- autoUse : boolean
+-- 
++ use(submarine : Submarine) : void
++ heal(submarine : Submarine) : void
++ canUse(submarine : Submarine) : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3017</x>
+      <y>1659</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>AmunitionExtra
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3017</x>
+      <y>1708</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>CooldownReducer
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3017</x>
+      <y>1757</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>MovementLimiter
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1225</x>
+      <y>1050</y>
+      <w>70</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>PlayerState
+--
+- id : number
+- player : string</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

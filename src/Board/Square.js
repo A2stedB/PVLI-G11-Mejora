@@ -1,5 +1,6 @@
 import { Position } from "../Board/Position.js";
 import { Vertex } from "../Board/Vertex.js";
+import { Dragon } from "../Dragon/Dragon.js";
 
 /**
  * El cuadrado logico, tiene los 4 vertices que forma este cuadrado
@@ -32,11 +33,19 @@ export class Square{
         this.nextPoint.push(topLeft,topRight,bottomLeft,bottomRight)
     }
 
+    /**
+     * Registrar cuando el dragon entra en esta casilla
+     * @param {Dragon} dragon 
+     * @returns 
+     */
     dragonEnter(dragon){
         this.dragon = dragon;
         return this;
     }
 
+    /**
+     * Registar la salida del dragon de esta casilla
+     */
     dragonExit(){
         this.dragon = null;
     }

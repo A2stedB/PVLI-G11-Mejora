@@ -10,7 +10,6 @@ export class Dragon extends Phaser.GameObjects.Container {
     board
     position;
     square;
-    invisibleBG;
     
     // Componentes visuales
     visualComponents = {
@@ -30,12 +29,6 @@ export class Dragon extends Phaser.GameObjects.Container {
 
         // Posicionar aleatoriamente
         this.randomSpawn(randomSpawn, position);
-
-        // this.invisibleBG = new Phaser.GameObjects.Image(board.scene,(this.position.x),(this.position.y),"Square").setAlpha(0.3);
-        // this.invisibleBG.setDisplaySize(board.config.cellSize*2,board.config.cellSize*2)
-        // this.invisibleBG.setOrigin(0.5,0.5);
-        // console.log(`Dragon t: ${this.x} ${this.y}`)
-        
 
         // Añadir al tablero
         this.setDepth(150); // Por encima de todo
@@ -318,7 +311,6 @@ export class Dragon extends Phaser.GameObjects.Container {
         });
 
         this.setPosition(targetX,targetY);
-        console.log(`Dragon t: ${this.x} ${this.y}`)
 
     }
 

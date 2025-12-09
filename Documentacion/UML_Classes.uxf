@@ -1,56 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
   <help_text/>
-  <zoom_level>7</zoom_level>
+  <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2387</x>
-      <y>784</y>
-      <w>315</w>
-      <h>343</h>
+      <x>3410</x>
+      <y>780</y>
+      <w>450</w>
+      <h>430</h>
     </coordinates>
     <panel_attributes>GameBoard
 --
 - scene : Phaser.Scene
 - active : bool
 - config : Object 
-- matrix : Object {
-		logic: LogicBoard
-		graphic : Array&lt;GraphicSquare | GraphicVertex&gt;
-	}
-- submarines : Object{
-	blue : Submarine
-	red : Submarine
-}
+- matrix : Object&lt;LogicBoard | Array&lt;GraphicSquare | GraphicVertex&gt;&gt;
+- submarines : Object&lt;Submarine&gt;
 - exitZoneSystem ：ExitZoneSystem
 - exitZones : Object
 - huds : SubmarineHUD
 - zoneClosing : ZoneClosingSystem
 - currentTurn : string
 --
-get player1() : Submarine
-get player2() : Submarine
++ get player1() : Submarine
++ get player2() : Submarine
 --
-setupEvent() : void
-render() : void
-graphicMatrixInitialize(boardWidth, boardHeight, logic) : Array&lt;GraphicSquare | GraphicVertex&gt;
-initializeBackground(x, y, image) : void
-createGraphicPoint(m, i, j, logic) : void
-refresh() : void
-swapHUDS() : void
-endTurn() : void
-update() : void
-onRange() : void</panel_attributes>
++ setupEvent() : void
++ render() : void
++ graphicMatrixInitialize(boardWidth, boardHeight, logic) : Array&lt;GraphicSquare | GraphicVertex&gt;
++ initializeBackground(x, y, image) : void
++ createGraphicPoint(m, i, j, logic) : void
++ refresh() : void
++ swapHUDS() : void
++ endTurn() : void
++ update() : void
++ onRange() : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1603</x>
-      <y>1169</y>
-      <w>301</w>
-      <h>511</h>
+      <x>2290</x>
+      <y>1330</y>
+      <w>430</w>
+      <h>730</h>
     </coordinates>
     <panel_attributes>Submarine
 --
@@ -103,10 +97,10 @@ endTurn() : void</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1442</x>
-      <y>602</y>
-      <w>224</w>
-      <h>147</h>
+      <x>2060</x>
+      <y>520</y>
+      <w>320</w>
+      <h>210</h>
     </coordinates>
     <panel_attributes>GameScreen
 --
@@ -121,90 +115,102 @@ endTurn() : void</panel_attributes>
 - submarineView : SubmarineView
 - tablero = GameBoard
 --
-createTextTween();</panel_attributes>
+createTextTween();
+group=group-1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2450</x>
-      <y>1183</y>
-      <w>154</w>
-      <h>77</h>
+      <x>3500</x>
+      <y>1350</y>
+      <w>220</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>LogicBoard
 --
 - matrix : Array&lt;Square | Vertex&gt;
 --
-initialize(x : int,y : int) : void
-getVertexListForSquare() : void
-createVertex(x : int,y : int) : void</panel_attributes>
++ initialize(x : int,y : int) : void
++ getVertexListForSquare() : void
++ createVertex(x : int,y : int) : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1239</x>
-      <y>602</y>
-      <w>147</w>
-      <h>21</h>
+      <x>1770</x>
+      <y>520</y>
+      <w>720</w>
+      <h>140</h>
     </coordinates>
-    <panel_attributes>Menu</panel_attributes>
+    <panel_attributes>Menu
+--
+- title : Phaser.GameObjects.Text
+- startBtn :Object&lt;Phaser.GameObjects.Rectangle | Phaser.GameObjects.Text | Phaser.Input.Keyboard.Key&gt;
+- flappyBtn : Object&lt;Phaser.GameObjects.Rectangle | Phaser.GameObjects.Text | Phaser.Input.Keyboard.Key&gt;
+- tutorialBtn : Object&lt;Phaser.GameObjects.Rectangle | Phaser.GameObjects.Text | Phaser.Input.Keyboard.Key&gt;
+- helpText : Phaser.GameObjects.Text
+group=group-1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>497</x>
-      <y>602</y>
-      <w>147</w>
-      <h>21</h>
+      <x>710</x>
+      <y>520</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
-    <panel_attributes>MinigameDialogScene</panel_attributes>
+    <panel_attributes>MinigameDialogScene
+group=group-1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>665</x>
-      <y>602</y>
-      <w>147</w>
-      <h>21</h>
+      <x>950</x>
+      <y>520</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>FireStateWindow
-</panel_attributes>
+
+group=group-1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>847</x>
-      <y>602</y>
-      <w>147</w>
-      <h>21</h>
+      <x>1210</x>
+      <y>520</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
-    <panel_attributes>MGFlappyDragon</panel_attributes>
+    <panel_attributes>MGFlappyDragon
+group=group-1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1029</x>
-      <y>602</y>
-      <w>147</w>
-      <h>21</h>
+      <x>1470</x>
+      <y>520</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>RepairMinigame
-</panel_attributes>
+
+group=group-1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>861</x>
-      <y>371</y>
-      <w>672</w>
-      <h>140</h>
+      <x>1230</x>
+      <y>190</y>
+      <w>960</w>
+      <h>200</h>
     </coordinates>
     <panel_attributes>Phaser
 --
@@ -215,10 +221,10 @@ group=group-0</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>875</x>
-      <y>399</y>
-      <w>140</w>
-      <h>21</h>
+      <x>1250</x>
+      <y>230</y>
+      <w>200</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>Phaser.Event.EventEmitter
 group=group-0</panel_attributes>
@@ -227,10 +233,10 @@ group=group-0</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1036</x>
-      <y>399</y>
-      <w>98</w>
-      <h>84</h>
+      <x>1480</x>
+      <y>230</y>
+      <w>140</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>Phaser.Scene
 --
@@ -244,10 +250,10 @@ group=group-0</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1162</x>
-      <y>399</y>
-      <w>147</w>
-      <h>21</h>
+      <x>1660</x>
+      <y>230</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>Phaser.GameObjects.Container
 group=group-0</panel_attributes>
@@ -256,10 +262,10 @@ group=group-0</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1330</x>
-      <y>399</y>
-      <w>147</w>
-      <h>21</h>
+      <x>1900</x>
+      <y>230</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>Phaser.GameObjects.Image
 group=group-0</panel_attributes>
@@ -268,21 +274,22 @@ group=group-0</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1715</x>
-      <y>602</y>
-      <w>147</w>
-      <h>21</h>
+      <x>2450</x>
+      <y>520</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
-    <panel_attributes>GameOverScene</panel_attributes>
+    <panel_attributes>GameOverScene
+group=group-1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>721</y>
-      <w>147</w>
-      <h>91</h>
+      <y>690</y>
+      <w>210</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>StateMachine
 --
@@ -298,10 +305,10 @@ group=group-0</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>210</x>
-      <y>721</y>
-      <w>147</w>
-      <h>98</h>
+      <x>300</x>
+      <y>690</y>
+      <w>210</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Abstract&gt;&gt;
 State
@@ -319,10 +326,10 @@ State
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>175</x>
-      <y>567</y>
-      <w>147</w>
-      <h>63</h>
+      <x>250</x>
+      <y>470</y>
+      <w>210</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Singleton&gt;&gt;
 EventDispatch
@@ -334,10 +341,10 @@ EventDispatch
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>49</x>
-      <y>567</y>
-      <w>56</w>
-      <h>28</h>
+      <x>70</x>
+      <y>470</y>
+      <w>80</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enum&gt;&gt;
 Event</panel_attributes>
@@ -346,10 +353,10 @@ Event</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>553</x>
-      <y>1050</y>
-      <w>147</w>
-      <h>21</h>
+      <x>790</x>
+      <y>1160</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>PlayerActionMachine</panel_attributes>
     <additional_attributes/>
@@ -357,10 +364,10 @@ Event</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>532</x>
-      <y>1127</y>
-      <w>70</w>
-      <h>21</h>
+      <x>760</x>
+      <y>1270</y>
+      <w>100</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>MoveState</panel_attributes>
     <additional_attributes/>
@@ -368,10 +375,10 @@ Event</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>651</x>
-      <y>1127</y>
-      <w>70</w>
-      <h>35</h>
+      <x>930</x>
+      <y>1270</y>
+      <w>100</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>FireState
 --
@@ -381,10 +388,10 @@ Event</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>420</x>
-      <y>1127</y>
-      <w>70</w>
-      <h>21</h>
+      <x>600</x>
+      <y>1270</y>
+      <w>100</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>EndState</panel_attributes>
     <additional_attributes/>
@@ -392,10 +399,10 @@ Event</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>959</x>
-      <y>1036</y>
-      <w>147</w>
-      <h>49</h>
+      <x>1370</x>
+      <y>1140</y>
+      <w>210</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>GameloopMachine
 --
@@ -407,10 +414,10 @@ Event</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1596</x>
-      <y>1050</y>
-      <w>294</w>
-      <h>84</h>
+      <x>2280</x>
+      <y>1160</y>
+      <w>420</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>Orientation
 --
@@ -419,16 +426,16 @@ E : number
 S : number
 W : number
 --
-getAvailableDirection(direction : Orientation) : Array&lt;Orientation&gt;</panel_attributes>
++ getAvailableDirection(direction : Orientation) : Array&lt;Orientation&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1169</x>
-      <y>1141</y>
-      <w>70</w>
-      <h>21</h>
+      <x>1670</x>
+      <y>1290</y>
+      <w>100</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>Player1</panel_attributes>
     <additional_attributes/>
@@ -436,10 +443,10 @@ getAvailableDirection(direction : Orientation) : Array&lt;Orientation&gt;</panel
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1267</x>
-      <y>1127</y>
-      <w>70</w>
-      <h>21</h>
+      <x>1870</x>
+      <y>1290</y>
+      <w>100</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>Player2</panel_attributes>
     <additional_attributes/>
@@ -447,10 +454,10 @@ getAvailableDirection(direction : Orientation) : Array&lt;Orientation&gt;</panel
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>777</x>
-      <y>1127</y>
-      <w>70</w>
-      <h>21</h>
+      <x>1110</x>
+      <y>1270</y>
+      <w>100</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>HealState</panel_attributes>
     <additional_attributes/>
@@ -458,10 +465,10 @@ getAvailableDirection(direction : Orientation) : Array&lt;Orientation&gt;</panel
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>119</x>
-      <y>238</y>
-      <w>98</w>
-      <h>49</h>
+      <x>170</x>
+      <y>0</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>EmptyPackage
 --
@@ -471,22 +478,23 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>385</x>
-      <y>0</y>
-      <w>1351</w>
-      <h>308</h>
+      <x>690</x>
+      <y>440</y>
+      <w>2000</w>
+      <h>440</h>
     </coordinates>
     <panel_attributes>Scenes
---</panel_attributes>
+--
+group=group-1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2912</x>
-      <y>1106</y>
-      <w>329</w>
-      <h>273</h>
+      <x>4160</x>
+      <y>1240</y>
+      <w>470</w>
+      <h>390</h>
     </coordinates>
     <panel_attributes>ResourceManager
 --
@@ -520,10 +528,10 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2338</x>
-      <y>1400</y>
-      <w>252</w>
-      <h>119</h>
+      <x>3340</x>
+      <y>1660</y>
+      <w>360</w>
+      <h>170</h>
     </coordinates>
     <panel_attributes>Square
 --
@@ -542,10 +550,10 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2646</x>
-      <y>1673</y>
-      <w>210</w>
-      <h>182</h>
+      <x>3570</x>
+      <y>2490</y>
+      <w>300</w>
+      <h>260</h>
     </coordinates>
     <panel_attributes>SubmarineHUD
 --
@@ -571,10 +579,10 @@ setPosition() : void
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2429</x>
-      <y>1785</y>
-      <w>175</w>
-      <h>84</h>
+      <x>3470</x>
+      <y>2210</y>
+      <w>250</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>Vertex
 --
@@ -591,21 +599,45 @@ setPosition() : void
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2751</x>
-      <y>1470</y>
-      <w>147</w>
-      <h>21</h>
+      <x>3900</x>
+      <y>1760</y>
+      <w>280</w>
+      <h>400</h>
     </coordinates>
-    <panel_attributes>ZoneExitSystem</panel_attributes>
+    <panel_attributes>ZoneClosingSystem
+--
+- board : GameBoard
+- config : Object&lt;number | hex&gt;
+- currentTurn : number
+- isActive : boolean
+- hasWarned : boolean
+- closedRings : number
+- closedZones : Array&lt;&gt;
+- cclosedSprites : Array&lt;string&gt;
+--
++ setupEvent() : void
++ checkClosing() : void
++ showWarning() ; void
++ showActivationMessage() : void
++ closeNextRing() : void
++ closeBorder() : void
++ visualizeClosedZone(positions) : void
++ showClosingEffect() : void
++ getCurrentMapSize() : int
++ isInClosedZone(x : int, y : int)  : boolean
++ checkSubmarinesInClosedZone() : void
++ showDamageEffect(submarine) : void
++ relocateExitZones() : void
++ destroy() : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2996</x>
-      <y>1421</y>
-      <w>175</w>
-      <h>70</h>
+      <x>4400</x>
+      <y>1700</y>
+      <w>250</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>Resource
 --
@@ -620,10 +652,10 @@ setPosition() : void
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2653</x>
-      <y>1246</y>
-      <w>245</w>
-      <h>140</h>
+      <x>3790</x>
+      <y>1440</y>
+      <w>350</w>
+      <h>200</h>
     </coordinates>
     <panel_attributes>Dragon
 --
@@ -643,21 +675,33 @@ setPosition() : void
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2751</x>
-      <y>1505</y>
-      <w>147</w>
-      <h>21</h>
+      <x>3790</x>
+      <y>2220</y>
+      <w>510</w>
+      <h>190</h>
     </coordinates>
-    <panel_attributes>ExitZoneSystem</panel_attributes>
+    <panel_attributes>ExitZoneSystem
+--
+- board : GameBoard
+- zones : Object
+- zoneSprite : Object
+--
++ createExitZones() : zones
++ visualizeZone(zone : zone, playerColor : string) : void
++ checkSubmarineInZone(submarine : Submarine, zoneName : zone) : boolean
++ relocateZones(newBounds : ) : void
++ showEnterEffect(zoneName : string) : void
++ destroy() : void
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2429</x>
-      <y>1603</y>
-      <w>147</w>
-      <h>70</h>
+      <x>3470</x>
+      <y>1950</y>
+      <w>210</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>GraphicSquare
 --
@@ -672,10 +716,10 @@ setPosition() : void
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2429</x>
-      <y>1694</y>
-      <w>182</w>
-      <h>70</h>
+      <x>3470</x>
+      <y>2080</y>
+      <w>260</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>GraphicVertex
 --
@@ -691,10 +735,10 @@ vertex : Vertex
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2989</x>
-      <y>1519</y>
-      <w>189</w>
-      <h>91</h>
+      <x>4390</x>
+      <y>1840</y>
+      <w>270</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>RepairKit
 --
@@ -710,10 +754,10 @@ vertex : Vertex
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3017</x>
-      <y>1659</y>
-      <w>147</w>
-      <h>21</h>
+      <x>4310</x>
+      <y>2030</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>AmunitionExtra
 
@@ -723,10 +767,10 @@ vertex : Vertex
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3017</x>
-      <y>1708</y>
-      <w>147</w>
-      <h>21</h>
+      <x>4310</x>
+      <y>2100</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>CooldownReducer
 
@@ -737,10 +781,10 @@ vertex : Vertex
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3017</x>
-      <y>1757</y>
-      <w>147</w>
-      <h>21</h>
+      <x>4310</x>
+      <y>2170</y>
+      <w>210</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>MovementLimiter
 
@@ -751,15 +795,26 @@ vertex : Vertex
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1225</x>
-      <y>1050</y>
-      <w>70</w>
-      <h>42</h>
+      <x>1750</x>
+      <y>1160</y>
+      <w>100</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>PlayerState
 --
 - id : number
 - player : string</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1550</x>
+      <y>340</y>
+      <w>690</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;670.0;180.0</additional_attributes>
   </element>
 </diagram>

@@ -1,0 +1,1405 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <help_text/>
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1758</x>
+      <y>558</y>
+      <w>516</w>
+      <h>246</h>
+    </coordinates>
+    <panel_attributes>GameBoard
+--
+- scene : Phaser.Scene
+- active : bool
+- config : Object 
+- matrix : Object&lt;LogicBoard | Array&lt;GraphicSquare | GraphicVertex&gt;&gt;
+- submarines : Object&lt;Submarine&gt;
+- exitZoneSystem ：ExitZoneSystem
+- exitZones : Object
+- huds : Object&lt;SubmarineHUD&gt;
+- zoneClosing : ZoneClosingSystem
+- currentTurn : string
+- dragon : Dragon
+--
++ get player1() : Submarine
++ get player2() : Submarine
+--
++ setupEvent() : void
++ render() : void
++ graphicMatrixInitialize(boardWidth, boardHeight, logic) : Array&lt;GraphicSquare | GraphicVertex&gt;
++ initializeBackground(x, y, image) : void
++ createGraphicPoint(m, i, j, logic) : void
++ refresh() : void
++ swapHUDS() : void
++ endTurn() : void
++ update() : void
++ onRange() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1602</x>
+      <y>1242</y>
+      <w>258</w>
+      <h>432</h>
+    </coordinates>
+    <panel_attributes>Submarine
+--
+- name : string
+- id : number
+- container : GameBoard
+- board : LogicBoard
+- scene : Phaser.Scene
+- position : Position
+- orientation : Orientation
+- currentHP : number
+- maxHP : number
+- inventory : Object
+--
++ get X() : Position.x
++ get Y() : Position.y
++ get HP() : currentHP
++ get MaxHP() : maxHP
+--
++ updateSprite() : void
++ setNewPosition(newX : int, newY : int) : void 
++ canMoveTo(newX : int, newY : int) : bool
++ moveFront() : bool
++ moveRight() : bool
++ moveLeft() : bool
++ canShoot(distance : int) :bool
++ shoot(distance : int) : bool
++ isTarget(x : int, y : int, distance : int) : bool
++ isTargetDir(x : int, y : int, distance : int, direction : Orientation)
++ loseHealth(damage : int) : void 
++ isSunk() : bool
++ heal(amount : int) : int
++ applyLeakDamage() : void
++ canUseAerialAttack() : bool
++ useAerialAttack()  : bool
++ reduceCooldown(amount : int) : bool 
++ updateCooldown() : void
++ addAmmunition(amount : int) : void
++ addCooldownReducer(amount : int) : void
++ useCooldownReducer() : bool
++ addMovementLimiter(amount : int) : void 
++ useMovementLimiter(targetSubmarine) : bool
++ addRepairKit(amount : int) : void 
++ useRepairKit(healAmount : int) : bool
++ collectResource(resource : Resource) : void 
++ updateMovementRestrictions() : void
++ endTurn() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1230</x>
+      <y>594</y>
+      <w>192</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>GameScreen
+--
+- header : Phaser.GameObject.Rectangle
+- roundText : Phaser.GameObject.Text
+- roundTextAnimation : Phaser.GameObject.Text
+- playerText : Phaser.GameObject.Text
+- playerActionText : Phaser.GameObject.Text
+- gameloopMachine : GameloopMachine
+- playerActionMachine : PlayerActionMachine
+- texturas : Array&lt;string&gt;
+- submarineView : SubmarineView
+- tablero ：GameBoard
+--
++ createTextTween();</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2142</x>
+      <y>822</y>
+      <w>132</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>LogicBoard
+--
+- matrix : Array&lt;Square | Vertex&gt;
+--
++ initialize(x : int,y : int) : void
++ getVertexListForSquare() : void
++ createVertex(x : int,y : int) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>492</x>
+      <y>1008</y>
+      <w>432</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>Menu
+--
+- title : Phaser.GameObjects.Text
+- startBtn :Object&lt;Phaser.GameObjects.Rectangle | Phaser.GameObjects.Text | Phaser.Input.Keyboard.Key&gt;
+- flappyBtn : Object&lt;Phaser.GameObjects.Rectangle | Phaser.GameObjects.Text | Phaser.Input.Keyboard.Key&gt;
+- tutorialBtn : Object&lt;Phaser.GameObjects.Rectangle | Phaser.GameObjects.Text | Phaser.Input.Keyboard.Key&gt;
+- helpText : Phaser.GameObjects.Text</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>144</y>
+      <w>126</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>MinigameDialogScene
+--
+- data : Object
+- submarine : Submarine
+- dragonPosition : Position
+- callingScene : Phaser.Scene
+--
++ startMinigame() : void
++ decline() : void
+
+
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>612</x>
+      <y>36</y>
+      <w>162</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>FireStateWindow
+--
+- screenWidth : number
+- screenHeight : number
+- data : Object
+- popUp : Phaser.GameObjects.Container
+--
++ createPopUp(data : data) : void
++ parse(distance : number) : void
+
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>564</x>
+      <y>678</y>
+      <w>252</w>
+      <h>300</h>
+    </coordinates>
+    <panel_attributes>RepairMinigame
+--
+- data : data
+- submarine : Submarine
+- returnScene : Phaser.Scene
+- healAmount : number
+- gameOver : boolean
+- gameWon : boolean
+- timer : number
+- objectsEntered : number
+- maxObjects : number
+- leaks : Array&lt;&gt;
+- totalLeaks : number
+- leaksRepaired : number
+- escKey : Phaser.Input.Keyboard.Key
+- objectSpawnTimer : Phaser.Time.TimerEvent
+- timerEvent : Phaser.Time.TimerEvent
+--
++ createSubmarineInterior() : void
++ createLeaks() : void
++ createLeak(x: int, y : int) : void
++ createUI() : void
++ checkLeakClick(pointer : Phaser.Input.Pointer) : void
++ repairLeak(leak : leak) : void
++ createRepairEffect(x: int, y: int) : void
++ spawnFloatingObject() : void
++ createFloatingObject(x: int, y: int) : void
++ decrementTimer() : void
++ winGame() : void
++ loseGame(reason :) : void
++ showEndScreen(title : string, subtitle : string, color : hex) : void
++ exitMinigame(success : boolean) : void
+ 
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>714</x>
+      <y>1398</y>
+      <w>120</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>Phaser.Event.EventEmitter</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>264</x>
+      <y>594</y>
+      <w>72</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>Phaser.Scene
+--
++ init()
++ preload()
++ create()
++ update()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2652</x>
+      <y>684</y>
+      <w>126</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>
+
+Phaser.GameObjects.Container</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2652</x>
+      <y>606</y>
+      <w>126</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>
+
+Phaser.GameObjects.Image
+Phaser.GameObjects.Sprite</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>582</x>
+      <y>1128</y>
+      <w>228</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>GameOverScene
+--
+- data : Object
+- winner : string
+- reason : string
+- stats : Object
+--
++ createStatsPanel(w : int, h : int) : void
++ createButtons(w : int, h : int) : void
++ createCelebrationEffect(x : int, y : int, color : hex) : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>702</x>
+      <y>1470</y>
+      <w>126</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Singleton&gt;&gt;
+EventDispatch
+--
++ on(Event, callback)
++ emit(Event, params)
+group=group-2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>618</x>
+      <y>1470</y>
+      <w>48</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Event
+group=group-2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1308</x>
+      <y>1590</y>
+      <w>258</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>Orientation
+--
+N : number
+E : number
+S : number
+W : number
+--
++ getAvailableDirection(direction : Orientation) : Array&lt;Orientation&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1860</x>
+      <y>192</y>
+      <w>282</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>ResourceManager
+--
+- scene : Phaser.Scene
+- board : GameBoard
+- resources : Array&lt;Resouce&gt;
+- resourceSprite : Array&lt;&gt;
+- resouceColor : hex
+- resourceTypes : Object&lt;string&gt;
+--
++ createResource(type : resourceTypes, x : int, y : int) : Resource | null
++ createResourceSprite(resource : Resource, x : int, y : int) : void
++ createRandomResource(x : int,y : int) : Resource
++ distributeRandomResources(count : int) : void
++ distributeResourcesByType(distribution : Object) : void
++ getAvailablePositions() : Array&lt;Object&gt;
++ isPositionAvailable(x : int, y : int) : boolean
++ getResourceAt(x : int, y : int) : Resource | null
++ collectResourceAt(x : int, y : int, submarine : Submarine) : boolean
++ hideResourceSprite(resource : Resource) : void
++ createCollectionEffect(x : int, y : int) : void
++ checkAndCollectResource(submarine : Submarine) : void
++ getAvailableResources() : Array&lt;Resource&gt;
++ cleanupCollectedResources() : void
++ shuffleArray(array : Array&lt;&gt;) : void
++ clear() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1944</x>
+      <y>942</y>
+      <w>216</w>
+      <h>102</h>
+    </coordinates>
+    <panel_attributes>Square
+--
+- position : Position
+- nextPoint : Array&lt;Vertex&gt;
+- active : boolean
+- dragon : Dragon | null
+-- 
++ getNextPoint(matrix : Array&lt;Square | Vertex&gt;) : void
++ dragonEnter(dragon : Dragon) : this
++ dragonExit() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1896</x>
+      <y>1242</y>
+      <w>180</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>SubmarineHUD
+--
+- scene : Phaser.Scene
+- submarine : Submarine
+- x : number
+- y : number
+- playerName : string
+- screenWidth : number
+- screenHeight : number
+- container : Phaser.GameObjects.Container
+--
++ createHUD() : void
++ update() : void
++ show() : void
++ hide() : void
++ destroy() : void
++ setPosition() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1758</x>
+      <y>906</y>
+      <w>156</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>Vertex
+--
+- position : Position
+- available : boolean
+- submarine : Submarine | null
+--
++ enter(submarine : Submarine) : void
++ exit() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2304</x>
+      <y>138</y>
+      <w>168</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>ZoneClosingSystem
+--
+- board : GameBoard
+- config : Object&lt;number | hex&gt;
+- currentTurn : number
+- isActive : boolean
+- hasWarned : boolean
+- closedRings : number
+- closedZones : Array&lt;&gt;
+- cclosedSprites : Array&lt;string&gt;
+--
++ setupEvent() : void
++ checkClosing() : void
++ showWarning() ; void
++ showActivationMessage() : void
++ closeNextRing() : void
++ closeBorder() : void
++ visualizeClosedZone(positions) : void
++ showClosingEffect() : void
++ getCurrentMapSize() : int
++ isInClosedZone(x : int, y : int)  : boolean
++ checkSubmarinesInClosedZone() : void
++ showDamageEffect(submarine) : void
++ relocateExitZones() : void
++ destroy() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1932</x>
+      <y>108</y>
+      <w>168</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Resource
+--
++ collected : boolean
+--
++ applyEffect(Submarine) : void
++ isAtPosition(x : int, y : int) : boolean
++ isAvailable() : boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2538</x>
+      <y>258</y>
+      <w>306</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>ExitZoneSystem
+--
+- board : GameBoard
+- zones : Object
+- zoneSprite : Object
+--
++ createExitZones() : zones
++ visualizeZone(zone : zone, playerColor : string) : void
++ checkSubmarineInZone(submarine : Submarine, zoneName : zone) : boolean
++ relocateZones(newBounds : ) : void
++ showEnterEffect(zoneName : string) : void
++ destroy() : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1974</x>
+      <y>828</y>
+      <w>126</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>GraphicSquare
+--
+- cellSize : number
+- square : Square
+- texture : string
+--
++ render() : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1758</x>
+      <y>828</y>
+      <w>156</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>GraphicVertex
+--
+graphic : Phaser.GameObjects.Graphics
+cellSize : number
+vertex : Vertex
+--
++ render() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1710</x>
+      <y>0</y>
+      <w>162</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>RepairKit
+--
+- healAmount : number
+- autoUse : boolean
+-- 
++ use(submarine : Submarine) : void
++ heal(submarine : Submarine) : void
++ canUse(submarine : Submarine) : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2196</x>
+      <y>18</y>
+      <w>126</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>AmunitionExtra
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2034</x>
+      <y>18</y>
+      <w>90</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>CooldownReducer
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1902</x>
+      <y>18</y>
+      <w>102</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>MovementLimiter
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>564</x>
+      <y>258</y>
+      <w>252</w>
+      <h>342</h>
+    </coordinates>
+    <panel_attributes>MGFlappyDragon
+--
+- submarine : Submarine
+- returnScene : Phaser.Scene
+- puntos : number
+- gameOver : boolean
+- timer : number
+- resourceEarned : number 
+- pointsPerResource : number
+- nextResourceThreshold : pointsPerResource
+- fondo1 : Phaser.GameObjects.TileSprite
+- fondo2 : Phaser.GameObjects.TileSprite
+- fondo3 : Phaser.GameObjects.TileSprite
+- basuraLimpia : Phaser.Physics.Arcade.Group
+- basuraToxica ： Phaser.Physics.Arcade.Group
+- dragon : Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+- textoPuntos : Phaser.GameObjects.Text
+- textoRecursos : Phaser.GameObjects.Text
+- textoProximoRecurso : Phaser.GameObjects.Text
+- textoTimer : Phaser.GameObjects.Text
+
+--
++ createDragon() : void
++ createTrashTextures() : void
++ createUI() : void 
++ generarBasura() : void
++ recogerBasuraLimpia(dragon : dragon, basura)
++ ganarRecurso() : void
++ createCollectEffect(x: int, y : int, color : hex) : void
++ playFlapAnimation() : void
++ decrementarTiempo() : void
++ actualizarTextoTimer() : void
++ finalizarJuego() : void
++ showGameOverScreen(reason) : void
++ giveResourcesToSubmarine() : void
++ exitMinigame() : void
+
+
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2034</x>
+      <y>798</y>
+      <w>18</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1908</x>
+      <y>882</y>
+      <w>270</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>430.0;10.0;430.0;60.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2154</x>
+      <y>882</y>
+      <w>108</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>160.0;10.0;160.0;190.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1824</x>
+      <y>798</y>
+      <w>18</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1854</x>
+      <y>1266</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1764</x>
+      <y>72</y>
+      <w>180</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>280.0;100.0;10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1956</x>
+      <y>30</y>
+      <w>18</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2064</x>
+      <y>30</y>
+      <w>18</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2094</x>
+      <y>30</y>
+      <w>174</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;180.0;270.0;180.0;270.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1998</x>
+      <y>162</y>
+      <w>18</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>594</x>
+      <y>1434</y>
+      <w>270</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>Eventos
+--
+bg=orange
+group=group-2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>762</x>
+      <y>1410</y>
+      <w>18</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2652</x>
+      <y>576</y>
+      <w>126</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>Phaser.GameObjects.Graphics</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>174</x>
+      <y>744</y>
+      <w>108</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>UIStyle
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2064</x>
+      <y>882</y>
+      <w>18</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1830</x>
+      <y>882</y>
+      <w>18</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1926</x>
+      <y>1458</y>
+      <w>150</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>Position
+--
+- x : number
+- y : number
+--
++ get Position() : string
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1560</x>
+      <y>1620</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1854</x>
+      <y>1476</y>
+      <w>84</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1044</x>
+      <y>1242</y>
+      <w>522</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>SubmarineView
+--
+- scene : Phaser.Scene
+- active : boolean
+- imID : string
+- screenWidth : number
+- screenHeight : number
+- halfHeight : number
+- submarine1 : Object
+- submarine2 : Object
+--
++ initialize: void
++ createPlayerViews(x: int, y: int, width: int, height: int, playerLabel: string, mySub: Submarine, enemySub: Submarine): void
++ createSingleView(x: int, y: int, width: int, height: int, label: string, mySub: Submarine, enemySub: Submarine, viewDirection: Object) : void
++ renderViewContent(x: int, y: int, width: int, height: int, mySub: Submarine, enemySub: Submarine, viewDirection: Object) : void
++ drawSubmarine(centerX: int, centerY: int, distance: int): void
++ drawWater(centerX: int, centerY: int): void
++ getVisibleCells(mySub: Submarine, direction: string) : Object
++ isEnemyInCell(enemySub: Submarine, cell: Object) : boolean
++ getDirectionVector(direction: Object) : Object  
++ getLeftDirection(direction: string) : string
++ getRightDirection(direction: string) : string
+
+
+
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1560</x>
+      <y>1302</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1854</x>
+      <y>1290</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>1476</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>84</x>
+      <y>594</y>
+      <w>108</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>Game
+--
+- config : Object
+- game : Phaser.Game
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2472</x>
+      <y>1122</y>
+      <w>210</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Dragon
+--
+- board : GameBoard
+- visualComponentes : Array&lt;Phaser.GameObjects&gt;
+--
++ createDragonGeometry() : void
++ blink() : void
++ setupEvents() : void
++ randomSpawn() : void
++ updateVisualPosition() : void
++ playMoveEffect() : void
++ isNearSubmarine(submarine ： Submarine) : boolean
++ destroy(fromScene : Phaser.Scene) : void | boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1206</x>
+      <y>36</y>
+      <w>126</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>StateMachine
+--
+- currentState : State
+- context : Object
+- name : string
+--
+- setState(State)
+--
++ transition(State)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1218</x>
+      <y>150</y>
+      <w>126</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Abstract&gt;&gt;
+State
+--
+- stateMachine : StateMachine
+- name : string
+--
++ onStateEnter()
++ onStateExit()
+--
+- transition()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>960</x>
+      <y>276</y>
+      <w>126</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>
+
+PlayerActionMachine</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1140</x>
+      <y>324</y>
+      <w>60</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>MoveState</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1140</x>
+      <y>288</y>
+      <w>60</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>FireState
+--
++ shoot() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1140</x>
+      <y>354</y>
+      <w>60</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>EndState</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1536</x>
+      <y>306</y>
+      <w>126</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>GameloopMachine
+--
+- round : number
+--
++ updateRound() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1434</x>
+      <y>312</y>
+      <w>60</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>Player1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1434</x>
+      <y>348</y>
+      <w>60</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>Player2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1140</x>
+      <y>264</y>
+      <w>60</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>HealState</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1356</x>
+      <y>318</y>
+      <w>60</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>PlayerState
+--
+- id : number
+- player : string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1008</x>
+      <y>78</y>
+      <w>210</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>330.0;10.0;10.0;10.0;10.0;330.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1326</x>
+      <y>78</y>
+      <w>288</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;460.0;10.0;460.0;380.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1278</x>
+      <y>108</y>
+      <w>18</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>312</y>
+      <w>72</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>300</y>
+      <w>72</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>288</y>
+      <w>72</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>264</y>
+      <w>72</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1410</x>
+      <y>312</y>
+      <w>36</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1410</x>
+      <y>336</y>
+      <w>36</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;40.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1338</x>
+      <y>198</y>
+      <w>60</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0;80.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1434</x>
+      <y>258</y>
+      <w>60</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>CheckState</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1488</x>
+      <y>258</y>
+      <w>60</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>80.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1488</x>
+      <y>312</y>
+      <w>60</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>80.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1488</x>
+      <y>336</y>
+      <w>60</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1338</x>
+      <y>168</y>
+      <w>138</w>
+      <h>102</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;210.0;10.0;210.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1164</x>
+      <y>198</y>
+      <w>66</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>90.0;10.0;10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1194</x>
+      <y>228</y>
+      <w>42</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>50.0;10.0;50.0;130.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1194</x>
+      <y>228</y>
+      <w>78</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;110.0;180.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1194</x>
+      <y>228</y>
+      <w>114</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>170.0;10.0;170.0;230.0;10.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1908</x>
+      <y>954</y>
+      <w>48</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2202</x>
+      <y>798</y>
+      <w>18</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+</diagram>

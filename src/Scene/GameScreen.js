@@ -82,9 +82,11 @@ export class GameScreen extends Phaser.Scene{
         let blueSubmarine = this.tablero.submarines.blue;
 
         this.submarineView = new SubmarineView(this,0,0, this.tablero, this.tablero.submarines.red, this.tablero.submarines.blue);
-        this.submarineView.setDepth(0); // Pantalla al fondo
-        this.tablero.setDepth(1); // Tablero encima
+        this.submarineView.setDepth(1); // Pantalla al fondo
+        this.tablero.setDepth(0); // Tablero encima
 
+        // this.submarineView.setVisible(false);
+        console.log(this.submarineView.visible)
         //Actualizar textos de ronda y jugador
         EventDispatch.on(Event.UPDATE_ROUND,(round)=>{
             let text = `Round ${round}`
@@ -105,10 +107,9 @@ export class GameScreen extends Phaser.Scene{
         })
 
         //Toogle Submarine View - Board con M
-        this.toggleKey.on("down",()=>{
-            this.refresh();
-        }) 
-    
+        // this.toggleKey.on("down",()=>{
+        //     this.refresh();
+        // }) 
     }
 
      refresh() {

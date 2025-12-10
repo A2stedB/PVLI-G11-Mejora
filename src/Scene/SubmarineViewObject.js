@@ -74,7 +74,7 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         // const halfHeight = screenHeight / 2; // 300px por jugador
         
 
-          const enemySub = this.tablero.submarines[this.tablero.submarines.currentTurn];
+        const enemySub = this.tablero.submarines[this.tablero.submarines.currentTurn];
         const mySub = this.tablero.submarines.currentTurn === "red" ? this.tablero.submarines.blue : this.tablero.submarines.red;
         //JUGADOR 1 (Parte Superior)
         this.createPlayerViews(0, 50, this.screenWidth, this.screenHeight, this.submarine1, this.submarine2);
@@ -169,8 +169,8 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
             x + width / 2,
             y + height / 2, 
             this.imId
-
         );
+        this.add(waterBg);
        
         waterBg.setDisplaySize(width, height - 20);        
 

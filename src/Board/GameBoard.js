@@ -125,6 +125,10 @@ export default class GameBoard extends Phaser.GameObjects.Container {
                 })
             })
         }
+
+       
+            this.swapHUDS();
+        
     }
 
     graphicMatrixInitialize(boardWidth, boardHeight, logic) {
@@ -175,6 +179,9 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         else this.setVisible(false);
          
         this.render()
+    }
+    isActive(){
+        return this.active;
     }
 
      swapHUDS() {

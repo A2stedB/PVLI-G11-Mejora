@@ -3,18 +3,40 @@
 //Vincular las vistas con el tablero y el submarino de verdad, pasandole a esto como parametros
 
 export default class SubmarineView extends Phaser.GameObjects.Container{
-
-    constructor(scene,x,y){
+/**
+     * @param {Phaser.Scene} scene - La escena de Phaser
+     * @param {SubmarineComplete} redSubmarine  - El submarino rojo
+     * @param {SubmarineComplete} blueSubmarine - El submarino azul
+     * @param {Number} x - Posición X del HUD
+     * @param {Number} y - Posición Y del HUD
+     * @param {String} playerName - Nombre del jugador ("Jugador 1" o "Jugador 2")
+     * @param {LogicBoard} board - Tablero del juego
+     */
+    constructor(scene,x,y, board, redSubmarine, blueSubmarine){
         super(scene,x,y)
+
         this.scene = scene;
         this.active = true;
+
+        // imagen de fondo
         this.imId = "SubWindow";
+
+        // pantalla
         this.screenWidth = scene.cameras.main.width;   // 800
         this.screenHeight = scene.cameras.main.height - 100; // 600
         this.setSize(this.screenWidth,this.screenHeight);
-        
-        // PANTALLA DIVIDIDA: mitad superior para Jugador 1, mitad inferior para Jugador 2
+         // PANTALLA DIVIDIDA: mitad superior para Jugador 1, mitad inferior para Jugador 2
         this.halfHeight = this.screenHeight / 2; // 300px por jugador
+
+        // pasaer referencias
+        this.tablero = board;
+        this.redSubmarine = redSubmarine;
+        this.blueSubmarine = blueSubmarine;
+
+       
+    
+        
+        this.toggleKey = this.scene.input.keyboard.addKey('M');
         
         // Posiciones temporales de los submarinos (estas vendran del sistema de movimiento)
         // Los submarinos estan en vertices (coordenadas pares)
@@ -30,19 +52,18 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
             direction: 'south'
         };
         
-        this.initialize()
-        this.setInteractive();
-
-        this.on("pointerdown",()=>{
-            this.active = !this.active;
-            if(this.active){
-                this.setVisible(true)
-            }
-            else{
-                this.setVisible(false)
-            }
-        })
+        this.initialize();
+        
+       this.toggleKey.on("down",()=>{
+            this.refresh();
+        }) 
         scene.add.existing(this)
+
+        if (this.tablero.isActive()) {
+            this.setVisible(false);
+        }
+       
+
     }
 
     initialize(){
@@ -52,8 +73,13 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         // // PANTALLA DIVIDIDA: mitad superior para Jugador 1, mitad inferior para Jugador 2
         // const halfHeight = screenHeight / 2; // 300px por jugador
         
+
+          const enemySub = this.tablero.submarines[this.tablero.submarines.currentTurn];
+        const mySub = this.tablero.submarines.currentTurn === "red" ? this.tablero.submarines.blue : this.tablero.submarines.red;
         //JUGADOR 1 (Parte Superior)
-        this.createPlayerViews(0, 50, this.screenWidth, this.screenHeight, 'JAPON', this.submarine1, this.submarine2);
+        this.createPlayerViews(0, 50, this.screenWidth, this.screenHeight, this.submarine1, this.submarine2);
+        
+
         
         // Linea divisoria
         // const line = this.scene.add.graphics();
@@ -64,10 +90,20 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         //this.createPlayerViews(0, this.halfHeight, this.screenWidth, this.halfHeight, 'JUGADOR 2', this.submarine2, this.submarine1);
     }
 
+    refresh() {
+        this.active = !this.active;
+        if (this.active) {
+            this.setVisible(true);
+        }
+        else this.setVisible(false);
+         
+        // this.render()
+    }
+
      /**
      * Crea las 3 vistas para un jugador
      */
-    createPlayerViews(x, y, width, height, playerLabel, mySub, enemySub) {
+    createPlayerViews(x, y, width, height, mySub, enemySub) {
         const viewWidth = width / 3;
         
         // VISTA LATERAL IZQUIERDA
@@ -109,70 +145,97 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
             rightDirection
         );
         
-        // Etiqueta del jugador
-        this.scene.add.text(x + 10, y + 10, playerLabel, {
-            fontSize: '16px',
-            fill: '#ffffff',
-            backgroundColor: '#000000',
-            padding: { x: 5, y: 5 }
-        });
+
+        
     }
 
     /**
      * Crea una vista individual
      */
     createSingleView(x, y, width, height, label, mySub, enemySub, viewDirection) {
-        // Fondo azul oscuro (agua) - UNA SOLA PANTALLA
-        const waterBg = this.scene.add.rectangle(
+       
+        // fondo de la vista
+        // const waterBg = this.scene.add.rectangle(
+        //     x + width / 2,
+        //     y + height / 2,
+        //     width - 10,
+        //     height,
+        //     0x001a33,
+        //     1
+        // );
+
+      // cargar imagen de fondo
+        const waterBg = this.scene.add.image(
             x + width / 2,
-            y + height / 2,
-            width - 10,
-            height,
-            0x001a33,
-            1
+            y + height / 2, 
+            this.imId
+
         );
-        let bg = "SubWindow";
+       
+        waterBg.setDisplaySize(width, height - 20);        
+
+        // // Borde blanco de la vista
+        // const border = this.scene.add.graphics();
+        // border.lineStyle(2, 0xffffff, 1);
+        // border.strokeRect(x + 5, y + 10, width - 10, height - 20);
         
-        // Borde blanco de la vista
-        const border = this.scene.add.graphics();
-        border.lineStyle(2, 0xffffff, 1);
-        border.strokeRect(x + 5, y + 10, width - 10, height - 20);
+        // // Etiqueta de la vista
+        // this.scene.add.text(x + width / 2, y + 15, label, {
+        //     fontSize: '14px',
+        //     fill: '#ffffff',
+        //     backgroundColor: '#000000',
+        //     padding: { x: 5, y: 3 }
+        // }).setOrigin(0.5, 0);
+
+          const centerX = x + width / 2;
+        const centerY = y + height / 2;
         
-        // Etiqueta de la vista
-        this.scene.add.text(x + width / 2, y + 15, label, {
-            fontSize: '14px',
-            fill: '#ffffff',
-            backgroundColor: '#000000',
-            padding: { x: 5, y: 3 }
-        }).setOrigin(0.5, 0);
+
         
         // Renderizar el contenido - UNA SOLA IMAGEN
-        this.renderViewContent(x, y, width, height, mySub, enemySub, viewDirection);
+       // this.paintSubs(x, y, width, height, this.tablero.currentTurn, enemySub, viewDirection);
+
+
+    }
+
+    toggle()
+    {
+        this.active = !this.active;
+        if (this.active) {
+            this.setVisible(true);
+        }
+        else this.setVisible(false);
+         
     }
 
     /**
      * Renderiza el contenido de la vista - SOLO UNA IMAGEN del submarino si esta visible
      */
-    renderViewContent(x, y, width, height, mySub, enemySub, viewDirection) {
+    paintSubs(x, y, width, height, mySub, enemySub, viewDirection) {
         const centerX = x + width / 2;
         const centerY = y + height / 2;
+
+        let attacker = this.tablero.submarines[this.tablero.currentTurn];
+        // const target = this.tablero.currentTurn === "red" ? this.tablero.submarines.blue : this.tablero.submarines.red;
+ 
+        let target =null;
+       if ( this.tablero.currentTurn == "red") target = this.redSubmarine
+       else target = this.blueSubmarine;
         
-        // Calcular las coordenadas de las 2 casillas visibles
-        const visibleCells = this.getVisibleCells(mySub, viewDirection);
-        
-        // Buscar en cual casilla esta el enemigo (si esta)
+        if (this.onDistance(attacker, target)){this.drawSubmarine(centerX, centerY, 1)}
+      
         let enemyDistance = null;
         
-        visibleCells.forEach((cell, index) => {
-            if (this.isEnemyInCell(enemySub, cell)) {
-                enemyDistance = index + 1; // 1 = cerca, 2 = lejos
-            }
-        });
+        // visibleCells.forEach((cell, index) => {
+        //     if (this.isEnemyInCell(enemySub, cell)) {
+        //         enemyDistance = index + 1; // 1 = cerca, 2 = lejos
+        //     }
+        // });
         
         // Dibujar segun si hay enemigo o no
         if (enemyDistance !== null) {
             // HAY ENEMIGO - Dibujar submarino
-            this.drawSubmarine(centerX, centerY, enemyDistance);
+            this.drawSubmarine(centerX, centerY, 1);
         } else {
             // NO HAY ENEMIGO - Solo agua
             this.drawWater(centerX, centerY);
@@ -315,4 +378,29 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         };
         return right[direction];
     }
+
+    onDistance(attacker, target)
+    {
+        //Calcula si los submarinos estan en rango de verse - usar isTargetDIr para pintar la vista en especifica 
+        let isTarget1 = attacker.isTarget(target.position.x, target.position.y, 1)
+        let isTarget2 = attacker.isTarget(target.position.x, target.position.y, 2)
+        
+
+        // let isTargetDir1 = isTarget1 && 
+        //     attacker.isTargetDir(target.position.x, target.position.y, 1, direction) && 
+        //     attacker.canShoot(distance);
+            
+        // let isTargetDir2 = isTarget2 && 
+        //     attacker.isTargetDir(target.position.x, target.position.y, 2, direction) && 
+        //     attacker.canShoot(distance);
+
+        let debug = isTarget1 || isTarget2;
+        console.log("ON_DISTANCE", debug)
+
+        return isTarget1 || isTarget2;
+    }
+
+    
+
+
 }

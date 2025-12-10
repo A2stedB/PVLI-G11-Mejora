@@ -35,57 +35,94 @@ export class GameScreen extends Phaser.Scene{
         this.load.image("Square","Page/img/Profile/Lappland.jpeg")
         this.load.image("BG","assets/GameBoard_BG.jpg")
         this.load.image("Submarine","assets/submarino.png")
-        this.load.image("SubWindow","assets/SubWindow.png")
+        this.load.image("SubWindow", "assets/SubWindow.png");
     }
     
     //La dimension de la tabla tiene que ser un numero impar
     create(){
-        let header = this.add.rectangle(0, 0, 2000, 100, 0x00CC9966, 1);
-        let roundText = this.add.text(40,520,"Round 0",{fontFamily:"Arial",fontSize:20})
-        this.roundTextAnimation = this.add.text(-150,300,"Round 0",{fontFamily:"Arial",fontSize:25})
-        let playerText = this.add.text(0,10,"Turno de China",{fontFamily:"Arial",fontSize:20})
-        let playerActionText = this.add.text(40,570,"Fase actual:",{fontFamily:"Arial",fontSize:20})
-        
-        
+
+        this.createHeader();
+        this.createPanel();
+        let roundText = this.add.text(400,550,"Round 0",
+        {
+            fontFamily:"Outfit",
+            fontSize:30,
+            color: '#412e1fff'
+        })
+
+        this.roundTextAnimation = this.add.text(-150,300,"Round 0",{fontFamily:"Outfit",fontSize:25})
+
+        let playerText = this.add.text(5,5,"Turno de China",
+        {
+            fontFamily:"Outfit",
+            fontSize:40,
+            color: '#412e1fff'
+        })
+
+        let playerActionText = this.add.text(5,550,"Fase actual:", 
+        {
+            fontFamily:"Outfit",
+            fontSize:30,
+            color: '#412e1fff'
+        })
+
+        this.toggleKey = this.input.keyboard.addKey('M');
 
         this.createTextTween();
 
+        // Maquina de estados y objetos del juego
         this.gameloopMachine = new GameLoopMachine(this);
         this.playerActionMachine = new PlayerActionMachine(this,this.gameloopMachine);
+
         let texturas = ["Square","BG", "Submarine"];
-        this.submarineView = new SubmarineView(this,0, 100)
+
         this.tablero = new GameBoard(this);
 
-        // let china = this.tablero.player1(); // China
-        // let japan = this.tablero.player2(); // Japon
+        let redSubmarine = this.tablero.submarines.red;
+        let blueSubmarine = this.tablero.submarines.blue;
 
-        // this.pC = china;
-        // this.pJ = japan;
+        this.submarineView = new SubmarineView(this,0,0, this.tablero, this.tablero.submarines.red, this.tablero.submarines.blue);
+        this.submarineView.setDepth(0); // Pantalla al fondo
+        this.tablero.setDepth(1); // Tablero encima
 
-        if (this.tablero.onRange()) console.log("AAA");
-
+        //Actualizar textos de ronda y jugador
         EventDispatch.on(Event.UPDATE_ROUND,(round)=>{
             let text = `Round ${round}`
             roundText.setText(text)
             this.roundTextAnimation.setText(text);
-            this.chain.restart();
+            
+            this.chain.restart();            
         })
-
+        
         EventDispatch.on(Event.UPDATE_PLAYER_TEXT,(player)=>{
-            if (this.player == 'rojo') playerText.setText(`Turno de China`);
-            else playerText.setText(`Turno de Japon`);
+            if (this.tablero.currentTurn == "red") playerText.setText(`Turno de China`);
+            else if (this.tablero.currentTurn == "blue")playerText.setText(`Turno de Japon`);
         })
 
         EventDispatch.on(Event.UPDATE_PLAYER_ACTION_TEXT,(state)=>{
             playerActionText.setText(`Fase actual: ${state}`)
+            this.submarineView.onDistance(this.tablero.submarines.red, this.tablero.submarines.blue)
         })
+
+        //Toogle Submarine View - Board con M
+        this.toggleKey.on("down",()=>{
+            this.refresh();
+        }) 
+    
+    }
+
+     refresh() {
+        this.submarineView.active = !this.submarineView.active;
+        if (this.submarineView.active) {
+            this.submarineView.setVisible(true);
+        }
+        else this.submarineView.setVisible(false);
+        console.log("Toggled submarine view visibility");
+        
     }
 
     update(){
-
-        // pC = this.tablero.player1(); // China
-        // pJ = this.tablero.player2(); // Japon
-
+     
     }
 
     createTextTween(){
@@ -127,5 +164,39 @@ export class GameScreen extends Phaser.Scene{
 
     playChain(){
         this.chain.play();
+    }
+
+    createHeader()
+    {
+        this.background = this.add.rectangle(0, 0, 1600, 180, 0x00CC9966, 1);
+        this.background.setOrigin(0, 0);
+        // this.container.add(this.background);
+
+
+    }
+    createPanel()
+    {
+        this.panel = this.add.rectangle(0, 0, 525, 3000, 0x00CC9966, 1);
+        this.panel.setOrigin(0, 0);
+        // this.container.add(this.background);
+
+        // const border = this.scene.add.graphics();
+        // border.lineStyle(2, 0xffffff, 1);
+        // border.strokeRect(0, 0, 525, 3000);
+
+          let divisor = this.add.text(300,565," | ",
+        {
+            fontFamily:"Outfit",
+            fontSize:40,
+            color: '#412e1fff'
+        })
+           let divisor2 = this.add.text(300,530," | ",
+        {
+            fontFamily:"Outfit",
+            fontSize:40,
+            color: '#412e1fff'
+        })
+
+
     }
 }

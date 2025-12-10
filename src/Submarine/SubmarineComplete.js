@@ -38,6 +38,7 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
      */
     constructor(scene, x, y, board, container, name,id) {
         super(scene, 100, 100, "Submarine", 0);
+        
 
         // Nombre(color) del submarino
         this.name = name
@@ -147,17 +148,16 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
     }
 
     canMoveTo(newX, newY) {
-        // if(this.board.matrix[newX][newY].submarine != null){
-        //     console.log("No se puede mover a esa direccion!")
-        //     return false;   
-        // }
+        if(this.board.matrix[newX][newY].submarine != null){
+            console.log("No se puede mover a esa direccion!")
+            return false;   
+        }
 
-        return (
+        else return (
             newX >= 0 &&
             newY >= 0 &&
             newX <= this.board.matrix.length - 1 &&
-            newY <= this.board.matrix[0].length - 1 &&
-            this.board.matrix[newX][newY].submarine == null
+            newY <= this.board.matrix[0].length - 1
         );
     }
 

@@ -199,6 +199,7 @@ export class GameOverScene extends Phaser.Scene {
                 // } else {
                 //     console.error(" No se pudo reiniciar GameScreen");
                 // }
+                this.scene.stop(this);
                 this.scene.start("GameScreen")
                     },
             true,

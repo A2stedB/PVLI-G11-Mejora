@@ -260,7 +260,9 @@ export class CheckState extends State {
         console.log(" Lanzando pantalla de Game Over");
         
         try {
-            phaserScene.scene.pause('GameScreen');
+            //Desubscribir todos los eventos
+            EventDispatch.shutdown()
+            phaserScene.scene.stop(phaserScene.scene);
             
             phaserScene.scene.launch('GameOver', {
                 winner: winner,

@@ -103,7 +103,8 @@ export class GameScreen extends Phaser.Scene{
 
         EventDispatch.on(Event.UPDATE_PLAYER_ACTION_TEXT,(state)=>{
             playerActionText.setText(`Fase actual: ${state}`)
-            this.submarineView.onDistance(this.tablero.submarines.red, this.tablero.submarines.blue)
+           // this.submarineView.onDistance(this.tablero.submarines.red, this.tablero.submarines.blue)
+             this.submarineView.renderView();
         })
 
         //Toogle Submarine View - Board con M

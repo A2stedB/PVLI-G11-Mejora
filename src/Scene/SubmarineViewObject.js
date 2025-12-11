@@ -31,23 +31,15 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         this.redSubmarine = redSubmarine;
         this.blueSubmarine = blueSubmarine;
 
-         this.toggleKey = this.scene.input.keyboard.addKey('M');
+        this.toggleKey = this.scene.input.keyboard.addKey('M');
 
-        
-        // Posiciones temporales de los submarinos (estas vendran del sistema de movimiento)
-        // Los submarinos estan en vertices (coordenadas pares)
-        this.submarine1 = {
-            x: 2,  // posicion en el tablero logico
-            y: 2,
-            direction: 'north'  // north, south, east, west
-        };
-        
-        this.submarine2 = {
-            x: 2,  // posicion en el tablero logico
-            y: 6,  // 2 casillas al sur del submarino 1
-            direction: 'south'
-        };
-        
+         //calcular centros de las ventanas
+        const centerY = this.screenHeight / 2; // vertical es la misma
+        const centerXiz = this.screenWidth / 3;
+        const centerX = this.screenWidth / 2;
+        const centerXder = this.screenWidth  - (this.screenWidth / 3);
+
+     
         this.initialize();
 
         this.toggleKey.on("down",()=>{
@@ -58,6 +50,12 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         if (this.tablero.isActive()) {
             this.setVisible(false);
         }
+
+        
+        this.sub = this.scene.add.image(centerX, centerY, "Submarine" ).setDisplaySize(50,50);
+        this.add(this.sub);
+        this.sub.setAlpha(0)
+
        
 
     }
@@ -69,15 +67,14 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
 
         //Crear las ventanas del submarino con espacio para el resto de cosas
         this.createPlayerViews(0, 50, this.screenWidth, this.screenHeight);
-
-
+       
     }
 
 
     createPlayerViews(x, y, width, height) {
         const viewWidth = width / 3;
         
-       
+       //LATERAL IZQUIERDA
         this.createSingleView(
             x,
             y,
@@ -116,102 +113,62 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         waterBg.setDisplaySize(width, height - 20); 
     }
 
-    //Esto sirve de render
-    renderView(x, y, width, height) {
+    //Esto sirve de render -- si se ve un submarino, lo pinta ne la vista correspondiente
+    renderView() {
         
-        const centerX = x + width / 2;
-        const centerY = y + height / 2;
+        if (this.onDistance(this.tablero.submarines.red, this.tablero.submarines.blue)){
+           
+            this.sub.setAlpha(1)
+             if ( this.tablero.currentTurn === "blue"){
 
-        let attacker = this.tablero.submarines[this.tablero.currentTurn];
-    
-        let target =null;
-       if ( this.tablero.currentTurn == "red") target = this.redSubmarine
-       else target = this.blueSubmarine;
-        
-        if (this.onDistance(attacker, target)){this.drawSubmarine(centerX, centerY, 1)}
-      
-        let enemyDistance = null;
-        // Dibujar segun si hay enemigo o no
-        if (enemyDistance !== null) {
-            // HAY ENEMIGO - Dibujar submarino
-            this.drawSubmarine(centerX, centerY, 1);
-        } else {
-            // NO HAY ENEMIGO - Solo agua
-            this.drawWater(centerX, centerY);
+                this.sub.setTint(0xff0000);
+             }
+
+             else{
+
+                this.sub.setTint(0x0000ff);
+             }
+
+           
         }
+        else 
+        {
+           this.sub.setAlpha(0)
+        }
+
+        
     }
 
     /**
      * Dibuja el submarino enemigo con tamano segun distancia
      */
-    drawSubmarine(centerX, centerY, distance) {
+    drawSubmarine(centerX, centerY, distance) 
+    {
+        //  if ( this.tablero.currentTurn == "red"){
+        //     this.paintSubRed.setVisible(true)
+
+        //     this.paintSubRed.x = centerX
+        //     this.paintSubRed.y = centerY
+
+        //     this.paintSubBlue.setVisible(false);
+        // }
+        // else {
+        //     this.paintSubBlue.setVisible(true)
+
+        //     this.paintSubBlue.x = centerX
+        //     this.paintSubBlue.y = centerY
+
+        //     this.paintSubRed.setVisible(false)
+        // }
+    }
+
+    hideSubmarines(){
+        // subL.setVisible(false);
+        // subR.setVisible(false);
         
-    }
-
-    
-
-    /**
-     * Obtiene las coordenadas de las casillas visibles
-     */
-    getVisibleCells(mySub, direction) {
-        const cells = [];
-        const dirVector = this.getDirectionVector(direction);
-        
-        // Calcular las 2 casillas visibles
-        for (let depth = 1; depth <= 2; depth++) {
-            cells.push({
-                x: mySub.x + (dirVector.x * depth * 2),
-                y: mySub.y + (dirVector.y * depth * 2)
-            });
-        }
-        
-        return cells;
-    }
-
-    /**
-     * Verifica si el submarino enemigo esta en una casilla especifica
-     */
-    isEnemyInCell(enemySub, cell) {
-        return enemySub.x === cell.x && enemySub.y === cell.y;
-    }
-
-    /**
-     * Obtiene el vector de direccion
-     */
-    getDirectionVector(direction) {
-        const vectors = {
-            'north': { x: 0, y: -1 },
-            'south': { x: 0, y: 1 },
-            'east': { x: 1, y: 0 },
-            'west': { x: -1, y: 0 }
-        };
-        return vectors[direction] || { x: 0, y: 0 };
-    }
-
-    /**
-     * Obtiene la direccion izquierda
-     */
-    getLeftDirection(direction) {
-        const left = {
-            'north': 'west',
-            'west': 'south',
-            'south': 'east',
-            'east': 'north'
-        };
-        return left[direction];
-    }
-
-    /**
-     * Obtiene la direccion derecha
-     */
-    getRightDirection(direction) {
-        const right = {
-            'north': 'east',
-            'east': 'south',
-            'south': 'west',
-            'west': 'north'
-        };
-        return right[direction];
+        // subL.setAlpha(0);
+        // subR.setAlpha(0);
+        this.sub.setAlpha(0);
     }
 
     onDistance(attacker, target)
@@ -231,6 +188,7 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
 
         let debug = isTarget1 || isTarget2;
         console.log("ON_DISTANCE", debug)
+
 
         return isTarget1 || isTarget2;
     }

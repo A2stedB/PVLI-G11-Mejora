@@ -1,18 +1,12 @@
-    import GameBoard from "../Board/GameBoard.js";
+import GameBoard from "../Board/GameBoard.js";
 import { SubmarineComplete } from "../Submarine/SubmarineComplete.js";
 import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
-// import { InputManager } from "../Input/InputManager.js";
 import SubmarineView from "../Scene/SubmarineViewObject.js";
 import { GameLoopMachine } from "../State/GameloopMachine/GameLoopMachine.js";
 import { PlayerActionMachine } from "../State/PlayerActionMachine/PlayerActionMachine.js";
-// import { ResourceManager } from "../Resources/ResourceManager.js";
-// import { SubmarineInventory } from "../Resources/SubmarineInventory.js";
 
 // AZUL = JAPON | ROJO = CHINA !!!
-
-//TODO
-// - Arreglar tween
 
 export class GameScreen extends Phaser.Scene{
 
@@ -20,13 +14,18 @@ export class GameScreen extends Phaser.Scene{
 
     constructor(){
         super({key:"GameScreen"})
-
         this.tablero;
     }
     
     init(){
-        console.log("init");
-        this.tablero;
+        console.log(" GameScreen init");
+        
+        // LIMPIAR eventos anteriores para evitar duplicados
+        EventDispatch.off(Event.UPDATE_ROUND);
+        EventDispatch.off(Event.UPDATE_PLAYER_TEXT);
+        EventDispatch.off(Event.UPDATE_PLAYER_ACTION_TEXT);
+        
+        this.tablero = null;
     }
     
     preload(){
@@ -109,24 +108,7 @@ export class GameScreen extends Phaser.Scene{
 
         EventDispatch.on(Event.UPDATE_PLAYER_ACTION_TEXT,(state)=>{
             playerActionText.setText(`Fase actual: ${state}`)
-           // this.submarineView.onDistance(this.tablero.submarines.red, this.tablero.submarines.blue)
-             this.submarineView.renderView();
         })
-
-        //Toogle Submarine View - Board con M
-        // this.toggleKey.on("down",()=>{
-        //     this.refresh();
-        // }) 
-    }
-
-     refresh() {
-        this.submarineView.active = !this.submarineView.active;
-        if (this.submarineView.active) {
-            this.submarineView.setVisible(true);
-        }
-        else this.submarineView.setVisible(false);
-        console.log("Toggled submarine view visibility");
-        
     }
 
     update(){
@@ -134,14 +116,13 @@ export class GameScreen extends Phaser.Scene{
     }
 
     createTextTween(){
-
         this.leftAnimation = this.add.tween({
             targets:this.roundTextAnimation,
             duration:1500,
             props:{
                 x:{value:350}
             },
-            ease:"Quart.easeInOut", //Quart
+            ease:"Quart.easeInOut",
             persist:true,
         })
 
@@ -151,7 +132,7 @@ export class GameScreen extends Phaser.Scene{
             props:{
                 x:{value:1000}
             },
-            ease:"Quart.easeInOut", //Quart
+            ease:"Quart.easeInOut",
             delay:1000,
             persist:true
         })
@@ -167,40 +148,9 @@ export class GameScreen extends Phaser.Scene{
             ],
             persist:true,
         })
-
     }
 
     playChain(){
         this.chain.play();
-    }
-
-    createHeader()
-    {
-        this.background = this.add.rectangle(0, 0, 1600, 60, 0x00CC9966, 1);
-        this.background.setOrigin(0, 0);
-        // this.container.add(this.background);
-
-
-    }
-    createPanel()
-    {
-        this.panel = this.add.rectangle(0, 0, 1050, 100, 0x00CC9966, 1);
-        this.panel.setPosition(0,575);
-      
-
-          let divisor = this.add.text(300,565," | ",
-        {
-            fontFamily:"Outfit",
-            fontSize:40,
-            color: '#412e1fff'
-        })
-           let divisor2 = this.add.text(300,530," | ",
-        {
-            fontFamily:"Outfit",
-            fontSize:40,
-            color: '#412e1fff'
-        })
-
-
     }
 }

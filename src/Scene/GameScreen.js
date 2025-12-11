@@ -170,7 +170,7 @@ export class GameScreen extends Phaser.Scene{
 
     createHeader()
     {
-        this.background = this.add.rectangle(0, 0, 1600, 180, 0x00CC9966, 1);
+        this.background = this.add.rectangle(0, 0, 1600, 50, 0x00CC9966, 1);
         this.background.setOrigin(0, 0);
         // this.container.add(this.background);
 
@@ -178,8 +178,9 @@ export class GameScreen extends Phaser.Scene{
     }
     createPanel()
     {
-        this.panel = this.add.rectangle(0, 0, 525, 3000, 0x00CC9966, 1);
-        this.panel.setOrigin(0, 0);
+        this.panel = this.add.rectangle(0, 0, 1050, 100, 0x00CC9966, 1);
+        this.panel.setPosition(0,575);
+       
         // this.container.add(this.background);
 
         // const border = this.scene.add.graphics();

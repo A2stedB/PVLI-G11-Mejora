@@ -139,38 +139,6 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         
     }
 
-    /**
-     * Dibuja el submarino enemigo con tamano segun distancia
-     */
-    drawSubmarine(centerX, centerY, distance) 
-    {
-        //  if ( this.tablero.currentTurn == "red"){
-        //     this.paintSubRed.setVisible(true)
-
-        //     this.paintSubRed.x = centerX
-        //     this.paintSubRed.y = centerY
-
-        //     this.paintSubBlue.setVisible(false);
-        // }
-        // else {
-        //     this.paintSubBlue.setVisible(true)
-
-        //     this.paintSubBlue.x = centerX
-        //     this.paintSubBlue.y = centerY
-
-        //     this.paintSubRed.setVisible(false)
-        // }
-    }
-
-    hideSubmarines(){
-        // subL.setVisible(false);
-        // subR.setVisible(false);
-        
-        // subL.setAlpha(0);
-        // subR.setAlpha(0);
-        this.sub.setAlpha(0);
-    }
-
     onDistance(attacker, target)
     {
         //Calcula si los submarinos estan en rango de verse - usar isTargetDIr para pintar la vista en especifica 
@@ -193,8 +161,6 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         return isTarget1 || isTarget2;
     }
 
-    // pintar sub segun la vista
-    // reiniciar
     
     refresh() {
         this.active = !this.active;

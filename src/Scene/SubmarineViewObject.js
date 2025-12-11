@@ -52,11 +52,11 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         }
 
         
-        this.sub = this.scene.add.image(this.centerX, this.centerY, "sFront" ).setDisplaySize(120,120);
+        this.sub = this.scene.add.image(this.centerX, this.centerY, "sFront" ).setDisplaySize(250,250);
         this.add(this.sub);
         this.sub.setAlpha(0)
 
-       
+        this.renderView();
 
     }
 
@@ -66,7 +66,8 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         const mySub = this.tablero.submarines.currentTurn === "red" ? this.tablero.submarines.blue : this.tablero.submarines.red;
 
         //Crear las ventanas del submarino con espacio para el resto de cosas
-        this.createPlayerViews(0, 50, this.screenWidth, this.screenHeight);
+        this.createPlayerViews(0, 50, this.screenWidth, this.screenHeight)
+       
        
     }
 
@@ -118,50 +119,68 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
     renderView() 
     {
         this.sub.setAlpha(0)
+         this.sub.setPosition(this.centerX, this.centerY);
+       
         if ( this.tablero.currentTurn === "blue")
         {
-            if (this.onDistance1(this.tablero.submarines.blue, this.tablero.submarines.red, "front")){
+            this.sub.setTint(0xff0000);
+             let front = this.onDistance1(this.tablero.submarines.blue, this.tablero.submarines.red, "front")
+              let right = this.onDistance1(this.tablero.submarines.blue, this.tablero.submarines.red, "right")
+                let left = this.onDistance1(this.tablero.submarines.blue, this.tablero.submarines.red, "left")
+            if (front){
            
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerX, this.centerY);
            
             }
-            else if (this.onDistance1(this.tablero.submarines.blue, this.tablero.submarines.red, "right")){
+           
+            
+            if (right){
             
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerXder, this.centerY);
            
             }
+             
 
-            else if (this.onDistance1(this.tablero.submarines.blue, this.tablero.submarines.red, "left")){
+            if (left){
             
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerXiz, this.centerY);
             
             }
-            this.sub.setTint(0xff0000);
+
+            if (!front && !right && !left) this.sub.setAlpha(0);
+             
         }
         else
         {
-            if (this.onDistance1(this.tablero.submarines.red, this.tablero.submarines.blue, "front")){
+            let front = this.onDistance1(this.tablero.submarines.red, this.tablero.submarines.blue, "front")
+                let right = this.onDistance1(this.tablero.submarines.red, this.tablero.submarines.blue, "right")
+                let left = this.onDistance1(this.tablero.submarines.red, this.tablero.submarines.blue, "left")
+            if (front){
            
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerX, this.centerY);
            
             }
-            else if (this.onDistance1(this.tablero.submarines.red, this.tablero.submarines.blue, "right")){
+
+           
+            if (right){
             
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerXder, this.centerY);
            
             }
+          
 
-            else if (this.onDistance1(this.tablero.submarines.red, this.tablero.submarines.blue, "left")){
+            if (left){
             
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerXiz, this.centerY);
             
             }
+            if (!front && !right && !left) this.sub.setAlpha(0);
             this.sub.setTint(0x0000ff);
         }
         
@@ -174,12 +193,12 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         let isTarget1 = attacker.isTarget(target.position.x, target.position.y, 1)
 
         let isTargetDir1 = isTarget1 && attacker.isTargetDir(target.position.x, target.position.y, 1, direction)
-            
+        
         console.log("ON_DISTANCE_1", isTargetDir1, direction)
 
-        return isTarget1;
+        return isTargetDir1;
     }
-
+    
     onDistance2(attacker, target)
     {
         let isTarget2 = attacker.isTarget(target.position.x, target.position.y, 2)

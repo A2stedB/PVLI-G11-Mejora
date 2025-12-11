@@ -31,6 +31,8 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         this.redSubmarine = redSubmarine;
         this.blueSubmarine = blueSubmarine;
 
+         this.toggleKey = this.scene.input.keyboard.addKey('M');
+
         
         // Posiciones temporales de los submarinos (estas vendran del sistema de movimiento)
         // Los submarinos estan en vertices (coordenadas pares)
@@ -48,6 +50,16 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         
         this.initialize();
 
+        this.toggleKey.on("down",()=>{
+            this.refresh();
+        }) 
+        scene.add.existing(this)
+
+        if (this.tablero.isActive()) {
+            this.setVisible(false);
+        }
+       
+
     }
 
     initialize(){
@@ -57,6 +69,8 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
 
         //Crear las ventanas del submarino con espacio para el resto de cosas
         this.createPlayerViews(0, 50, this.screenWidth, this.screenHeight);
+
+
     }
 
 
@@ -223,6 +237,15 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
 
     // pintar sub segun la vista
     // reiniciar
-
+    
+    refresh() {
+        this.active = !this.active;
+        if (this.active) {
+            this.setVisible(true);
+        }
+        else this.setVisible(false);
+         
+        // this.render()
+    }
 
 }

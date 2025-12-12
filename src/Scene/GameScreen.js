@@ -260,7 +260,7 @@ export class GameScreen extends Phaser.Scene{
             }
         })
         this.input.keyboard.on('keydown-D', () =>{
-            if(this.dAdvanceEnabledAdvanceEnabled){
+            if(this.dAdvanceEnabled){
                 this.tutorialStep++;
                 console.log("Paso del tutorial num.: " + this.tutorialStep);
                 this.updateTutorial();
@@ -337,27 +337,43 @@ export class GameScreen extends Phaser.Scene{
             break;
         case 9:
             this.tablero.submarines.blue.moveRight();
-            this.playerActionMachine.transition(this.playerActionMachine._currentState);
+            this.playerActionMachine._currentState.transition();
+            this.playerActionMachine._currentState.transition();
+
+            this.dialog.setText(
+                "Parece que se ha apartado para que no puedas seguir golpeandolo. Pulsa [D] para desplazarte a la casilla en tu derecha.",
+                true
+            )
+            this.dAdvanceEnabled = true;
+            this.clickAdvanceEnabled = false;
             break;
         case 10:
             this.dialog.setText(
-                "Parece que se ha apartado para que no puedas seguir golpeandolo. Pulsa [D] para desplazarte a la casilla en tu derecha.",
+                "Ahora para atacarlo debes tener en cuenta que has girado y estás boca abajo en el mapa, haciendo que tu izquierda sea la derecha de tu mapa.",
                 true
             )
-            this.dAdvanceEnabled = true;
-            this.clickAdvanceEnabled = false;
+            this.dAdvanceEnabled = false;
+            this.clickAdvanceEnabled = true;
             break;
         case 11:
             this.dialog.setText(
-                "Parece que se ha apartado para que no puedas seguir golpeandolo. Pulsa [D] para desplazarte a la casilla en tu derecha.",
+                "Pulsa [A] para atacar a tu derecha, donde está el submarino enemigo. Y pulsa otra vez [A] para hacer un ataque a corto alcance.",
                 true
             )
-            this.dAdvanceEnabled = true;
+            this.aAdvanceEnabled = true;
             this.clickAdvanceEnabled = false;
             break;
+        case 12:
+            this.dialog.setText(
+                "Felicidades, superates el entrenamiento soldado. Ahora puedes participar en batallas por ti mismo!",
+                true
+            )
+            this.aAdvanceEnabled = false;
+            this.clickAdvanceEnabled = true;
+            break;
+        case 13:
+            break;
         }
-
-            //this.dialog.toggleWindow()
 
     }
 }

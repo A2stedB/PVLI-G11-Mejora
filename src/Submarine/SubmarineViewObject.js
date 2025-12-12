@@ -58,6 +58,9 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         this.add(this.sub);
         this.sub.setAlpha(0)
 
+        this.tablero.huds.red.container.setAlpha(0);
+        this.tablero.huds.blue.container.setAlpha(0);
+
         this.renderView();
 
     }
@@ -188,7 +191,7 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
 
     paintSub(front, right, left, front2, right2, left2)
     {
-        let rotar = 20;
+        let rotar = 10;
         if (front){
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerX, this.centerY); 
@@ -242,8 +245,6 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         let isTarget1 = attacker.isTarget(target.position.x, target.position.y, 1)
 
         let isTargetDir1 = isTarget1 && attacker.isTargetDir(target.position.x, target.position.y, 1, direction)
-        
-        console.log("ON_DISTANCE_1", isTargetDir1, direction)
 
         return isTargetDir1;
     }
@@ -253,8 +254,6 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
         let isTarget2 = attacker.isTarget(target.position.x, target.position.y, 2)
         
         let isTargetDir2 = isTarget2 &&  attacker.isTargetDir(target.position.x, target.position.y, 2, direction) 
-        console.log("ON_DISTANCE_2", isTargetDir2, direction)
-
 
         return isTargetDir2;
     }
@@ -263,10 +262,18 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
     
     refresh() {
         this.active = !this.active;
+
+        
         if (this.active) {
             this.setVisible(true);
+            this.tablero.huds.red.container.setAlpha(1);
+            this.tablero.huds.blue.container.setAlpha(1);
         }
-        else this.setVisible(false);
+        else {this.setVisible(false)
+            this.tablero.huds.red.container.setAlpha(0);
+            this.tablero.huds.blue.container.setAlpha(0);
+        };
+
          
         // this.render()
     }

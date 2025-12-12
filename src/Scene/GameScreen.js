@@ -10,9 +10,6 @@ import { StateMachine } from "../State/StateMachine.js";
 
 // AZUL = JAPON | ROJO = CHINA !!!
 
-//TODO
-// - Arreglar tween
-
 export class GameScreen extends Phaser.Scene{
 
     chain
@@ -31,8 +28,6 @@ export class GameScreen extends Phaser.Scene{
     }
     
     preload(){
-        console.log("preload");
-        
         this.load.image("Square","Page/img/Profile/Lappland.jpeg")
         this.load.image("BG","assets/GameBoard_BG.jpg")
         this.load.image("Submarine","assets/submarino.png")
@@ -42,6 +37,7 @@ export class GameScreen extends Phaser.Scene{
         this.load.image("sRight", "assets/Submarine/Submarine_right.png");
         this.load.image("sLeft", "assets/Submarine/Submarine_left.png");
         this.load.image("tutorialArrow", "assets/flecha.png")
+        this.load.image("Panel", "assets/Panel.png");
     }
     
     //La dimension de la tabla tiene que ser un numero impar
@@ -49,7 +45,7 @@ export class GameScreen extends Phaser.Scene{
 
         this.createHeader();
         this.createPanel();
-        let roundText = this.add.text(400,550,"Round 0",
+        let roundText = this.add.text(370,550,"Round 0",
         {
             fontFamily:"Outfit",
             fontSize:30,
@@ -153,7 +149,6 @@ export class GameScreen extends Phaser.Scene{
             this.submarineView.setVisible(true);
         }
         else this.submarineView.setVisible(false);
-        console.log("Toggled submarine view visibility");
         
     }
 
@@ -212,7 +207,7 @@ export class GameScreen extends Phaser.Scene{
     }
     createPanel()
     {
-        this.panel = this.add.rectangle(0, 0, 1050, 100, 0x00CC9966, 1);
+        this.panel = this.add.rectangle(0, 0, 1010, 100, 0x00CC9966, 1);
         this.panel.setPosition(0,575);
       
 

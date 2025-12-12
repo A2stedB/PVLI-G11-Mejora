@@ -1,5 +1,5 @@
 import GameBoard from "../Board/GameBoard.js";
-import { SubmarineComplete } from "../Submarine/SubmarineComplete.js";
+import { Orientation, SubmarineComplete } from "../Submarine/SubmarineComplete.js";
 import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
 import SubmarineView from "../Submarine/SubmarineViewObject.js";
@@ -111,35 +111,7 @@ export class GameScreen extends Phaser.Scene{
              this.submarineView.renderView();
         })
 
-        if(this.tutorialToggle){
-            this.clickAdvanceEnabled = true;
-            this.wAdvanceEnabled = false;
-            this.aAdvanceEnabled = false;
-            this.dAdvanceEnabled = false;
-
-            this.setUpControls();
-            this.tutorialStep = 0;
-            this.dialog = new DialogText(this, {
-                borderThickness: 4,
-                borderColor: 0xcb3234,
-                borderAlpha: 1,
-                windowAlpha: 0.6,
-                windowColor: 0xff6961,
-                windowHeight: 150,
-                padding: 32,
-                closeBtnColor: 'darkgoldenrod',
-                dialogSpeed: 4,
-                fontSize: 24,
-                fontFamily: "pixel",
-            });
-            this.updateTutorial();
-            this.tablero.submarines.red.setNewPosition(2, 6);
-            this.tablero.submarines.blue.setNewPosition(6, 6);
-            this.arrow = new Phaser.GameObjects.Image(this, 230, 345, "tutorialArrow")
-            this.add.existing(this.arrow);
-            this.arrow.scale = 0.05;
-            this.arrow.visible = false;
-        }
+        if(this.tutorialToggle) this.createTutorialStuff();
 
     }
 
@@ -263,6 +235,50 @@ export class GameScreen extends Phaser.Scene{
         })
     }
 
+    createTutorialStuff(){
+        // Variables del tutorial
+        this.tutorialStep = 0;
+        this.clickAdvanceEnabled = true;
+        this.wAdvanceEnabled = false;
+        this.aAdvanceEnabled = false;
+        this.dAdvanceEnabled = false;
+
+        // Elementos del submarino
+            // Cuadro de diálogo
+        this.dialog = new DialogText(this, {    
+            borderThickness: 4,
+            borderColor: 0x43BA99,
+            borderAlpha: 1,
+            windowAlpha: 0.6,
+            windowColor: 0xAAF2DE,
+            windowHeight: 150,
+            padding: 32,
+            closeBtnColor: 'darkgoldenrod',
+            dialogSpeed: 4,
+            fontSize: 24,
+            fontFamily: "pixel",
+        });
+            // Flecha
+        this.arrow = new Phaser.GameObjects.Image(this, 230, 345, "tutorialArrow")  
+        this.add.existing(this.arrow);
+        this.arrow.scale = 0.05;
+        this.arrow.visible = false;
+
+        this.setUpControls();
+        this.updateTutorial();
+
+        //Reposicionamiento de los submarinos
+        this.tablero.submarines.red.setNewPosition(2, 6);
+        this.tablero.submarines.blue.setNewPosition(6, 6);
+        this.tablero.submarines.red.orientation = Orientation.E;
+        this.tablero.submarines.red.angle = 0;
+        this.tablero.submarines.red.setVisible(true);
+        this.tablero.submarines.blue.setVisible(true);
+
+
+
+    }
+
     //Estados del tutorial
     updateTutorial(){
         switch(this.tutorialStep){
@@ -276,7 +292,7 @@ export class GameScreen extends Phaser.Scene{
             break;
         case 1:
             this.dialog.setText(
-                "En el mapa que tienes en frente de ti verás 2 submarinos.", 
+                "En el mapa que tienes en frente de ti verás 2 submarinos. Normalmente no tendrás un mapa con la posición de los enemigos y aliados disponible, pero para mayor claridad nosotros usaremos uno que si.", 
                 true
             )            
             break;
@@ -367,6 +383,7 @@ export class GameScreen extends Phaser.Scene{
             this.clickAdvanceEnabled = true;
             break;
         case 13:
+            this.scene.start('menu2');
             break;
         }
 

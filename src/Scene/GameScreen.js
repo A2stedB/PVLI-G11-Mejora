@@ -3,7 +3,7 @@ import { SubmarineComplete } from "../Submarine/SubmarineComplete.js";
 import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
 // import { InputManager } from "../Input/InputManager.js";
-import SubmarineView from "../Scene/SubmarineViewObject.js";
+import SubmarineView from "../Submarine/SubmarineViewObject.js";
 import { GameLoopMachine } from "../State/GameloopMachine/GameLoopMachine.js";
 import { PlayerActionMachine } from "../State/PlayerActionMachine/PlayerActionMachine.js";
 import DialogText from "../Tutorial/dialog_plugin.js";

@@ -3,7 +3,16 @@ import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
 
 /**
- * Orientaciones del submarino
+ * Orientaciones posibles del submarino
+ * 
+ * VALORES:
+ * - N (0°): Norte - Arriba
+ * - E (90°): Este - Derecha
+ * - S (180°): Sur - Abajo
+ * - W (270°): Oeste - Izquierda
+ * 
+ * @enum {Number}
+ * @readonly
  */
 export const Orientation = Object.freeze({
     N: 0,
@@ -11,6 +20,16 @@ export const Orientation = Object.freeze({
     S: 180,
     W: 270,
 
+    /**
+     * Obtiene las direcciones disponibles desde una orientación
+     * 
+     * @param {Number} direction - Orientación actual
+     * @returns {Array.<Number>} Array con dirección actual y ±90°
+     * 
+     * @example
+     * // Si miras al Norte (0°):
+     * getAvailableDirection(0) // [0, 90, 270] = N, E, W
+     */
     getAvailableDirection(direction) {
         return [direction, (direction + 90) % 360, (direction - 90) % 360];
     }
@@ -127,10 +146,23 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
         const cellSize = this.container.config.cellSize;
         this.setPosition(this.position.x * cellSize, this.position.y * cellSize);
         this.setAngle(this.orientation -90); 
-        // this.positionReferenceCheck();
     }
 
     //MOVIMIENTO
+
+    /**
+     * Recoloca el submarino en una nueva posición
+     * 
+     * USO:
+     * - Spawn inicial
+     * - Teletransporte (si se implementa)
+     * - Debug/testing
+     * 
+     * NOTA: No verifica colisiones ni validez de la posición
+     * 
+     * @param {Number} newX - Nueva coordenada X (lógica)
+     * @param {Number} newY - Nueva coordenada Y (lógica)
+     */
     setNewPosition(newX, newY) {
         const cellSize = this.container.config.cellSize;
         this.position.x = newX;
@@ -139,6 +171,17 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
         this.setAngle(this.orientation -90); 
     }
 
+    /**
+     * Verifica si el submarino puede moverse a una posición
+     * 
+     * CONDICIONES PARA MOVERSE:
+     * 1. La posición debe estar dentro del tablero
+     * 2. No debe haber otro submarino en esa posición
+     * 
+     * @param {Number} newX - Coordenada X destino
+     * @param {Number} newY - Coordenada Y destino
+     * @returns {Boolean} true si puede moverse
+     */
     canMoveTo(newX, newY) {
         // if(this.board.matrix[newX][newY].submarine != null){
         //     console.log("No se puede mover a esa direccion!")
@@ -154,6 +197,21 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
         );
     }
 
+    /**
+     * Mueve el submarino hacia adelante (en la dirección que mira)
+     * 
+     * COMPORTAMIENTO:
+     * - Avanza 2 casillas en la orientación actual
+     * - Sale del vértice actual
+     * - Entra en el nuevo vértice
+     * - Actualiza visual
+     * 
+     * RESTRICCIÓN:
+     * - Si movementRestricted = true y 'front' no está en allowedDirections,
+     *   el movimiento se bloquea
+     * 
+     * @returns {Boolean} true si se movió exitosamente, false si no pudo
+     */
     moveFront() {
         if (this.movementRestricted && !this.allowedDirections.includes('front')) {
             return false;
@@ -196,6 +254,19 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
         }
     }
 
+    /**
+     * Gira el submarino 90° a la derecha y avanza 2 casillas
+     * 
+     * COMPORTAMIENTO:
+     * - Gira: N→E, E→S, S→W, W→N
+     * - Avanza 2 casillas en la nueva dirección
+     * - Sale del vértice actual y entra en el nuevo
+     * 
+     * RESTRICCIÓN:
+     * - Si movementRestricted = true y 'right' no está permitido, se bloquea
+     * 
+     * @returns {Boolean} true si se movió, false si no pudo
+     */
     moveRight() {
         if (this.movementRestricted && !this.allowedDirections.includes('right')) {
             return false;
@@ -243,6 +314,18 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
         }
     }
 
+    /**
+     * Gira el submarino 90° a la izquierda y avanza 2 casillas
+     * 
+     * COMPORTAMIENTO:
+     * - Gira: N→W, W→S, S→E, E→N
+     * - Avanza 2 casillas en la nueva dirección
+     * 
+     * RESTRICCIÓN:
+     * - Si movementRestricted = true y 'left' no está permitido, se bloquea
+     * 
+     * @returns {Boolean} true si se movió, false si no pudo
+     */
     moveLeft() {
         if (this.movementRestricted && !this.allowedDirections.includes('left')) {
             return false;

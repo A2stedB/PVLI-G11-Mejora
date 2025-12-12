@@ -34,7 +34,9 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         this.GRAPHIC = scene.add.graphics({ lineStyle: { width: 1, color: 0x00ff00 } });
         this.add(this.GRAPHIC)
 
-        this.toggleKey = this.scene.input.keyboard.addKey('M');
+        this.toggleKey = this.scene.input.keyboard.addKey('N');
+
+        
 
         this.config = config;
 
@@ -63,6 +65,12 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         this.submarines.red.setAlpha(1);
         this.submarines.blue.setDepth(100);
         this.submarines.red.setDepth(100);
+
+        this.submarines.blue.setVisible(false);
+        this.submarines.red.setVisible(false);
+
+        this.submarines.blue.active = false;
+        this.submarines.red.active = false;
 
         this.initializeBackground(config.x, config.y, "BG");
 
@@ -93,9 +101,9 @@ export default class GameBoard extends Phaser.GameObjects.Container {
 
     setupEvents() {
 
-        // this.toggleKey.on("down",()=>{
-        //     this.refresh();
-        // }) 
+        this.toggleKey.on("down",()=>{
+            this.refresh();
+        }) 
 
         EventDispatch.on(Event.GET_GAMEBOARD,(callback)=>{
             callback.boardCallback(this);
@@ -172,11 +180,16 @@ export default class GameBoard extends Phaser.GameObjects.Container {
     }
 
     refresh() {
-        this.active = !this.active;
-        if (this.active) {
-            this.setVisible(true);
+        this.submarines.red.active = !this.submarines.red.active;
+        this.submarines.blue.active = !this.submarines.blue.active;
+        if (this.submarines.red.active) {
+            this.submarines.red.setVisible(true);
         }
-        else this.setVisible(false);
+        else this.submarines.red.setVisible(false);
+         if (this.submarines.blue.active) {
+            this.submarines.blue.setVisible(true);
+        }
+        else this.submarines.blue.setVisible(false);
          
         this.render()
     }

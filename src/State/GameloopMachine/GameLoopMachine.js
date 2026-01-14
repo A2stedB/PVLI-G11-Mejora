@@ -1,3 +1,14 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: 
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas: 
+// 
+// Commentarios: 
+// 
+// TODO: Añadir una lista de observadores y "avisarles" cuando este cambia de estado
+// 
+//------------------------------------------------------------------------
 import {StateMachine} from "../StateMachine.js";
 import { Player1 } from "./Player1.js";
 import { Player2 } from "./Player2.js";

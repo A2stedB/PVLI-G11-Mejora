@@ -1,3 +1,14 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: 
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas: 
+// 
+// Commentarios: 
+// 
+// TODO: Omitir esto, de momento no sirve para nada
+// 
+//------------------------------------------------------------------------
 /**
  * AirAttackState_Mejorado.js
  * 

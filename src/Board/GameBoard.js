@@ -1,3 +1,14 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: 
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas: 
+// 
+// Commentarios: 
+// 
+// TODO: Centralizar la matriz en una(deberia ser posible)
+// 
+//------------------------------------------------------------------------
 import LogicBoard from "../Board/LogicBoard.js"
 import { GraphicVertex } from "../Board/GraphicVertex.js";
 import { GraphicSquare } from "../Board/GraphicSquare.js";

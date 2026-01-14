@@ -1,3 +1,14 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: 
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas: 
+// 
+// Commentarios: 
+// 
+// TODO: Quitar metodos que no se utiliza
+// 
+//------------------------------------------------------------------------
 import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
 

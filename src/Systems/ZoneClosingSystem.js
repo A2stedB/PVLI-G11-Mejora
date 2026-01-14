@@ -1,3 +1,15 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: 
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas: 
+// 
+// Commentarios: 
+// 
+// TODO: Quitar esto, de momento no sirve para nada
+// 
+//------------------------------------------------------------------------
+
 /**
  * ZoneClosingSystem.js
  *

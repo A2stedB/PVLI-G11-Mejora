@@ -37,24 +37,26 @@ export class ResourceManager_Complete {
      * @param {Number} y - Posición Y en el tablero lógico
      * @returns {Resource} El recurso creado
      */
+
+    // Resource no esta cargado, por esto aparece cuadrado negro sin textura
     createResource(type, x, y) {
         let resource = null;
 
         switch(type) {
             case this.resourceTypes.COOLDOWN_REDUCER:
-                resource = new CooldownReducer(this.scene, x, y, "Resource");
+                resource = new CooldownReducer(this.scene, x, y);
                 break;
             
             case this.resourceTypes.MOVEMENT_LIMITER:
-                resource = new MovementLimiter(this.scene, x, y, "Resource");
+                resource = new MovementLimiter(this.scene, x, y);
                 break;
             
             case this.resourceTypes.REPAIR_KIT:
-                resource = new RepairKit(this.scene, x, y, "Resource", 30);
+                resource = new RepairKit(this.scene, x, y, 30);
                 break;
             
             case this.resourceTypes.AMMUNITION_EXTRA:
-                resource = new AmunitionExtra(this.scene, x, y, "Resource", 4);
+                resource = new AmunitionExtra(this.scene, x, y, 4);
                 break;
             
             default:

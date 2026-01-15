@@ -1,3 +1,16 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Modificado
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas: 
+// 
+// Commentarios: Los cuadrados negros era porque estaba cargando una textura que no existe
+// 
+// TODO: 
+// Dar una textura individual a cada uno de los recursos
+// Reorganizar esto
+//
+//------------------------------------------------------------------------
 import { Position } from "../Board/Position.js";
 import { SubmarineComplete } from "../Submarine/SubmarineComplete.js";
 
@@ -14,13 +27,13 @@ export class Resource extends Phaser.GameObjects.Sprite
      * @param {String} texture - Textura del recurso (todos visualmente iguales según GDD)
      * @param {String} type - Tipo de recurso ('cooldown_reducer', 'movement_limiter', 'repair_kit')
      */
-    constructor(scene, x, y, texture = "Resource", type) {
-        super(scene, x, y, texture);
+    constructor(scene, x, y, texture, type) {
+        super(scene, x, y, "Submarine");
         
         this.position = new Position(x, y);
         this.type = type;
         this.collected = false; // Indica si ya fue recogido
-        this.visible = true;
+        this.visible = false;
         
         scene.add.existing(this);
     }

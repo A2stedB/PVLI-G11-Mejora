@@ -44,9 +44,9 @@ export class SubmarineHUD {
 
         // Fondo hud
         this.background = this.scene.add.image(112, 80, "Panel");
-       this.background.setDisplaySize(330,370);
-      //this.background.setOrigin(0, 0);
-       this.background.setAngle(90);
+        this.background.setDisplaySize(330,370);
+        //this.background.setOrigin(0, 0);
+        this.background.setAngle(90);
         this.container.add(this.background);
 
    

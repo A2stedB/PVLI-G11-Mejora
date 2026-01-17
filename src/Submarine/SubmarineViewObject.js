@@ -176,7 +176,7 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
             let me = this.tablero.submarines.red;
             let enemy = this.tablero.submarines.blue;
 
-             this.checkRotations(me, enemy, front, right, left, front2, right2, left2);
+            this.checkRotations(me, enemy, front, right, left, front2, right2, left2);
             
         }
 
@@ -210,14 +210,14 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerXder, this.centerY);
                 this.sub.setDisplaySize(150,150);
-                this.sub.setAngle(rotar);
+                // this.sub.setAngle(rotar);
             }
 
             if (right2){
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerXder, this.centerY);
                 this.sub.setDisplaySize(50,50);
-                this.sub.setAngle(rotar);
+                // this.sub.setAngle(rotar);
             }
 
             if (left){
@@ -225,14 +225,14 @@ export default class SubmarineView extends Phaser.GameObjects.Container{
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerXiz, this.centerY);
                 this.sub.setDisplaySize(150,150);
-                this.sub.setAngle(0 - rotar);
+                // this.sub.setAngle(0 - rotar);
             }
 
             if (left2){
                 this.sub.setAlpha(1)
                 this.sub.setPosition(this.centerXiz, this.centerY);
                 this.sub.setDisplaySize(50,50);
-                this.sub.setAngle(0 - rotar);
+                // this.sub.setAngle(0 - rotar);
             }   
 
             if (!front && !right && !left && !front2 && !right2 && !left2) this.sub.setAlpha(0); 

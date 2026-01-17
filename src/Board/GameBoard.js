@@ -22,57 +22,8 @@ import { ExitZoneSystem } from "../Systems/ExitZoneSystem.js";
 import { ZoneClosingSystem } from "../Systems/ZoneClosingSystem.js";
 import config from "./config.json" with {type:"json"}
 
-/**
- * GameBoard - Sistema Central del Tablero de Juego
- * ==================================================
- * 
- * DESCRIPCIÓN:
- * Clase principal que coordina todos los elementos del juego en el tablero.
- * Gestiona la matriz lógica y gráfica, los submarinos, recursos, zonas de salida,
- * el dragón NPC y el sistema de cierre progresivo del mapa.
- * 
- * ESTRUCTURA DEL TABLERO:
- * - Matriz dual: lógica (datos) + gráfica (visual)
- * - Vértices (posiciones pares): donde se mueven los submarinos
- * - Casillas (posiciones impares): donde aparece el dragón
- * - Dimensiones configurables desde config.json
- * 
- * SISTEMAS GESTIONADOS:
- * 1. ResourceManager: Genera y gestiona recursos recogibles
- * 2. ExitZoneSystem: Crea y gestiona zonas de escape
- * 3. ZoneClosingSystem: Reduce el mapa progresivamente
- * 4. Dragon: NPC que se mueve aleatoriamente
- * 5. HUDs: Interfaces de cada jugador
- * 6. Turnos: Control del flujo de juego
- * 
- * EVENTOS ESCUCHADOS:
- * - GET_GAMEBOARD: Proporciona referencia al tablero
- * - END_TURN: Finaliza el turno actual
- * - UPDATE_MAP: Actualiza renderizado
- * 
- * @extends Phaser.GameObjects.Container
- */
 export default class GameBoard extends Phaser.GameObjects.Container {
-     /**
-     * Crea una nueva instancia del tablero de juego
-     * 
-     * PROCESO DE INICIALIZACIÓN:
-     * 1. Crea matriz lógica y gráfica
-     * 2. Instancia submarinos en posiciones iniciales
-     * 3. Genera zonas de salida
-     * 4. Crea dragón NPC
-     * 5. Distribuye recursos aleatorios
-     * 6. Crea HUDs para ambos jugadores
-     * 7. Inicializa sistema de cierre de zona
-     * 8. Configura eventos del sistema
-     * 
-     * @param {Phaser.Scene} scene - La escena de Phaser donde se renderiza
-     * @param {Array.<string>} texture - Array de texturas (actualmente no usado)
-     * 
-     * @example
-     * // En GameScreen.js:
-     * this.tablero = new GameBoard(this);
-     */
+
     constructor(scene,texture) {
          // Posicionar el container en coordenadas del config
         super(scene, config.x, config.y);
@@ -81,7 +32,7 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         this.scene = scene;
         this.active = true; // Controla si el tablero es visible
         
-        this.texture = texture
+        // this.texture = texture
 
           // Graphics para dibujar elementos (líneas, círculos, etc)
         this.GRAPHIC = scene.add.graphics({ lineStyle: { width: 1, color: 0x00ff00 } });
@@ -93,19 +44,6 @@ export default class GameBoard extends Phaser.GameObjects.Container {
          // Configuración del tablero (desde JSON)
         this.config = config;
 
-        
-        // MATRIZ LÓGICA Y GRÁFICA 
-        /**
-         * Matriz dual que contiene:
-         * - logic: LogicBoard con Vertices y Squares (datos)
-         * - graphic: Array con GraphicVertex y GraphicSquare (visual)
-         * 
-         * DIMENSIONES:
-         * - Ancho/Alto real = (config.width/height * 2) - 1
-         * - Ejemplo: config 5x5 → matriz 9x9
-         * - Vértices en posiciones pares (0,0), (2,2), etc.
-         * - Casillas en posiciones impares (1,1), (3,3), etc.
-         */
         this.matrix = {
             logic: new LogicBoard(config.boardWidth*2-1, config.boardHeight*2-1),
             graphic: null
@@ -198,16 +136,6 @@ export default class GameBoard extends Phaser.GameObjects.Container {
             )
         };
 
-         // SISTEMA DE CIERRE DE ZONA 
-        /**
-         * ZoneClosingSystem implementa el cierre progresivo del mapa:
-         * - Comienza en turno 15 (configurable)
-         * - Warning 3 turnos antes
-         * - Cierra un anillo exterior cada 3 turnos
-         * - Tamaño mínimo: 4x4
-         * - Daño por turno si estás en zona cerrada: 25 HP
-         */
-        this.zoneClosing = new ZoneClosingSystem(this);
 
         
         // CONTROL DE TURNOS 

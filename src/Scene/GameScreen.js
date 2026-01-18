@@ -8,7 +8,9 @@ import { GameLoopMachine } from "../State/GameloopMachine/GameLoopMachine.js";
 import { PlayerActionMachine } from "../State/PlayerActionMachine/PlayerActionMachine.js";
 // import { ResourceManager } from "../Resources/ResourceManager.js";
 // import { SubmarineInventory } from "../Resources/SubmarineInventory.js"
+
 import SubmarineView2 from "../Submarine/submarine-view.js";
+import InstructionUI from "../UI/ui-instruction.js";
 
 // AZUL = JAPON | ROJO = CHINA !!!
 
@@ -36,6 +38,9 @@ export class GameScreen extends Phaser.Scene{
         this.load.image("sLeft", "assets/Submarine/Submarine_left.png");
         this.load.image("Panel", "assets/Panel.png");
         this.load.image("Land", "assets/land.jpg");
+        this.load.audio("Fire","assets/sound/Fire sound 2.mp3")
+        this.load.audio("Move","assets/sound/Move sound.mp3")
+        this.load.image("Speed effect","assets/speedingEffect-2.png")
     }
     
     //La dimension de la tabla tiene que ser un numero impar
@@ -43,6 +48,8 @@ export class GameScreen extends Phaser.Scene{
 
         this.createHeader();
         this.createPanel();
+
+        this.instruction = new InstructionUI({scene:this,fontSize:20})
         let roundText = this.add.text(370,550,"Round 0",
         {
             fontFamily:"Outfit",
@@ -52,12 +59,12 @@ export class GameScreen extends Phaser.Scene{
 
         this.roundTextAnimation = this.add.text(-150,300,"Round 0",{fontFamily:"Outfit",fontSize:25})
 
-        let playerText = this.add.text(5,5,"Turno de China",
-        {
-            fontFamily:"Outfit",
-            fontSize:40,
-            color: '#412e1fff'
-        })
+        // let playerText = this.add.text(5,5,"Turno de China",
+        // {
+        //     fontFamily:"Outfit",
+        //     fontSize:40,
+        //     color: '#412e1fff'
+        // })
 
         let playerActionText = this.add.text(5,550,"Fase actual:", 
         {
@@ -93,21 +100,21 @@ export class GameScreen extends Phaser.Scene{
             let text = `Round ${round}`
             roundText.setText(text)
             this.roundTextAnimation.setText(text);
-             this.submarineView.renderView();
+            //  this.submarineView.renderView();
             this.chain.restart();            
         })
         
-        EventDispatch.on(Event.UPDATE_PLAYER_TEXT,(player)=>{
-            if (this.tablero.currentTurn == "red") playerText.setText(`Turno de China`);
-            else if (this.tablero.currentTurn == "blue")playerText.setText(`Turno de Japon`);
-             this.submarineView.renderView();
+        // EventDispatch.on(Event.UPDATE_PLAYER_TEXT,(player)=>{
+        //     if (this.tablero.currentTurn == "red") playerText.setText(`Turno de China`);
+        //     else if (this.tablero.currentTurn == "blue")playerText.setText(`Turno de Japon`);
+        //      this.submarineView.renderView();
           
-        })
+        // })
 
-        EventDispatch.on(Event.UPDATE_PLAYER_ACTION_TEXT,(state)=>{
-            playerActionText.setText(`Fase actual: ${state}`)
-             this.submarineView.renderView();
-        })
+        // EventDispatch.on(Event.UPDATE_PLAYER_ACTION_TEXT,(state)=>{
+        //     playerActionText.setText(`Fase actual: ${state}`)
+        //      this.submarineView.renderView();
+        // })
     }
 
      refresh() {
@@ -162,8 +169,8 @@ export class GameScreen extends Phaser.Scene{
 
     createHeader()
     {
-        this.background = this.add.rectangle(0, 0, 1600, 60, 0x00CC9966, 1);
-        this.background.setOrigin(0, 0);
+        // this.background = this.add.rectangle(0, 0, 1600, 60, 0x00CC9966, 1);
+        // this.background.setOrigin(0, 0);
     }
     createPanel()
     {

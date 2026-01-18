@@ -104,6 +104,7 @@ export class FireState extends State{
                 distanceCallback: (distance)=>{
                     let range = distance;
                     this.shoot(range,direction);
+                    
                 },
 
                 //El id del jugador actual
@@ -160,6 +161,8 @@ export class FireState extends State{
         board.huds[board.currentTurn].update();
         const targetColor = board.currentTurn === "red" ? "blue" : "red";
         board.huds[targetColor].update();
+
+        this.scene.sound.play("Fire")
 
         this.transition();
     }

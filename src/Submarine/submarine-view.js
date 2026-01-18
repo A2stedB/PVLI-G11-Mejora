@@ -1,4 +1,6 @@
 import { Orientation } from "./submarine-orientation-v2.js";
+import EventDispatch from "../Event/EventDispatch.js";
+import Event from "../Event/Event.js";
 
 export default class SubmarineView2 extends Phaser.GameObjects.Container{
 
@@ -14,6 +16,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         super(config.scene,0,0);
         
         this.config = config;
+
         this.scene = config.scene;
         this.screenWidth = this.scene.cameras.main.width;   // 800
         this.screenHeight = this.scene.cameras.main.height - 100; // 600
@@ -41,22 +44,43 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         this.centerX = this.screenWidth / 2;
         this.centerXder = this.screenWidth  - (this.screenWidth / 6) ;
 
+
+        //TODO: Cambiar esto
         this.createWindowLayer(this.screenWidth);
 
-        this.enemy = this.scene.add.image(this.centerX, this.centerY, "sFront" ).setDisplaySize(250,250).setVisible(true);
-        this.enemy.setDepth(1);
-        this.add(this.enemy);
+        // this.enemy = this.scene.add.image(this.centerX, this.centerY, "sFront" ).setDisplaySize(250,250).setVisible(true);
+        // this.enemy.setDepth(1);
+        // this.add(this.enemy);
 
         this.toggleKey.on("down",()=>{
             this.show = !this.show;
             this.setVisible(this.show);
         }) 
 
-        this.hideWater.on("down",()=>{
-            Object.entries(this.view).forEach(element => {
-                element[1].list.forEach(element => {
-                    if(element.name == "water"){
-                        element.setVisible(!element.visible);
+        // this.hideWater.on("down",()=>{
+        //     Object.entries(this.view).forEach(element => {
+        //         element[1].list.forEach(element => {
+        //             if(element.name == "water"){
+        //                 element.setVisible(!element.visible);
+        //             }
+        //         });
+        //     });
+        // })
+
+
+        EventDispatch.on(Event.MOVE,()=>{
+            Object.entries(this.view).forEach(view => {
+                view[1].list.forEach(element => {
+                    if(element.name === "move"){
+                        console.log(element);
+                        this.scene.add.tween({
+                            targets:element,
+                            duration:1500,
+                            props:{
+                                alpha:1
+                            },  
+                            yoyo:true
+                        })
                     }
                 });
             });
@@ -86,9 +110,16 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         land.setDepth(-4);
         land.setDisplaySize(width,height);
 
+        let speedingEffect = this.scene.add.image(x,y,"Speed effect")
+        speedingEffect.setName("move");
+        speedingEffect.setDepth(-2);
+        speedingEffect.setDisplaySize(width,height);
+        speedingEffect.setAlpha(0);
+
         //El orden afecta...
         window.add(land);
         window.add(water);
+        window.add(speedingEffect);
         window.add(submarineWindow);
 
         this.add(window);

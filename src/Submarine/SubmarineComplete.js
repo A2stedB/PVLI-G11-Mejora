@@ -55,6 +55,7 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
     constructor(scene, x, y, board, container, name,id) {
         super(scene, 100, 100, "Submarine", 0);
         
+        this.scene = scene;
         // Nombre(color) del submarino
         this.name = name
         this.id = id;
@@ -113,6 +114,7 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
                 this.container.resourceManager.checkAndCollectResource(this);
                 this.container.huds[this.container.currentTurn].update()
             }
+            this.scene.sound.play("Move");
         })
 
         //Devuelve el submarino si coincide el nombre o ID

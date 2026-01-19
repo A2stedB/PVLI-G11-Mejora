@@ -114,7 +114,9 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
                 this.container.resourceManager.checkAndCollectResource(this);
                 this.container.huds[this.container.currentTurn].update()
             }
-            this.scene.sound.play("Move");
+            if(direction != null){
+                this.scene.sound.play("Move");
+            }
         })
 
         //Devuelve el submarino si coincide el nombre o ID

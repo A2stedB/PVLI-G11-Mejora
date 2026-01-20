@@ -1,0 +1,15 @@
+{
+    "image":[
+        {"key":"Square","path":"Page/img/Profile/Lappland.jpeg"},
+        {"key":"BG","path":"assets/GameBoard_BG.jpg"},
+        {"key":"Submarine","path":"assets/submarino.png"},
+        {"key":"SubWindow","path":"assets/SubmarineViewTransparent.png"},
+        {"key":"sFront","path":"assets/Submarine/Submarine_front.png"},
+        {"key":"sBack","path":"assets/Submarine/Submarine_back.png"},
+        {"key":"sRight","path":"assets/Submarine/Submarine_right.png"},
+        {"key":"sLeft","path":"assets/Submarine/Submarine_left.png"},
+        {"key":"Panel","path":"assets/Panel.png"},
+        {"key":"Land","path":"assets/land.jpg"},
+        {"key":"Speed effect","path":"assets/speedingEffect-2.png"}
+    ]
+}

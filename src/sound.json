@@ -1,0 +1,6 @@
+{
+    "audio":[
+        {"key":"Fire","path":"assets/sound/Fire sound 2.mp3"},
+        {"key":"Move","path":"assets/sound/Move sound.mp3"}
+    ]
+}

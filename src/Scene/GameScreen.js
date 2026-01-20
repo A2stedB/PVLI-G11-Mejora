@@ -8,9 +8,10 @@ import { GameLoopMachine } from "../State/GameloopMachine/GameLoopMachine.js";
 import { PlayerActionMachine } from "../State/PlayerActionMachine/PlayerActionMachine.js";
 // import { ResourceManager } from "../Resources/ResourceManager.js";
 // import { SubmarineInventory } from "../Resources/SubmarineInventory.js"
-
 import SubmarineView2 from "../Submarine/submarine-view.js";
 import InstructionUI from "../UI/ui-instruction.js";
+import image_assets from "../image.json" with {type:"json"}
+import sound_assets from "../sound.json" with {type:"json"}
 
 // AZUL = JAPON | ROJO = CHINA !!!
 
@@ -28,19 +29,8 @@ export class GameScreen extends Phaser.Scene{
     }
     
     preload(){
-        this.load.image("Square","Page/img/Profile/Lappland.jpeg")
-        this.load.image("BG","assets/GameBoard_BG.jpg")
-        this.load.image("Submarine","assets/submarino.png")
-        this.load.image("SubWindow", "assets/SubmarineViewTransparent.png");
-        this.load.image("sFront", "assets/Submarine/Submarine_front.png");
-        this.load.image("sBack", "assets/Submarine/Submarine_back.png");
-        this.load.image("sRight", "assets/Submarine/Submarine_right.png");
-        this.load.image("sLeft", "assets/Submarine/Submarine_left.png");
-        this.load.image("Panel", "assets/Panel.png");
-        this.load.image("Land", "assets/land.jpg");
-        this.load.audio("Fire","assets/sound/Fire sound 2.mp3")
-        this.load.audio("Move","assets/sound/Move sound.mp3")
-        this.load.image("Speed effect","assets/speedingEffect-2.png")
+        this.loadImage();
+        this.loadAudio();
     }
     
     //La dimension de la tabla tiene que ser un numero impar
@@ -190,7 +180,17 @@ export class GameScreen extends Phaser.Scene{
             fontSize:40,
             color: '#412e1fff'
         })
+    }
 
+    loadImage(){
+        image_assets.image.forEach(element => {
+            this.load.image(element.key,element.path)
+        });
+    }
 
+    loadAudio(){
+        sound_assets.audio.forEach(element => {
+            this.load.audio(element.key,element.path)
+        });
     }
 }

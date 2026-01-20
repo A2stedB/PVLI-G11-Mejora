@@ -73,27 +73,22 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
 
         EventDispatch.on(Event.MOVE,()=>{
             Object.entries(this.view).forEach(view => {
-                view[1].list.forEach(element => {
-                    if(element.name === "move"){
-                        console.log(element);
-                        this.scene.add.tween({
-                            targets:element,
-                            duration:1500,
-                            props:{
-                                alpha:1
-                            },  
-                            yoyo:true
-                        })
-                    }
+                    this.scene.add.tween({
+                        targets:view[1].moveEffect,
+                        duration:1500,
+                        props:{
+                            alpha:1
+                        },  
+                        yoyo:true
+                    })
                 });
             });
-        })
 
         EventDispatch.on(Event.SHOOT,(c,direction)=>{
             let view;
-            if(direction == 0) view = this.view.center;
-            else if(direction == -90) view = this.view.left;
-            else if(direction == 90) view = this.view.right;
+            if(direction == 0) view = this.view.center.container;
+            else if(direction == -90) view = this.view.left.container;
+            else if(direction == 90) view = this.view.right.container;
             
             this.torpedo.setPosition(view.x,view.y+200).setVisible(true).setDepth(-2).setAlpha(1).setScale(1);
             this.scene.add.tween({
@@ -125,6 +120,11 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
     
     createSingleWindow(x,y,width,height){
 
+        let view = {}
+        view.container = null;
+        view.bg = null;
+        view.moveEffect = null;
+
         let window = this.scene.add.container(x,y);
 
         //0 0 respecto del "centro" del container...
@@ -149,12 +149,28 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         window.add(submarineWindow);
 
         this.add(window);
+        view.container = window;
+        view.bg = water;
+        view.moveEffect = speedingEffect;
+        console.log(view);
 
-        return window;
+        return view;
     }
 
     checkR(me,enemy){
         
+    }
+
+    switchToLand(view){
+        let viewWidth = this.screenWidth / 3;
+        let viewHeight = this.screenHeight - 20;
+        view.bg.setTexture("Land").setDisplaySize(viewWidth,viewHeight);
+    }
+
+    switchToWater(view){
+        let viewWidth = this.screenWidth / 3;
+        let viewHeight = this.screenHeight - 20;
+        view.bg.setTexture("BG").setDisplaySize(viewWidth,viewHeight);
     }
 
 }

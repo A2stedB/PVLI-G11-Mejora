@@ -5,6 +5,7 @@ import { FireStateWindow } from "./Scene/FireStateWindow.js";
 import { MinigameDialogScene } from "./Scene/MinigameDialogScene.js";
 import { RepairMinigame } from "./Minigames/RepairMinigame.js";
 import { GameOverScene } from "./Scene/GameOverScene.js"; 
+import MapView from "./Scene/scene-mapview.js";
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -35,7 +36,8 @@ let config = {
 		FireStateWindow,       
 		MinigameDialogScene,    
 		RepairMinigame,
-		GameOverScene          
+		GameOverScene,
+        MapView,      
 	],
 };
 

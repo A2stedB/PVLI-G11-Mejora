@@ -35,7 +35,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
     }
 
     initialize(){
-        this.setSize(this.screenWidth,this.screenHeight);
+        // this.setSize(this.screenWidth,this.screenHeight);
         this.setDepth(0);
         
         //calcular centros de las ventanas
@@ -152,7 +152,6 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         view.container = window;
         view.bg = water;
         view.moveEffect = speedingEffect;
-        console.log(view);
 
         return view;
     }

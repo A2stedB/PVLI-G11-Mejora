@@ -161,7 +161,7 @@ export class FireState extends State{
         board.huds[board.currentTurn].update();
         const targetColor = board.currentTurn === "red" ? "blue" : "red";
         board.huds[targetColor].update();
-
+        this.scene.sound.stopAll();
         this.scene.sound.play("Fire")
 
         this.transition();

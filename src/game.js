@@ -5,7 +5,7 @@ import { FireStateWindow } from "./Scene/FireStateWindow.js";
 import { MinigameDialogScene } from "./Scene/MinigameDialogScene.js";
 import { RepairMinigame } from "./Minigames/RepairMinigame.js";
 import { GameOverScene } from "./Scene/GameOverScene.js"; 
-import MapView from "./Scene/scene-mapview.js";
+import {MapView} from "./Scene/scene-mapview.js";
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -44,41 +44,42 @@ let config = {
 // Crear el juego
 const game = new Phaser.Game(config);
 
-// Escuchar la tecla P para el minijuego del dragón (testing)
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'p' || event.key === 'P') {
-        console.log("Tecla P presionada - Iniciando minijuego del dragón");
+//wtf is this LMAO
+// // Escuchar la tecla P para el minijuego del dragón (testing)
+// document.addEventListener('keydown', (event) => {
+//     if (event.key === 'p' || event.key === 'P') {
+//         console.log("Tecla P presionada - Iniciando minijuego del dragón");
         
-        const activeScenes = game.scene.getScenes(true);
+//         const activeScenes = game.scene.getScenes(true);
         
-        if (activeScenes.length > 0) {
-            const currentScene = activeScenes[0];
+//         if (activeScenes.length > 0) {
+//             const currentScene = activeScenes[0];
             
-            if (currentScene.scene.key !== 'FlappyDragon') {
-                currentScene.scene.start('FlappyDragon', {
-                    submarine: null,
-                    returnScene: currentScene.scene.key
-                });
-            }
-        }
-    }
+//             if (currentScene.scene.key !== 'FlappyDragon') {
+//                 currentScene.scene.start('FlappyDragon', {
+//                     submarine: null,
+//                     returnScene: currentScene.scene.key
+//                 });
+//             }
+//         }
+//     }
     
-    // Escuchar la tecla B para el minijuego de reparación (testing)
-    if (event.key === 'b' || event.key === 'B') {
-        console.log("Tecla B presionada - Iniciando minijuego de reparación");
+//     // Escuchar la tecla B para el minijuego de reparación (testing)
+//     if (event.key === 'b' || event.key === 'B') {
+//         console.log("Tecla B presionada - Iniciando minijuego de reparación");
         
-        const activeScenes = game.scene.getScenes(true);
+//         const activeScenes = game.scene.getScenes(true);
         
-        if (activeScenes.length > 0) {
-            const currentScene = activeScenes[0];
+//         if (activeScenes.length > 0) {
+//             const currentScene = activeScenes[0];
             
-            if (currentScene.scene.key !== 'RepairMinigame') {
-                currentScene.scene.start('RepairMinigame', {
-                    submarine: null,
-                    returnScene: currentScene.scene.key,
-                    healAmount: 30
-                });
-            }
-        }
-    }
-});
+//             if (currentScene.scene.key !== 'RepairMinigame') {
+//                 currentScene.scene.start('RepairMinigame', {
+//                     submarine: null,
+//                     returnScene: currentScene.scene.key,
+//                     healAmount: 30
+//                 });
+//             }
+//         }
+//     }
+// });

@@ -13,30 +13,39 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         this.screenWidth = this.scene.cameras.main.width;   // 800
         this.screenHeight = this.scene.cameras.main.height; // 600
         this.matrix = [];
+        this.toggleKey = this.scene.input.keyboard.addKey("P");
 
         this.scene.add.existing(this);
         this.initialize();
     }   
 
     initialize(){
+        let centerX = (this.screenWidth/2) 
+        let centerY = (this.screenHeight/2) 
+        let totalColumns = (2 * this.config.boardWidth) - 2;
+        let totalRows = (2 * this.config.boardHeight) - 2;
         
         //El origen top-left de donde se muestra el tablero
-        this.boardDisplayWidth = board_config.boardWidth * board_config.cellSize
-        this.boardDisplayHeight = board_config.boardHeight * board_config.cellSize
+        this.boardDisplayWidth = totalColumns * this.config.cellSize;
+        this.boardDisplayHeight = totalRows * this.config.cellSize;
 
-        this.setSize(this.boardDisplayWidth,this.boardDisplayHeight)
-        let x = (this.screenWidth/2) - (this.boardDisplayWidth/2)
-        let y = (this.screenHeight/2) - (this.boardDisplayHeight/2)
+        let x = centerX - (this.boardDisplayWidth/2)
+        let y = centerY - (this.boardDisplayHeight/2)
         this.setPosition(x,y);
-        console.log(this.x,this.y);
 
         // this.scene.add.circle(this.x,this.y,10,0xFFFFFF,1);
         // this.scene.add.circle(this.x+this.boardDisplayWidth,this.y,10,0xFFFFFF,1);
         // this.scene.add.circle(this.x,this.y + this.boardDisplayHeight,10,0xFFFFFF,1);
         // this.scene.add.circle(this.x+this.boardDisplayWidth,this.y+  this.boardDisplayHeight,10,0xFFFFFF,1);
+        
+        let background = this.scene.add.image(0,0,"BG").
+                         setDisplaySize(this.boardDisplayWidth,this.boardDisplayHeight).setOrigin(0,0)
+        
+        this.add(background)
+        this.moveDown(background)
 
-        let vertexRow = (2*board_config.boardWidth) - 1
-        let vertexColumn= (2*board_config.boardHeight) - 1
+        let vertexRow = (2 * this.config.boardWidth) - 1;
+        let vertexColumn = (2 * this.config.boardHeight) - 1;
 
         for(let i = 0; i < vertexRow; ++i){
             this.matrix[i] = [];
@@ -45,7 +54,14 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
             }
         }
 
-        console.log(this.matrix);
+        this.toggleKey.on("down",()=>{
+            let gameScreen = this.scene;
+            this.scene.scene.pause();
+            this.scene.scene.launch("MapView", { matrix: this , closeCallback:()=>{gameScreen.add.existing(this);}}); //La misma sin duplicar pero esta en esta escena de nuevo 
+        })
+        
+
+        this.setVisible(false);
     }
 
     createVertex(matrix,x,y){

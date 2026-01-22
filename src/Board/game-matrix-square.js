@@ -14,13 +14,14 @@ export class Square extends Phaser.GameObjects.Image{
         this.setDisplaySize(config.cellSize*2,config.cellSize*2);
 
         this.initialize();        
-        scene.add.existing(this);
+
+        this.setVisible(false);
     }
 
     initialize(){
         let x = (this.position.x * this.container.config.cellSize);
         let y = (this.position.y * this.container.config.cellSize);
         this.setPosition(x,y);
-        // console.warn(this.x,this.y);
+
     }
 }

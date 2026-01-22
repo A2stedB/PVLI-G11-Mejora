@@ -115,6 +115,7 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
                 this.container.huds[this.container.currentTurn].update()
             }
             if(direction != null){
+                this.scene.sound.stopAll();
                 this.scene.sound.play("Move");
             }
         })

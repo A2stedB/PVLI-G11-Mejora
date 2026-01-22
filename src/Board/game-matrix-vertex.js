@@ -36,6 +36,6 @@ export class Vertex extends Phaser.GameObjects.Graphics{
 
     enter(submarine){
         this.submarine = submarine;
-        console.log(this.submarine)
+        // console.log(this.submarine)
     }
 }

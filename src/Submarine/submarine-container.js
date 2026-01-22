@@ -10,6 +10,7 @@ export default class Submarine{
         this.view = new SubmarineView2({scene:config.scene});
         this.gameMatrix = config.gameMatrix;
         this.boardConfig = config.gameMatrix.config;
+        this.orientation = config.orientation;
 
         this.initialize();
         this.position;
@@ -19,14 +20,14 @@ export default class Submarine{
     initialize(){
         let boardWidth = this.boardConfig.boardWidth;
         let boardHeight = this.boardConfig.boardHeight;
-        let index = this.config.y * boardHeight + this.config.x;
+        let index = this.config.x * boardHeight + this.config.y;
 
-        this.position = this.gameMatrix.vertexList[index];
-        this.position.enter(this);
-        this.gameMatrix.updateView();
+        this.vertex = this.gameMatrix.vertexList[index];
+        this.vertex.enter(this);
+        this.gameMatrix.initSubmarine(this);
     }
 
     move(direction){
-
+        
     }
 }

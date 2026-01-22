@@ -1,6 +1,8 @@
 import board_config from "./config.json" with {type:"json"}
 import { Square } from "./game-matrix-square.js";
 import { Vertex } from "./game-matrix-vertex.js";
+import { SubmarineSprite } from "../Submarine/submarine-sprite-wrapper.js";
+
 
 
 export default class GameMatrix extends Phaser.GameObjects.Container{
@@ -16,9 +18,11 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         this.matrix = [];
         this.vertexList = [];
         this.squareList = [];
-        this.submarines = {}
+        this.submarines = [];
 
         this.toggleKey = this.scene.input.keyboard.addKey("P");
+        
+        this.showingSubmarine = false
 
         this.scene.add.existing(this);
         this.initialize();
@@ -60,15 +64,18 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         }
 
         this.getVertexForSquare();
-        console.log(this.squareList)
 
         this.toggleKey.on("down",()=>{
             let gameScreen = this.scene;
             this.scene.scene.pause();
             this.scene.scene.launch("MapView", { matrix: this , closeCallback:()=>{gameScreen.add.existing(this);}}); //La misma sin duplicar pero esta en esta escena de nuevo 
         })
+
+        // this.toggleSubmarineViewKey.on("down",()=>{
+        //     this.showingSubmarine = !this.showingSubmarine;
+        //     this.toggleSubmarineVisibility(this.showingSubmarine);
+        // })
         
-        console.log(this.vertexList)
         this.setVisible(false);
     }
 
@@ -100,6 +107,14 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
     }
 
     updateView(){
-        
+        this.submarines.forEach(submarines => {
+            submarines.updateView();
+        });
+    }
+
+    initSubmarine(submarine){
+        let newSubmarine = new SubmarineSprite({scene:this.scene,submarine:submarine}).setVisible(this.showingSubmarine)
+        this.submarines.push(newSubmarine);
+        this.add(newSubmarine);
     }
 }

@@ -14,6 +14,7 @@ import image_assets from "../image.json" with {type:"json"}
 import sound_assets from "../sound.json" with {type:"json"}
 import GameMatrix from "../Board/game-matrix.js";
 import Submarine from "../Submarine/submarine-container.js";
+import { Orientation } from "../Submarine/submarine-orientation-v2.js";
 
 // AZUL = JAPON | ROJO = CHINA !!!
 
@@ -171,8 +172,7 @@ export class GameScreen extends Phaser.Scene{
         // })
 
         this.matrix2 = new GameMatrix(this);
-        this.blueSub = new Submarine({x:1,y:3,scene:this,gameMatrix:this.matrix2})
-        console.log(this.blueSub.position);
+        this.blueSub = new Submarine({x:2,y:3,scene:this,gameMatrix:this.matrix2,orientation:Orientation.W})
     }
 
      refresh() {

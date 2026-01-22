@@ -9,8 +9,10 @@ export class MapView extends Phaser.Scene{
 
     create(config){
         let matrix = config.matrix;
-
+        this.matrix = config.matrix
+        
         let toggleKey = this.input.keyboard.addKey("P");
+        let toggleSubmarineViewKey = this.input.keyboard.addKey("O");
 
         toggleKey.on("down",()=>{
             matrix.setVisible(false);
@@ -20,6 +22,11 @@ export class MapView extends Phaser.Scene{
             this.scene.resume("GameScreen");
         })
 
+        toggleSubmarineViewKey.on("down",()=>{
+            matrix.showingSubmarine = !matrix.showingSubmarine;
+            this.toggleSubmarineVisibility(matrix.showingSubmarine,matrix);
+        })
+
         this.screenWidth = this.cameras.main.width;   // 800
         this.screenHeight = this.cameras.main.height; // 600
 
@@ -27,5 +34,11 @@ export class MapView extends Phaser.Scene{
         this.add.existing(matrix);// Para que se vea bien por delante con el fondo negro, sino solo estoy manipulando el que esta en la otra escena y se veria el fondo negro de aqui por delante;
         matrix.setVisible(true);   
         matrix.setAlpha(1);     
+    }
+
+    toggleSubmarineVisibility(bool){
+        this.matrix.submarines.forEach(submarine => {
+            submarine.setVisible(bool)
+        });
     }
 }

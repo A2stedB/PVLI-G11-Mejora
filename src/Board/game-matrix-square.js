@@ -9,7 +9,7 @@ export class Square extends Phaser.GameObjects.Image{
         this.container = config.container;
         this.container.add(this);
         this.position = new Position(x,y);
-        this.nearPoints = [];
+        this.vertices = [];
         this.dragon = null;
         this.setDisplaySize(config.cellSize*2,config.cellSize*2);
 
@@ -22,6 +22,16 @@ export class Square extends Phaser.GameObjects.Image{
         let x = (this.position.x * this.container.config.cellSize);
         let y = (this.position.y * this.container.config.cellSize);
         this.setPosition(x,y);
-
+        
     }
+
+    dragonEnter(dragon){
+        this.dragon = dragon;
+        return this;
+    }
+
+    dragonExit(){
+        this.dragon = null;
+    }
+
 }

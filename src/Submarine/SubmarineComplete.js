@@ -53,7 +53,7 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
      * @param {Phaser.GameObjects.Container} container - Contenedor del tablero
      */
     constructor(scene, x, y, board, container, name,id) {
-        super(scene, 100, 100, "Submarine", 0);
+        super(scene, 100, 100, "sTop", 0);
         
         this.scene = scene;
         // Nombre(color) del submarino
@@ -99,9 +99,10 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
         this.allowedDirections = ['front', 'left', 'right'];
 
         // Configuración visual
-        this.texture = "Submarine";
+        this.texture = "sTop";
         container.add(this);
-        this.setScale(0.2);
+        this.setScale(0.1);
+        // this.setDisplaySize(80,80);
         this.setOrigin(0.5, 0.5);
         this.updateSprite();
 

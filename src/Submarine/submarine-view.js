@@ -35,7 +35,6 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
     }
 
     initialize(){
-        // this.setSize(this.screenWidth,this.screenHeight);
         this.setDepth(0);
         
         //calcular centros de las ventanas
@@ -44,11 +43,9 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         this.centerX = this.screenWidth / 2;
         this.centerXder = this.screenWidth  - (this.screenWidth / 6) ;
 
-
-        //TODO: Cambiar esto
         this.createWindowLayer();
 
-        // this.enemy = this.scene.add.image(this.centerX, this.centerY, "sFront" ).setDisplaySize(250,250).setVisible(true);
+        // this.enemy = this.scene.add.image(this.centerX, this.centerY, "sTop" ).setDisplaySize(250,250).setVisible(true);
         // this.enemy.setDepth(1);
         // this.add(this.enemy);
 
@@ -71,7 +68,8 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         // })
 
 
-        EventDispatch.on(Event.MOVE,()=>{
+        EventDispatch.on(Event.MOVE,(sub,direction)=>{
+            if(direction == null) return;
             Object.entries(this.view).forEach(view => {
                     this.scene.add.tween({
                         targets:view[1].moveEffect,
@@ -90,12 +88,13 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
             else if(direction == -90) view = this.view.left.container;
             else if(direction == 90) view = this.view.right.container;
             
-            this.torpedo.setPosition(view.x,view.y+200).setVisible(true).setDepth(-2).setAlpha(1).setScale(1);
+            this.torpedo.setPosition(view.x+(direction/2),view.y+200).setVisible(true).setDepth(-2).setAlpha(1).setScale(1);
             this.scene.add.tween({
                 targets:this.torpedo,
                 duration:2000,
                 props:{
                     y:view.y,
+                    x:view.x,
                     scale:0,
                 },
                 yoyo:false,
@@ -104,7 +103,6 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
                 },
                 callBackScope:this
             })
-
         })
     }
 

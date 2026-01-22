@@ -12,7 +12,12 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         this.style = this.scene.add.graphics({ lineStyle: { width: 1, color: 0x00ff00 } });
         this.screenWidth = this.scene.cameras.main.width;   // 800
         this.screenHeight = this.scene.cameras.main.height; // 600
+
         this.matrix = [];
+        this.vertexList = [];
+        this.squareList = [];
+        this.submarines = {}
+
         this.toggleKey = this.scene.input.keyboard.addKey("P");
 
         this.scene.add.existing(this);
@@ -50,9 +55,12 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         for(let i = 0; i < vertexRow; ++i){
             this.matrix[i] = [];
             for(let j = 0; j < vertexColumn;++j){
-                this.createVertex(this.matrix,i,j);
+                this.matrixCreation(this.matrix,i,j);
             }
         }
+
+        this.getVertexForSquare();
+        console.log(this.squareList)
 
         this.toggleKey.on("down",()=>{
             let gameScreen = this.scene;
@@ -60,19 +68,38 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
             this.scene.scene.launch("MapView", { matrix: this , closeCallback:()=>{gameScreen.add.existing(this);}}); //La misma sin duplicar pero esta en esta escena de nuevo 
         })
         
-
+        console.log(this.vertexList)
         this.setVisible(false);
     }
 
-    createVertex(matrix,x,y){
+    matrixCreation(matrix,x,y){
         if(!(x%2) && !(y%2)){
             matrix[x][y] = new Vertex(this.scene,x,y,{style:this.style,container:this,cellSize:board_config.cellSize});
+            this.vertexList.push(matrix[x][y]);
+            
         }
         else if(x%2 && y%2){
             matrix[x][y] = new Square(this.scene,x,y,{container:this,cellSize:board_config.cellSize});
+            this.squareList.push(matrix[x][y])
         }
         else {
             matrix[x][y] = null;
         }
+    }
+
+    getVertexForSquare(){
+        this.squareList.forEach(square => {
+            let x = square.position.x; let y = square.position.y
+            let topLeft = this.matrix[x-1][y-1];
+            let topRight = this.matrix[x+1][y-1];
+            let bottomLeft = this.matrix[x-1][y+1];
+            let bottomRight = this.matrix[x+1][y+1];
+
+            square.vertices.push(topLeft,topRight,bottomLeft,bottomRight);
+        });
+    }
+
+    updateView(){
+        
     }
 }

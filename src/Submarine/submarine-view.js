@@ -1,4 +1,4 @@
-import { Orientation } from "./submarine-orientation-v2.js";
+import Orientation  from "./submarine-orientation-v2.js";
 import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
 
@@ -10,8 +10,6 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
     screenHeight
     matrix
 
-
-
     constructor(config){
         super(config.scene,0,0);
         
@@ -21,10 +19,12 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         this.screenWidth = this.scene.cameras.main.width;   // 800
         this.screenHeight = this.scene.cameras.main.height - 100; // 600
 
+        this.submarine = config.submarine;
         this.gameManager = config.gameManager;
         this.matrix = config.matrix;
         this.show = true;
         this.view = {};
+        this.viewArray = [];
         this.toggleKey = this.scene.input.keyboard.addKey('M');
         this.hideWater = this.scene.input.keyboard.addKey('H');
         this.enemy = null;
@@ -45,9 +45,10 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
 
         this.createWindowLayer();
 
-        // this.enemy = this.scene.add.image(this.centerX, this.centerY, "sTop" ).setDisplaySize(250,250).setVisible(true);
-        // this.enemy.setDepth(1);
-        // this.add(this.enemy);
+        this.enemy = this.scene.add.image(this.centerX, this.centerY, "sLeft" ).setDisplaySize(250,250).setVisible(true);
+        this.enemy.setDepth(1);
+        this.setVisible(false)
+        this.add(this.enemy);
 
         this.torpedo = this.scene.add.circle(this.centerX,this.centerY,20,0x000000,1).setVisible(false).setDepth(-2);
         this.add(this.torpedo)
@@ -114,6 +115,8 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         this.view.center = this.createSingleWindow(this.centerX,this.centerY,viewWidth,viewHeight);
 
         this.view.right = this.createSingleWindow(this.centerXder,this.centerY,viewWidth,viewHeight);
+
+        this.viewArray.push(this.view.left,this.view.center,this.view.right);
     }
     
     createSingleWindow(x,y,width,height){
@@ -154,8 +157,35 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         return view;
     }
 
-    checkR(me,enemy){
-        
+    updateView(){
+        let directions = Orientation.getAvailableDirection(this.submarine.orientation)
+        this.enemy.setVisible(false);
+        console.log(this.visible)
+
+        //izquierda centro derecha
+        for(let i = 0; i < 3;++i){
+            let direction = directions[i];
+            let window = this.viewArray[i];
+            let matrix = this.submarine.gameMatrix;
+
+            let x = this.submarine.position.x + direction.vector.x;
+            let y = this.submarine.position.y + direction.vector.y;
+
+            this.switchToWater(window)
+            if(!this.submarine.canMoveToWithoutEnemy(x,y)){
+                this.switchToLand(window);
+            }
+            else{
+                let boardHeight = this.submarine.boardConfig.boardHeight;
+                let index = y * boardHeight + x;
+                console.log(index)
+                let vertex = matrix.vertexList[index];
+                if(vertex.submarine != null){
+                    this.checkRotations(this.submarine,vertex.submarine)
+                    this.enemy.setVisible(true);
+                }
+            }
+        }
     }
 
     switchToLand(view){
@@ -170,4 +200,55 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         view.bg.setTexture("BG").setDisplaySize(viewWidth,viewHeight);
     }
 
+    changeSprite(rotation)
+    {
+        switch (rotation) {
+            case 'front':
+                this.enemy.setTexture("sFront");
+                break;
+            case 'back':
+                this.enemy.setTexture("sBack");
+                break;
+            case 'right':
+                this.enemy.setTexture("sRight");
+                break; 
+            case 'left':
+                this.enemy.setTexture("sLeft");
+                break;
+        }
+    }
+
+
+    // Lo que funciona funciona, y se deja tal cual...
+    checkRotations(me, enemy)
+    {
+        if (me.orientation === Orientation.N)
+        {
+            if (enemy.orientation == Orientation.N) this.changeSprite("back");
+            if (enemy.orientation == Orientation.S) this.changeSprite("front");
+            if (enemy.orientation == Orientation.E) this.changeSprite("right");
+            if (enemy.orientation == Orientation.W) this.changeSprite("left");
+        }
+        if (me.orientation === Orientation.S)
+        {
+            if (enemy.orientation == Orientation.N) this.changeSprite("front");
+            if (enemy.orientation == Orientation.S) this.changeSprite("back");
+            if (enemy.orientation == Orientation.E) this.changeSprite("left");
+            if (enemy.orientation == Orientation.W) this.changeSprite("right");
+        }
+        if (me.orientation === Orientation.E)
+        {
+            if (enemy.orientation == Orientation.N) this.changeSprite("left");
+            if (enemy.orientation == Orientation.S) this.changeSprite("right");
+            if (enemy.orientation == Orientation.E) this.changeSprite("back");
+            if (enemy.orientation == Orientation.W) this.changeSprite("front");
+        }
+        if (me.orientation === Orientation.W)
+        {
+            if (enemy.orientation == Orientation.N) this.changeSprite("right");
+            if (enemy.orientation == Orientation.S) this.changeSprite("left");
+            if (enemy.orientation == Orientation.E) this.changeSprite("front");
+            if (enemy.orientation == Orientation.W) this.changeSprite("back");
+        }
+    }
 }

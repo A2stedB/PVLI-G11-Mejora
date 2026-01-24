@@ -22,7 +22,7 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
 
         this.toggleKey = this.scene.input.keyboard.addKey("P");
         
-        this.showingSubmarine = false
+        this.showingSubmarine = true
 
         this.scene.add.existing(this);
         this.initialize();
@@ -59,7 +59,7 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         for(let i = 0; i < vertexRow; ++i){
             this.matrix[i] = [];
             for(let j = 0; j < vertexColumn;++j){
-                this.matrixCreation(this.matrix,i,j);
+                this.matrixCreation(this.matrix,j,i);
             }
         }
 
@@ -70,43 +70,38 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
             this.scene.scene.pause();
             this.scene.scene.launch("MapView", { matrix: this , closeCallback:()=>{gameScreen.add.existing(this);}}); //La misma sin duplicar pero esta en esta escena de nuevo 
         })
-
-        // this.toggleSubmarineViewKey.on("down",()=>{
-        //     this.showingSubmarine = !this.showingSubmarine;
-        //     this.toggleSubmarineVisibility(this.showingSubmarine);
-        // })
         
         this.setVisible(false);
     }
 
     matrixCreation(matrix,x,y){
         if(!(x%2) && !(y%2)){
-            matrix[x][y] = new Vertex(this.scene,x,y,{style:this.style,container:this,cellSize:board_config.cellSize});
-            this.vertexList.push(matrix[x][y]);
+            matrix[y][x] = new Vertex(this.scene,x,y,{style:this.style,container:this,cellSize:board_config.cellSize});
+            this.vertexList.push(matrix[y][x]);
             
         }
         else if(x%2 && y%2){
-            matrix[x][y] = new Square(this.scene,x,y,{container:this,cellSize:board_config.cellSize});
-            this.squareList.push(matrix[x][y])
+            matrix[y][x] = new Square(this.scene,x,y,{container:this,cellSize:board_config.cellSize});
+            this.squareList.push(matrix[y][x])
         }
         else {
-            matrix[x][y] = null;
+            matrix[y][x] = null;
         }
     }
 
     getVertexForSquare(){
         this.squareList.forEach(square => {
             let x = square.position.x; let y = square.position.y
-            let topLeft = this.matrix[x-1][y-1];
-            let topRight = this.matrix[x+1][y-1];
-            let bottomLeft = this.matrix[x-1][y+1];
-            let bottomRight = this.matrix[x+1][y+1];
+            let topLeft = this.matrix[y-1][x-1];
+            let topRight = this.matrix[y+1][x-1];
+            let bottomLeft = this.matrix[y-1][x+1];
+            let bottomRight = this.matrix[y+1][x+1];
 
             square.vertices.push(topLeft,topRight,bottomLeft,bottomRight);
         });
     }
 
-    updateView(){
+    updateMap(){
         this.submarines.forEach(submarines => {
             submarines.updateView();
         });

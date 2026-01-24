@@ -10,9 +10,12 @@ export class SubmarineSprite extends Phaser.GameObjects.Image{
     }
 
     updateView(){
-        let position = this.submarine.position;
+        console.log(this.x,this.y)
+        let position = this.submarine.vertex;
+        console.log(position);
         this.setPosition(position.x,position.y);
         this.setRotation(Phaser.Math.DegToRad(this.submarine.orientation.degree));
+        console.log(this.x,this.y)
     }
 
 }

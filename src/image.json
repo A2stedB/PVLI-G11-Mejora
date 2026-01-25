@@ -10,6 +10,8 @@
         {"key":"Panel","path":"assets/Panel.png"},
         {"key":"Land","path":"assets/land.jpg"},
         {"key":"Speed effect","path":"assets/speedingEffect-2.png"},
-        {"key":"sTop","path":"assets/Submarine/SubTop.png"}
+        {"key":"sTop","path":"assets/Submarine/SubTop.png"},
+        {"key":"Submarine HUD","path":"assets/Submarine/Submarine-HUD.png"},
+        {"key":"Submarine HUD top","path":"assets/Submarine/Submarine-HUD-top.png"}
     ]
 }

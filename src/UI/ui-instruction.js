@@ -8,7 +8,7 @@ export default class InstructionUI extends Phaser.GameObjects.Container{
         this.screenWidth = this.scene.cameras.main.width;   // 800
         this.height = 45;
         this.fontSize = config.fontSize;
-        this.background = this.scene.add.rectangle(this.screenWidth/2, 30, this.screenWidth, 60, 0x00CC9966, 1)
+        this.background = this.scene.add.rectangle(this.screenWidth/2, 30, this.screenWidth, 100, 0x00CC9966, 1)
 
         this.availableAction = ["mover","disparar"];
 

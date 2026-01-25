@@ -3,6 +3,7 @@ import Orientation from "./submarine-orientation-v2.js";
 import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
 import { Vector } from "../vector.js";
+import { SubmarineHUDv2 } from "./submarine-HUD-v2.js";
 
 export default class Submarine{
 
@@ -10,7 +11,9 @@ export default class Submarine{
         this.scene = config.scene;
 
         this.config = config;
+        this.data = config.data
         this.view = new SubmarineView2({scene:config.scene,submarine:this});
+        this.hud = new SubmarineHUDv2({scene:config.scene,submarine:this});
         this.gameMatrix = config.gameMatrix;
         this.boardConfig = config.gameMatrix.config;
         this.orientation = config.orientation;
@@ -47,10 +50,11 @@ export default class Submarine{
         let boardWidth = this.boardConfig.boardWidth;
         let index = nextY * boardWidth + nextX;
 
+        this.orientation = direction;
         if(this.canMoveTo(nextX,nextY,index)){
             this.position.x = nextX;
             this.position.y = nextY;
-            this.orientation = direction;
+            // this.orientation = direction;
 
             this.exitCurrent();
 
@@ -82,5 +86,9 @@ export default class Submarine{
 
     exitCurrent(){
         this.vertex.submarine = null
+    }
+
+    updateView(){
+        this.view.updateView();
     }
 }

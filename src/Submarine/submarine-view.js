@@ -1,6 +1,7 @@
 import Orientation  from "./submarine-orientation-v2.js";
 import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
+import UIdata from "../UI-data.json" with {type:"json"}
 
 export default class SubmarineView2 extends Phaser.GameObjects.Container{
 
@@ -17,7 +18,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
 
         this.scene = config.scene;
         this.screenWidth = this.scene.cameras.main.width;   // 800
-        this.screenHeight = this.scene.cameras.main.height - 100; // 600
+        this.screenHeight = this.scene.cameras.main.height; // 600
 
         this.submarine = config.submarine;
         this.gameManager = config.gameManager;
@@ -37,6 +38,8 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
     initialize(){
         this.setDepth(0);
         
+        this.setPosition(0,UIdata.top)
+
         //calcular centros de las ventanas
         this.centerY = this.screenHeight / 2 + 50; // vertical es la misma
         this.centerXiz = this.screenWidth / 6;
@@ -109,7 +112,8 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
 
     createWindowLayer(){
         let viewWidth = this.screenWidth / 3;
-        let viewHeight = this.screenHeight - 20;
+        let viewHeight = this.screenHeight - UIdata.top - UIdata.HUD.height;
+        this.centerY = viewHeight / 2;
         this.view.left = this.createSingleWindow(this.centerXiz,this.centerY,viewWidth,viewHeight);
         
         this.view.center = this.createSingleWindow(this.centerX,this.centerY,viewWidth,viewHeight);
@@ -127,11 +131,13 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         view.moveEffect = null;
 
         let window = this.scene.add.container(x,y);
+        console.log(window.x,window.y)
 
         //0 0 respecto del "centro" del container...
         let submarineWindow = this.scene.add.image(0,0,"SubWindow");
         submarineWindow.setDepth(-1);
         submarineWindow.setDisplaySize(width,height);
+        // this.scene.add.existing(submarineWindow)
 
         let water = this.scene.add.image(0,0,"BG")
         water.setDepth(-3);
@@ -160,7 +166,6 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
     updateView(){
         let directions = Orientation.getAvailableDirection(this.submarine.orientation)
         this.enemy.setVisible(false);
-        console.log(this.visible)
 
         //izquierda centro derecha
         for(let i = 0; i < 3;++i){
@@ -176,12 +181,14 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
                 this.switchToLand(window);
             }
             else{
-                let boardHeight = this.submarine.boardConfig.boardHeight;
-                let index = y * boardHeight + x;
-                console.log(index)
+                let boardWidth = this.submarine.boardConfig.boardWidth;
+                let index = y * boardWidth + x;
                 let vertex = matrix.vertexList[index];
                 if(vertex.submarine != null){
-                    this.checkRotations(this.submarine,vertex.submarine)
+                    // console.log(this.submarine.position);
+                    this.checkRotations(this.submarine,vertex.submarine,i)
+                    this.enemy.setScale(0.2);
+                    this.enemy.setPosition(window.container.x,window.container.y);
                     this.enemy.setVisible(true);
                 }
             }
@@ -220,35 +227,21 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
 
 
     // Lo que funciona funciona, y se deja tal cual...
-    checkRotations(me, enemy)
+    checkRotations(me, enemy, side)
     {
-        if (me.orientation === Orientation.N)
-        {
-            if (enemy.orientation == Orientation.N) this.changeSprite("back");
-            if (enemy.orientation == Orientation.S) this.changeSprite("front");
-            if (enemy.orientation == Orientation.E) this.changeSprite("right");
-            if (enemy.orientation == Orientation.W) this.changeSprite("left");
-        }
-        if (me.orientation === Orientation.S)
-        {
-            if (enemy.orientation == Orientation.N) this.changeSprite("front");
-            if (enemy.orientation == Orientation.S) this.changeSprite("back");
-            if (enemy.orientation == Orientation.E) this.changeSprite("left");
-            if (enemy.orientation == Orientation.W) this.changeSprite("right");
-        }
-        if (me.orientation === Orientation.E)
-        {
-            if (enemy.orientation == Orientation.N) this.changeSprite("left");
-            if (enemy.orientation == Orientation.S) this.changeSprite("right");
-            if (enemy.orientation == Orientation.E) this.changeSprite("back");
-            if (enemy.orientation == Orientation.W) this.changeSprite("front");
-        }
-        if (me.orientation === Orientation.W)
-        {
-            if (enemy.orientation == Orientation.N) this.changeSprite("right");
-            if (enemy.orientation == Orientation.S) this.changeSprite("left");
-            if (enemy.orientation == Orientation.E) this.changeSprite("front");
-            if (enemy.orientation == Orientation.W) this.changeSprite("back");
-        }
+        let mod = (n, m) => (n % m + m) % m
+        const angles = { [Orientation.N]: 0, [Orientation.E]: 90, [Orientation.S]: 180, [Orientation.W]: 270 };
+
+        const sideOffsets = [-90, 0, 90];
+        const myDirectionAngle = angles[me.orientation] + sideOffsets[side];
+
+        let diff = mod(angles[enemy.orientation] - myDirectionAngle + 360,360);
+        // console.log(diff);
+        if (diff === 0) this.changeSprite("back");
+        else if (diff === 180) this.changeSprite("front");
+        else if (diff === 90) this.changeSprite("right");
+        else if (diff === 270) this.changeSprite("left");
+
+        //48 IFS!!!!!
     }
 }

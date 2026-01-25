@@ -1,0 +1,11 @@
+{
+    "japan":
+    {
+        "health":100,
+        "color":"0x8a3e32"
+    },
+    "china":{
+        "health":95,
+        "color":"0x32788A"
+    }
+}

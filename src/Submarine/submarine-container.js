@@ -19,6 +19,11 @@ export default class Submarine{
         this.orientation = config.orientation;
 
         this.position = new Vector(this.config.x,this.config.y)
+        this.maxHealth = this.data.health;
+        this.currentHealth = this.maxHealth;
+        this.maxMunition = this.data.munition;
+        this.currentMunition = this.maxMunition;
+
         this.initialize();
 
         EventDispatch.on(Event.MOVE,(c,direction)=>{
@@ -40,8 +45,10 @@ export default class Submarine{
         this.vertex.enter(this);
         this.gameMatrix.initSubmarine(this);
 
+        this.removeHP(10);
         this.gameMatrix.updateMap();
         this.view.updateView();
+        this.hud.updateHUD();
     }
 
     move(direction){
@@ -90,5 +97,11 @@ export default class Submarine{
 
     updateView(){
         this.view.updateView();
+    }
+
+    removeHP(damage){
+        this.currentHealth -= damage;
+
+        // Si ya esta hundido , entonces manda evento
     }
 }

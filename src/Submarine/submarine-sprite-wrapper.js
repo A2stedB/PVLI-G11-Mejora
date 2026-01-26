@@ -5,6 +5,7 @@ export class SubmarineSprite extends Phaser.GameObjects.Image{
         super(config.scene,config.submarine.vertex.x, config.submarine.vertex.y,"sTop")
 
         this.submarine = config.submarine;
+        this.setTint(this.submarine.data.color)
         this.setRotation(Phaser.Math.DegToRad(this.submarine.orientation.degree));
         this.setScale(0.07)
     }

@@ -107,18 +107,18 @@ export class SubmarineComplete extends Phaser.GameObjects.Image {
         this.updateSprite();
 
         EventDispatch.on(Event.MOVE,(player,direction)=>{
-            if(player == this.id){
-                console.log(this.name);
-                if(direction == 0) this.moveFront();
-                if(direction == 90) this.moveRight();
-                if(direction == -90) this.moveLeft();
-                this.container.resourceManager.checkAndCollectResource(this);
-                this.container.huds[this.container.currentTurn].update()
-            }
-            if(direction != null){
-                this.scene.sound.stopAll();
-                this.scene.sound.play("Move");
-            }
+            // if(player == this.id){
+            //     console.log(this.name);
+            //     if(direction == 0) this.moveFront();
+            //     if(direction == 90) this.moveRight();
+            //     if(direction == -90) this.moveLeft();
+            //     this.container.resourceManager.checkAndCollectResource(this);
+            //     this.container.huds[this.container.currentTurn].update()
+            // }
+            // if(direction != null){
+            //     this.scene.sound.stopAll();
+            //     this.scene.sound.play("Move");
+            // }
         })
 
         //Devuelve el submarino si coincide el nombre o ID

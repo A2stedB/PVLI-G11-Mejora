@@ -30,8 +30,8 @@ let config = {
     },
 
 	scene: [
-		Menu2, 
 		GameScreen, 
+		Menu2, 
 		Flappy_Dragon,          
 		FireStateWindow,       
 		MinigameDialogScene,    

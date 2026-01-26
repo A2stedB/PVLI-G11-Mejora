@@ -115,13 +115,11 @@ export class GameScreen extends Phaser.Scene{
         // })
 
         this.matrix2 = new GameMatrix(this);
-        this.blueSub = new Submarine({x:0,y:0,scene:this,gameMatrix:this.matrix2,orientation:Orientation.N,data:SubmarineData.japan})
-        this.redSub = new Submarine({x:2,y:0,scene:this,gameMatrix:this.matrix2,orientation:Orientation.S,})
+        this.redSub = new Submarine({x:0,y:0,scene:this,gameMatrix:this.matrix2,orientation:Orientation.N,data:SubmarineData.japan})
+        this.blueSub = new Submarine({x:2,y:0,scene:this,gameMatrix:this.matrix2,orientation:Orientation.S,data:SubmarineData.china})
         this.currentView = this.blueSub.view;
         this.currentView.setVisible(true);
         this.blueSub.updateView();
-
-        let top = this.add.image(0,0,"Submarine HUD top").setOrigin(0,0).setDisplaySize(800,UIdata.top)
     }
 
      refresh() {
@@ -131,10 +129,6 @@ export class GameScreen extends Phaser.Scene{
         }
         else this.submarineView.setVisible(false);
         
-    }
-
-    update(){
-     
     }
 
     createTextTween(){

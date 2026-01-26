@@ -122,18 +122,18 @@ export default class GameBoard extends Phaser.GameObjects.Container {
          * - Estado (fugas, restricciones de movimiento)
          */
         this.huds = {
-            blue: new SubmarineHUD(
-                scene, 
-                this.submarines.blue, 
-                530, 425,              // Posición en pantalla
-                "Japon"                // Nombre del jugador
-            ),
-            red: new SubmarineHUD(
-                scene, 
-                this.submarines.red, 
-                530, 425, 
-                "China"
-            )
+            // blue: new SubmarineHUD(
+            //     scene, 
+            //     this.submarines.blue, 
+            //     530, 425,              // Posición en pantalla
+            //     "Japon"                // Nombre del jugador
+            // ),
+            // red: new SubmarineHUD(
+            //     scene, 
+            //     this.submarines.red, 
+            //     530, 425, 
+            //     "China"
+            // )
         };
 
 
@@ -205,25 +205,25 @@ export default class GameBoard extends Phaser.GameObjects.Container {
      * - Se construye el tablero
      */
     render() {
-        // Solo renderizar si el tablero está activo
-        if (this.active) {
-            // Recorrer matriz gráfica
-            this.matrix.graphic.forEach((row) => {
-                row.forEach(point => {
-                    // Renderizar casillas (donde va el dragón)
-                    if (point instanceof GraphicSquare) {
-                        point.render();
-                    }
-                     // Renderizar vértices (donde van los submarinos)
-                    if (point instanceof GraphicVertex) {
-                        point.render();
-                    }
-                })
-            })
-        }
+        // // Solo renderizar si el tablero está activo
+        // if (this.active) {
+        //     // Recorrer matriz gráfica
+        //     this.matrix.graphic.forEach((row) => {
+        //         row.forEach(point => {
+        //             // Renderizar casillas (donde va el dragón)
+        //             if (point instanceof GraphicSquare) {
+        //                 point.render();
+        //             }
+        //              // Renderizar vértices (donde van los submarinos)
+        //             if (point instanceof GraphicVertex) {
+        //                 point.render();
+        //             }
+        //         })
+        //     })
+        // }
 
-        // Actualizar visibilidad de HUDs
-        this.swapHUDS();
+        // // Actualizar visibilidad de HUDs
+        // this.swapHUDS();
         
     }
 

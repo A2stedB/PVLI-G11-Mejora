@@ -14,10 +14,10 @@ export class GameManager{
         this.playerActionMachine = new PlayerActionMachine(this.scene,this.gameloopMachine);
         this.submarine = [];
 
-        // let submarineData = JSON.parse(SubmarineData);
-        // console.log(submarineData)
-        this.redSub = new Submarine({x:3,y:5,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:SubmarineData.japan})
-        this.blueSub = new Submarine({x:3,y:0,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.S,data:SubmarineData.china})
+        this.submarineData = JSON.parse(JSON.stringify(SubmarineData));
+        console.log(this.submarineData)
+        this.redSub = new Submarine({x:3,y:5,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:this.submarineData.japan})
+        this.blueSub = new Submarine({x:3,y:0,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.S,data:this.submarineData.china})
         this.currentView = this.blueSub.view;
         this.currentView.setVisible(true);
         this.currentHUD = this.blueSub.hud;
@@ -33,7 +33,7 @@ export class GameManager{
     }
 
     flipCoin(){
-
+        
     }
 
     setSubmarineExit(submarine,x,y){

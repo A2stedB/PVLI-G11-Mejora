@@ -94,76 +94,28 @@ export class FireState extends State{
 
     setEvent(){
         EventDispatch.on(Event.SHOOT,(confirmButton,direction)=>{
-            this.scene.scene.pause();
-            this.scene.scene.launch("fireStateWindow",{
+            this.shoot();
+            // this.scene.scene.pause();
 
-                //Teclas del jugador correspondiente
-                confirmButton:confirmButton, 
+            // this.scene.scene.launch("fireStateWindow",{
 
-                //cuando ya sabe la distancia que quiere disparar
-                distanceCallback: (distance)=>{
-                    let range = distance;
-                    this.shoot(range,direction);
+            //     //Teclas del jugador correspondiente
+            //     confirmButton:confirmButton, 
+
+            //     //cuando ya sabe la distancia que quiere disparar
+            //     distanceCallback: (distance)=>{
+            //         let range = distance;
+            //         this.shoot(range,direction);
                     
-                },
+            //     },
 
-                //El id del jugador actual
-                currentPlayer:this.stateMachine.context.currentState.id
-            })
+            //     //El id del jugador actual
+            //     currentPlayer:this.stateMachine.context.currentState.id
+            // })
         })
     }
 
     shoot(distance, direction){
-
-        //Conversion para utilizar los metodos 
-        if(direction == 0) direction = "front";
-        else if(direction == -90) direction = "left"
-        else if(direction == 90) direction = "right"
-
-        let board = null;
-        EventDispatch.emit(Event.GET_GAMEBOARD,{boardCallback:(b)=>{board = b}})
-
-        //Logica del disparo (traslado tal cual de lo que habia en GameBoard)
-
-        const attacker = board.submarines[board.currentTurn];
-        const target = board.currentTurn === "red" ? board.submarines.blue : board.submarines.red;
-
-
-        let isTarget1 = attacker.isTarget(target.position.x, target.position.y, 1)
-        let isTarget2 = attacker.isTarget(target.position.x, target.position.y, 2)
-
-        if (isTarget1 || isTarget2) console.log("Target!");
-
-        let isTargetDir1 = isTarget1 && 
-            attacker.isTargetDir(target.position.x, target.position.y, 1, direction) && 
-            attacker.canShoot(distance);
-            
-        let isTargetDir2 = isTarget2 && 
-            attacker.isTargetDir(target.position.x, target.position.y, 2, direction) && 
-            attacker.canShoot(distance);
-
-        if (distance == 1) {
-            attacker.shoot(distance);
-            if (isTargetDir1) {
-                target.loseHealth(5);
-                console.log("¡Impacto! -5 HP");
-            }
-        }
-        if (distance == 2) {
-            attacker.shoot(distance);
-            if (isTargetDir2 || isTargetDir1) {
-                target.loseHealth(2);
-                console.log("¡Impacto! -2 HP");
-            }
-        }
-
-        // Actualizar ambos HUDs
-        board.huds[board.currentTurn].update();
-        const targetColor = board.currentTurn === "red" ? "blue" : "red";
-        board.huds[targetColor].update();
-        this.scene.sound.stopAll();
-        this.scene.sound.play("Fire")
-
         this.transition();
     }
 }

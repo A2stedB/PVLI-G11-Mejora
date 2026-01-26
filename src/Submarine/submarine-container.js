@@ -24,6 +24,7 @@ export default class Submarine{
         this.currentHealth = this.maxHealth;
         this.maxMunition = this.data.munition;
         this.currentMunition = this.maxMunition;
+        this.damage = config.data.damage;
 
         this.initialize();
 
@@ -34,6 +35,15 @@ export default class Submarine{
             else if(direction == 0) dir = possibleDirection[1];
             else if(direction == 90) dir = possibleDirection[2];
             if(direction != null) this.move(dir);
+        })
+
+        EventDispatch.on(Event.SHOOT,(c,direction)=>{
+            let possibleDirection = Orientation.getAvailableDirection(this.orientation);
+            let dir;
+            if(direction == -90) dir = possibleDirection[0];
+            else if(direction == 0) dir = possibleDirection[1];
+            else if(direction == 90) dir = possibleDirection[2];
+            if(direction != null) this.shoot(dir);
         })
 
     }
@@ -58,6 +68,8 @@ export default class Submarine{
         let boardWidth = this.boardConfig.boardWidth;
         let index = nextY * boardWidth + nextX;
 
+
+        // Cambias de direccion de todas formas, se vera reflejado en las vistas
         this.orientation = direction;
         if(this.canMoveTo(nextX,nextY,index)){
             this.position.x = nextX;
@@ -68,11 +80,35 @@ export default class Submarine{
 
             this.vertex = this.gameMatrix.vertexList[index];
             this.vertex.enter(this);
+            if(direction != null){
+                this.scene.sound.stopAll();
+                this.scene.sound.play("Move");
+            }
             this.checkExit(this.vertex);
         }
 
         this.gameMatrix.updateMap();
         this.view.updateView();
+    }
+
+    shoot(direction){
+        let nextX = this.position.x + direction.vector.x;
+        let nextY = this.position.y + direction.vector.y;
+        let boardWidth = this.boardConfig.boardWidth;
+        let index = nextY * boardWidth + nextX;
+
+        if(this.canMoveToWithoutEnemy(nextX,nextY)){
+            let enemy = this.gameMatrix.vertexList[index].submarine;
+            this.scene.sound.stopAll();
+            this.scene.sound.play("Fire")
+            if(enemy != null){
+                enemy.removeHP(this.damage)
+            }
+        }
+
+        this.gameMatrix.updateMap();
+        this.view.updateView();
+        this.hud.updateHUD();
     }
 
     canMoveTo(newX, newY, index) {

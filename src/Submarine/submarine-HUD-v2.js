@@ -60,6 +60,6 @@ export class SubmarineHUDv2 extends Phaser.GameObjects.Container{
 
         // Update munition count
         this.munitionNum.setText(`${submarine.currentMunition} / ${submarine.maxMunition}`)
-        console.log("HUD updated")
+        // console.log("HUD updated")
     }
 }

@@ -17,6 +17,7 @@ import Submarine from "../Submarine/submarine-container.js";
 import Orientation from "../Submarine/submarine-orientation-v2.js";
 import UIdata from "../UI-data.json" with {type:"json"}
 import SubmarineData from "../Submarine/submarine-data.json" with {type:"json"}
+import { GameManager } from "../game-manager.js";
 
 // AZUL = JAPON | ROJO = CHINA !!!
 
@@ -36,7 +37,6 @@ export class GameScreen extends Phaser.Scene{
     preload(){
         this.addLoadScreen();
 
-
         this.loadImage();
         this.loadAudio();
     }
@@ -44,16 +44,13 @@ export class GameScreen extends Phaser.Scene{
     //La dimension de la tabla tiene que ser un numero impar
     create(){
 
-        this.createHeader();
-        this.createPanel();
-
         // this.instruction = new InstructionUI({scene:this,fontSize:20})
-        let roundText = this.add.text(370,550,"Round 0",
-        {
-            fontFamily:"Outfit",
-            fontSize:30,
-            color: '#412e1fff'
-        })
+        // let roundText = this.add.text(370,550,"Round 0",
+        // {
+        //     fontFamily:"Outfit",
+        //     fontSize:30,
+        //     color: '#412e1fff'
+        // })
 
         this.roundTextAnimation = this.add.text(-150,300,"Round 0",{fontFamily:"Outfit",fontSize:25})
 
@@ -64,36 +61,36 @@ export class GameScreen extends Phaser.Scene{
         //     color: '#412e1fff'
         // })
 
-        let playerActionText = this.add.text(5,550,"Fase actual:", 
-        {
-            fontFamily:"Outfit",
-            fontSize:30,
-            color: '#412e1fff'
-        })
+        // let playerActionText = this.add.text(5,550,"Fase actual:", 
+        // {
+        //     fontFamily:"Outfit",
+        //     fontSize:30,
+        //     color: '#412e1fff'
+        // })
 
-        this.toggleKey = this.input.keyboard.addKey('M');
+        // this.toggleKey = this.input.keyboard.addKey('M');
 
         this.createTextTween();
 
         // Maquina de estados y objetos del juego
-        this.gameloopMachine = new GameLoopMachine(this);
-        this.playerActionMachine = new PlayerActionMachine(this,this.gameloopMachine);
+        // this.gameloopMachine = new GameLoopMachine(this);
+        // this.playerActionMachine = new PlayerActionMachine(this,this.gameloopMachine);
 
-        let texturas = ["Square","BG", "Submarine"];
+        this.gameManager = new GameManager({scene:this});
 
-        this.tablero = new GameBoard(this);
+        // this.tablero = new GameBoard(this);
 
-        let redSubmarine = this.tablero.submarines.red;
-        let blueSubmarine = this.tablero.submarines.blue;
+        // let redSubmarine = this.tablero.submarines.red;
+        // let blueSubmarine = this.tablero.submarines.blue;
 
         // this.submarineView = new SubmarineView(this,0,0, this.tablero, this.tablero.submarines.red, this.tablero.submarines.blue);
-        this.submarineView = new SubmarineView2({scene:this})
+        // this.submarineView = new SubmarineView2({scene:this})
         // this.submarineView.setDepth(1); // Pantalla al fondo
-        this.tablero.setDepth(0); // Tablero encima
+        // this.tablero.setDepth(0); // Tablero encima
 
         // this.submarineView.setVisible(false);
         // console.log(this.submarineView.visible)
-        //Actualizar textos de ronda y jugador
+        // Actualizar textos de ronda y jugador
         EventDispatch.on(Event.UPDATE_ROUND,(round)=>{
             let text = `Round ${round}`
             roundText.setText(text)
@@ -106,7 +103,6 @@ export class GameScreen extends Phaser.Scene{
         //     if (this.tablero.currentTurn == "red") playerText.setText(`Turno de China`);
         //     else if (this.tablero.currentTurn == "blue")playerText.setText(`Turno de Japon`);
         //      this.submarineView.renderView();
-          
         // })
 
         // EventDispatch.on(Event.UPDATE_PLAYER_ACTION_TEXT,(state)=>{
@@ -114,12 +110,12 @@ export class GameScreen extends Phaser.Scene{
         //      this.submarineView.renderView();
         // })
 
-        this.matrix2 = new GameMatrix(this);
-        this.redSub = new Submarine({x:0,y:0,scene:this,gameMatrix:this.matrix2,orientation:Orientation.N,data:SubmarineData.japan})
-        this.blueSub = new Submarine({x:2,y:0,scene:this,gameMatrix:this.matrix2,orientation:Orientation.S,data:SubmarineData.china})
-        this.currentView = this.blueSub.view;
-        this.currentView.setVisible(true);
-        this.blueSub.updateView();
+        // this.matrix2 = new GameMatrix(this);
+        // this.redSub = new Submarine({x:0,y:0,scene:this,gameMatrix:this.matrix2,orientation:Orientation.N,data:SubmarineData.japan})
+        // this.blueSub = new Submarine({x:2,y:0,scene:this,gameMatrix:this.matrix2,orientation:Orientation.S,data:SubmarineData.china})
+        // this.currentView = this.blueSub.view;
+        // this.currentView.setVisible(true);
+        // this.blueSub.updateView();
     }
 
      refresh() {
@@ -128,7 +124,6 @@ export class GameScreen extends Phaser.Scene{
             this.submarineView.setVisible(true);
         }
         else this.submarineView.setVisible(false);
-        
     }
 
     createTextTween(){
@@ -175,22 +170,22 @@ export class GameScreen extends Phaser.Scene{
     }
     createPanel()
     {
-        this.panel = this.add.rectangle(0, 0, 1010, 100, 0x00CC9966, 1);
-        this.panel.setPosition(0,575);
+        // this.panel = this.add.rectangle(0, 0, 1010, 100, 0x00CC9966, 1);
+        // this.panel.setPosition(0,575);
       
 
-          let divisor = this.add.text(300,565," | ",
-        {
-            fontFamily:"Outfit",
-            fontSize:40,
-            color: '#412e1fff'
-        })
-           let divisor2 = this.add.text(300,530," | ",
-        {
-            fontFamily:"Outfit",
-            fontSize:40,
-            color: '#412e1fff'
-        })
+        //   let divisor = this.add.text(300,565," | ",
+        // {
+        //     fontFamily:"Outfit",
+        //     fontSize:40,
+        //     color: '#412e1fff'
+        // })
+        //    let divisor2 = this.add.text(300,530," | ",
+        // {
+        //     fontFamily:"Outfit",
+        //     fontSize:40,
+        //     color: '#412e1fff'
+        // })
     }
 
     loadImage(){

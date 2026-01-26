@@ -27,7 +27,7 @@ export class Vertex extends Phaser.GameObjects.Graphics{
         this.setPosition(x,y);
 
         this.fillStyle(0xe6e8f0);
-        this.fillCircle(0,0,2); //jdr con la posicion relativa
+        this.fillCircle(0,0,2); // jdr con la posicion relativa
     }
 
     exit(){
@@ -36,5 +36,11 @@ export class Vertex extends Phaser.GameObjects.Graphics{
 
     enter(submarine){
         this.submarine = submarine;
+    }
+
+    setExit(submarine){
+        this.exit = submarine;
+        let exitIcon = this.scene.add.circle(this.x,this.y,20,submarine.data.color);
+        this.container.add(exitIcon);
     }
 }

@@ -96,7 +96,7 @@ export default class GameBoard extends Phaser.GameObjects.Container {
         this.submarines.red.active = false;
 
           // FONDO 
-        this.initializeBackground(config.x, config.y, "BG");
+        // this.initializeBackground(config.x, config.y, "BG");
 
         // SISTEMA DE RECURSOS
         /**

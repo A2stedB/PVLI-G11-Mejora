@@ -113,6 +113,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
     createWindowLayer(){
         let viewWidth = this.screenWidth / 3;
         let viewHeight = this.screenHeight - UIdata.top - UIdata.HUD.height;
+        console.log(viewHeight)
         this.centerY = viewHeight / 2;
         this.view.left = this.createSingleWindow(this.centerXiz,this.centerY,viewWidth,viewHeight);
         
@@ -131,7 +132,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         view.moveEffect = null;
 
         let window = this.scene.add.container(x,y);
-        console.log(window.x,window.y)
+        // console.log(window.x,window.y)
 
         //0 0 respecto del "centro" del container...
         let submarineWindow = this.scene.add.image(0,0,"SubWindow");
@@ -197,13 +198,13 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
 
     switchToLand(view){
         let viewWidth = this.screenWidth / 3;
-        let viewHeight = this.screenHeight - 20;
+        let viewHeight = this.screenHeight - UIdata.top - UIdata.HUD.height;
         view.bg.setTexture("Land").setDisplaySize(viewWidth,viewHeight);
     }
 
     switchToWater(view){
         let viewWidth = this.screenWidth / 3;
-        let viewHeight = this.screenHeight - 20;
+        let viewHeight = this.screenHeight - UIdata.top - UIdata.HUD.height;
         view.bg.setTexture("BG").setDisplaySize(viewWidth,viewHeight);
     }
 

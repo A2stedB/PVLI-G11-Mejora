@@ -11,7 +11,8 @@ export default class Submarine{
         this.scene = config.scene;
 
         this.config = config;
-        this.data = config.data
+        this.data = config.data;
+        // console.log(this.data)
         this.view = new SubmarineView2({scene:config.scene,submarine:this});
         this.hud = new SubmarineHUDv2({scene:config.scene,submarine:this});
         this.gameMatrix = config.gameMatrix;
@@ -67,6 +68,7 @@ export default class Submarine{
 
             this.vertex = this.gameMatrix.vertexList[index];
             this.vertex.enter(this);
+            this.checkExit(this.vertex);
         }
 
         this.gameMatrix.updateMap();
@@ -104,4 +106,14 @@ export default class Submarine{
 
         // Si ya esta hundido , entonces manda evento
     }
+
+    checkExit(vertex){
+        if(this == vertex.exit){
+            console.log("Exit reached");
+            this.scene.scene.stop();
+            // Mandar el evento de ganar
+        }
+    }
+
+    
 }

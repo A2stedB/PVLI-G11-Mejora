@@ -19,6 +19,7 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         this.vertexList = [];
         this.squareList = [];
         this.submarines = [];
+        this.dragon;
 
         this.toggleKey = this.scene.input.keyboard.addKey("P");
         
@@ -111,5 +112,11 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         let newSubmarine = new SubmarineSprite({scene:this.scene,submarine:submarine}).setVisible(this.showingSubmarine)
         this.submarines.push(newSubmarine);
         this.add(newSubmarine);
+    }
+
+    setExit(submarine,x,y){
+        let index = y * board_config.boardWidth + x;
+        // console.log(index)
+        this.vertexList[index].setExit(submarine);
     }
 }

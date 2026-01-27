@@ -91,13 +91,13 @@ export class GameScreen extends Phaser.Scene{
         // this.submarineView.setVisible(false);
         // console.log(this.submarineView.visible)
         // Actualizar textos de ronda y jugador
-        EventDispatch.on(Event.UPDATE_ROUND,(round)=>{
-            let text = `Round ${round}`
-            roundText.setText(text)
-            this.roundTextAnimation.setText(text);
-            //  this.submarineView.renderView();
-            this.chain.restart();            
-        })
+        // EventDispatch.on(Event.UPDATE_ROUND,(round)=>{
+        //     let text = `Round ${round}`
+        //     roundText.setText(text)
+        //     this.roundTextAnimation.setText(text);
+        //     //  this.submarineView.renderView();
+        //     this.chain.restart();            
+        // })
         
         // EventDispatch.on(Event.UPDATE_PLAYER_TEXT,(player)=>{
         //     if (this.tablero.currentTurn == "red") playerText.setText(`Turno de China`);
@@ -118,13 +118,13 @@ export class GameScreen extends Phaser.Scene{
         // this.blueSub.updateView();
     }
 
-     refresh() {
-        this.submarineView.active = !this.submarineView.active;
-        if (this.submarineView.active) {
-            this.submarineView.setVisible(true);
-        }
-        else this.submarineView.setVisible(false);
-    }
+    //  refresh() {
+    //     this.submarineView.active = !this.submarineView.active;
+    //     if (this.submarineView.active) {
+    //         this.submarineView.setVisible(true);
+    //     }
+    //     else this.submarineView.setVisible(false);
+    // }
 
     createTextTween(){
 

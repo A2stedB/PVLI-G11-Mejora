@@ -4,6 +4,7 @@ import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
 import { Vector } from "../vector.js";
 import { SubmarineHUDv2 } from "./submarine-HUD-v2.js";
+import VictoryReason from "../game-victoryCondition.js";
 
 export default class Submarine{
 
@@ -12,6 +13,8 @@ export default class Submarine{
 
         this.config = config;
         this.data = config.data;
+        this.name = this.data.name;
+        this.gameManager = config.gamemanager;
         // console.log(this.data)
         this.view = new SubmarineView2({scene:config.scene,submarine:this});
         this.hud = new SubmarineHUDv2({scene:config.scene,submarine:this});
@@ -56,7 +59,7 @@ export default class Submarine{
         this.vertex.enter(this);
         this.gameMatrix.initSubmarine(this);
 
-        this.removeHP(10);
+
         this.gameMatrix.updateMap();
         this.view.updateView();
         this.hud.updateHUD();
@@ -103,6 +106,9 @@ export default class Submarine{
             this.scene.sound.play("Fire")
             if(enemy != null){
                 enemy.removeHP(this.damage)
+                if(enemy.currentHealth <= 0) {
+                    this.gameManager.endOfGame(this,VictoryReason.defeatEnemy);
+                }
             }
         }
 
@@ -139,14 +145,14 @@ export default class Submarine{
 
     removeHP(damage){
         this.currentHealth -= damage;
-
+        if(this.currentHealth < 0) this.currentHealth = 0;
         // Si ya esta hundido , entonces manda evento
     }
 
     checkExit(vertex){
         if(this == vertex.exit){
             console.log("Exit reached");
-            this.scene.scene.stop();
+            this.gameManager.endOfGame(this,VictoryReason.exitReached);
             // Mandar el evento de ganar
         }
     }

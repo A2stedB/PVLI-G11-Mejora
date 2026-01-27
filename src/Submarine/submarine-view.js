@@ -13,6 +13,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
 
     constructor(config){
         super(config.scene,0,0);
+        this.scene = null
         
         this.config = config;
 
@@ -113,7 +114,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
     createWindowLayer(){
         let viewWidth = this.screenWidth / 3;
         let viewHeight = this.screenHeight - UIdata.top - UIdata.HUD.height;
-        console.log(viewHeight)
+        // console.log(viewHeight)
         this.centerY = viewHeight / 2;
         this.view.left = this.createSingleWindow(this.centerXiz,this.centerY,viewWidth,viewHeight);
         

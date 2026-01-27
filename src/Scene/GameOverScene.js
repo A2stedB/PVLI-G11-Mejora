@@ -11,6 +11,7 @@
  * - ESC: Volver al menú
  * - Click en botones
  */
+import VictoryReason from '../game-victoryCondition.js';
 
 // IMPORTAR sistema de estilos unificado
 import { 
@@ -38,7 +39,6 @@ export class GameOverScene extends Phaser.Scene {
     init(data) {
         this.winner = data.winner;
         this.reason = data.reason;
-        this.stats = data.stats;
     }
 
     /**
@@ -53,12 +53,11 @@ export class GameOverScene extends Phaser.Scene {
         overlay.setDepth(1000);
         
         // PASO 2: Determinar datos del ganador
-        const winnerColor = this.winner === 'red' ? 0xff4444 : 0x4444ff;
-        const winnerColorHex = this.winner === 'red' ? '#ff4444' : '#4444ff';
-        const winnerName = this.winner === 'red' ? 'CHINA (ROJO)' : 'JAPÓN (AZUL)';
+        const winnerColorHex = this.winner.color
+        const winnerName = this.winner.name
         
         // PASO 3: Título principal según razón de victoria
-        const titleText = this.reason === 'elimination' 
+        const titleText = this.reason === VictoryReason.defeatEnemy 
             ? '¡SUBMARINO DESTRUIDO!' 
             : '¡ZONA DE ESCAPE ALCANZADA!';
         
@@ -96,14 +95,14 @@ export class GameOverScene extends Phaser.Scene {
             ease: 'Sine.easeInOut'
         });
         
-        // PASO 5: Panel de estadísticas
-        this.createStatsPanel(w, h);
+        // // PASO 5: Panel de estadísticas
+        // this.createStatsPanel(w, h);
         
-        // PASO 6: Botones de acción
+        // // PASO 6: Botones de acción
         this.createButtons(w, h);
         
-        // PASO 7: Efecto de celebración
-        this.createCelebrationEffect(w/2, h/2, winnerColor);
+        // // PASO 7: Efecto de celebración
+        this.createCelebrationEffect(w/2, h/2, winnerColorHex);
     }
     
     /**
@@ -113,44 +112,44 @@ export class GameOverScene extends Phaser.Scene {
      * @param {Number} h - Alto de la pantalla
      */
     createStatsPanel(w, h) {
-        const panelY = 280;
+        // const panelY = 280;
         
-        // Panel semi-transparente
-        const panel = createStyledPanel(this, w/2, panelY + 80, 500, 180);
-        panel.setDepth(1001);
+        // // Panel semi-transparente
+        // const panel = createStyledPanel(this, w/2, panelY + 80, 500, 180);
+        // panel.setDepth(1001);
         
-        // Título de estadísticas
-        const statsTitle = createStyledText(
-            this, w/2, panelY, 
-            'ESTADÍSTICAS DE LA PARTIDA',
-            'subtitle'
-        );
-        statsTitle.setColor('#00ff88');
-        statsTitle.setOrigin(0.5);
-        statsTitle.setDepth(1002);
+        // // Título de estadísticas
+        // const statsTitle = createStyledText(
+        //     this, w/2, panelY, 
+        //     'ESTADÍSTICAS DE LA PARTIDA',
+        //     'subtitle'
+        // );
+        // statsTitle.setColor('#00ff88');
+        // statsTitle.setOrigin(0.5);
+        // statsTitle.setDepth(1002);
         
-        // Mostrar estadísticas (usando datos reales)
-        const stats = [
-            `Duración: ${this.stats.duration || '5:30'}`,
-            `Total de turnos: ${this.stats.totalTurns || 0}`,
-            `Disparos realizados: ${this.stats.totalShots || 'N/A'}`,
-            `Impactos: ${this.stats.hits || 0}`,
-            `Recursos recogidos: ${this.stats.resourcesCollected || 0}`,
-            `Daño total: ${this.stats.totalDamage || 0} HP`
-        ];
+        // // Mostrar estadísticas (usando datos reales)
+        // const stats = [
+        //     `Duración: ${this.stats.duration || '5:30'}`,
+        //     `Total de turnos: ${this.stats.totalTurns || 0}`,
+        //     `Disparos realizados: ${this.stats.totalShots || 'N/A'}`,
+        //     `Impactos: ${this.stats.hits || 0}`,
+        //     `Recursos recogidos: ${this.stats.resourcesCollected || 0}`,
+        //     `Daño total: ${this.stats.totalDamage || 0} HP`
+        // ];
         
-        stats.forEach((stat, index) => {
-            const statText = createStyledText(
-                this, 
-                w/2, 
-                panelY + 30 + (index * 25), 
-                stat, 
-                'body'
-            );
-            statText.setFontSize('16px');
-            statText.setOrigin(0.5);
-            statText.setDepth(1002);
-        });
+        // stats.forEach((stat, index) => {
+        //     const statText = createStyledText(
+        //         this, 
+        //         w/2, 
+        //         panelY + 30 + (index * 25), 
+        //         stat, 
+        //         'body'
+        //     );
+        //     statText.setFontSize('16px');
+        //     statText.setOrigin(0.5);
+        //     statText.setDepth(1002);
+        // });
     }
     
     /**
@@ -201,14 +200,9 @@ export class GameOverScene extends Phaser.Scene {
                         gameScreen.tweens.killAll();
                     }
                     
-                    if (gameScreen.tablero) {
-                        if (gameScreen.tablero.zoneClosing) {
-                            gameScreen.tablero.zoneClosing.destroy();
-                        }
-                        if (gameScreen.tablero.exitZoneSystem) {
-                            gameScreen.tablero.exitZoneSystem.destroy();
-                        }
-                    }
+                    // if (gameScreen.gameManager) {
+                    //     gameScreen.gameManager.destroy();
+                    // }
                 }
                 
                 console.log("  Deteniendo Game Over...");

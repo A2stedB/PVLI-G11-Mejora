@@ -4,6 +4,8 @@ import Submarine from "./Submarine/submarine-container.js";
 import GameMatrix from "./Board/game-matrix.js";
 import Orientation from "./Submarine/submarine-orientation-v2.js";
 import SubmarineData from "./Submarine/submarine-data.json" with {type:"json"}
+import UIdata from "./UI-data.json" with {type:"json"}
+import EventDispatch from "./Event/EventDispatch.js";
 
 export class GameManager{
     constructor(config){
@@ -15,21 +17,47 @@ export class GameManager{
         this.submarine = [];
 
         this.submarineData = JSON.parse(JSON.stringify(SubmarineData));
-        console.log(this.submarineData)
-        this.redSub = new Submarine({x:3,y:5,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:this.submarineData.japan})
-        this.blueSub = new Submarine({x:3,y:0,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.S,data:this.submarineData.china})
+        this.redSub = new Submarine({x:3,y:3,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.S,data:this.submarineData.japan,gamemanager:this})
+        this.blueSub = new Submarine({x:3,y:4,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:this.submarineData.china,gamemanager:this})
+
         this.currentView = this.blueSub.view;
         this.currentView.setVisible(true);
         this.currentHUD = this.blueSub.hud;
         this.currentHUD.setVisible(true);
         this.blueSub.updateView();
 
+        this.blueSub.removeHP(90);
+
         this.initialize();
         this.currentTurn = 0;
+  
     }
 
     initialize(){
         this.setSubmarineExit(this.redSub,4,5);
+        // this.setSubmarineExit(this.redSub,4,5);
+
+        let centerY = UIdata.top / 2;
+        let screenWidth = this.scene.cameras.main.width;
+        let centerXiz = screenWidth / 6;
+        let centerX = screenWidth / 2;
+        let centerXdr = screenWidth - screenWidth / 6
+
+        this.roundText = this.scene.add.text(centerXiz,centerY,"Round 0",
+        {
+            fontFamily:"Outfit",
+            fontSize:30,
+            color: 'rgb(72, 70, 163)'
+        }).setOrigin(0.5,0.5)
+        
+        this.actionText = this.scene.add.text(centerX,centerY,"Accion",
+        {
+            fontFamily:"Outfit",
+            fontSize:30,
+            color: 'rgb(72, 70, 163)'
+        }).setOrigin(0.5,0.5)
+
+        // this.scene.add.existing(roundText);
     }
 
     flipCoin(){
@@ -38,5 +66,12 @@ export class GameManager{
 
     setSubmarineExit(submarine,x,y){
         this.gameMatrix.setExit(submarine,x,y);
+    }
+
+    endOfGame(sub,reason){
+        this.scene.scene.stop();
+        EventDispatch.removeAllListeners(Event.MOVE)
+        EventDispatch.removeAllListeners(Event.SHOOT)
+        this.scene.scene.start("GameOver",{winner:sub,reason:reason})
     }
 }

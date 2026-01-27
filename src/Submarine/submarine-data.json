@@ -3,12 +3,14 @@
         "health": 100,
         "color": "0xee6b6e",
         "munition": 7,
-        "damage":10
+        "damage": 10,
+        "name": "japan"
     },
     "china": {
         "health": 95,
         "color": "0x32788A",
         "munition": 9,
-        "damage":12
+        "damage": 12,
+        "name": "china"
     }
 }

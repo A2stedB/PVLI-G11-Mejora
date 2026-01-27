@@ -51,6 +51,10 @@
         {
             "key": "Submarine HUD top",
             "path": "assets/Submarine/Submarine-HUD-top.png"
+        },
+        {
+            "key": "Arrow",
+            "path": "assets/up arrow.png"
         }
     ]
 }

@@ -46,7 +46,7 @@ export class FireState extends State{
     onStateEnter(){
 
         EventDispatch.emit(Event.UPDATE_PLAYER_ACTION_TEXT,"Fire");
-
+        
         let currentPlayer = this.stateMachine.context.currentState.id
         
         if(currentPlayer == 1){
@@ -89,7 +89,7 @@ export class FireState extends State{
     }
 
     transition(){
-        this.stateMachine.transition(this.stateMachine.stateList.healState)
+        this.stateMachine.transition(this.stateMachine.stateList.endState)
     }
 
     setEvent(){

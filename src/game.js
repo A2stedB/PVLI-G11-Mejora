@@ -6,6 +6,7 @@ import { MinigameDialogScene } from "./Scene/MinigameDialogScene.js";
 import { RepairMinigame } from "./Minigames/RepairMinigame.js";
 import { GameOverScene } from "./Scene/GameOverScene.js"; 
 import {MapView} from "./Scene/scene-mapview.js";
+import { RandomSide } from "./Scene/scene-random-side.js";
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -31,6 +32,7 @@ let config = {
 
 	scene: [
 		GameScreen, 
+		RandomSide,
 		Menu2, 
 		Flappy_Dragon,          
 		FireStateWindow,       

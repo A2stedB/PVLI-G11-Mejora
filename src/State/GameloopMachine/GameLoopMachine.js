@@ -22,10 +22,11 @@ export class GameLoopMachine extends StateMachine{
     constructor(scene){
         super(scene);
         this._round = 0;
-        this._name = "Gameloop Machine"
+        this._name = "Gameloop Machine";
         this._player1 = new Player1(this,1);
         this._player2 = new Player2(this,2);
         this._checkState = new CheckState(this);
+        this.playerList = [ this._player1, this._player2];
 
         this._currentState = this._checkState;
         this._currentState.onStateEnter();
@@ -55,5 +56,12 @@ export class GameLoopMachine extends StateMachine{
      */
     get round(){
         return this._round;
+    }
+    
+    setOrder(order){
+        for(let i = 0; i < 2;++i){
+            this.playerList[i]._id = order[i]; 
+        }
+        console.log("finish ordering")
     }
 }

@@ -397,21 +397,21 @@ export default class GameBoard extends Phaser.GameObjects.Container {
      * cuando PlayerActionMachine finaliza todas las acciones del turno.
      */
     endTurn() {
-        // Obtener submarino del turno actual
-        const currentSubmarine = this.submarines[this.currentTurn];
+        // // Obtener submarino del turno actual
+        // const currentSubmarine = this.submarines[this.currentTurn];
         
-        // Aplicar efectos de fin de turno
-        currentSubmarine.endTurn();
+        // // Aplicar efectos de fin de turno
+        // currentSubmarine.endTurn();
         
-        // Actualizar HUD
-        this.huds[this.currentTurn].update();
+        // // Actualizar HUD
+        // this.huds[this.currentTurn].update();
         
-        // Cambiar turno
-        this.currentTurn = this.currentTurn === "red" ? "blue" : "red";
-        console.log(`Turno de: ${this.currentTurn}`);
+        // // Cambiar turno
+        // this.currentTurn = this.currentTurn === "red" ? "blue" : "red";
+        // console.log(`Turno de: ${this.currentTurn}`);
 
-        // Actualizar visibilidad de HUDs
-        this.swapHUDS();
+        // // Actualizar visibilidad de HUDs
+        // this.swapHUDS();
     }
     
     /**

@@ -17,9 +17,7 @@ export class PlayerActionMachine extends StateMachine{
         this._context = gameLoopMachine;
         this._moveState = new MoveState(this);
         this._fireState = new FireState(this);
-        this._airAttackState = new AirAttackState(this);
         this._endState = new EndState(this);
-        this._healState = new HealState(this);
 
         this._currentState = this._moveState;
         this._currentState.onStateEnter();
@@ -29,8 +27,6 @@ export class PlayerActionMachine extends StateMachine{
         let availableStates = Object.freeze({
             moveState: this._moveState,
             fireState: this._fireState,
-            airAttackState: this._airAttackState,
-            healState: this._healState,
             endState: this._endState,
         })
         return availableStates;

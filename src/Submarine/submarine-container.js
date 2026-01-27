@@ -15,7 +15,7 @@ export default class Submarine{
         this.data = config.data;
         this.name = this.data.name;
         this.gameManager = config.gamemanager;
-        // console.log(this.data)
+
         this.view = new SubmarineView2({scene:config.scene,submarine:this});
         this.hud = new SubmarineHUDv2({scene:config.scene,submarine:this});
         this.gameMatrix = config.gameMatrix;
@@ -28,6 +28,7 @@ export default class Submarine{
         this.maxMunition = this.data.munition;
         this.currentMunition = this.maxMunition;
         this.damage = config.data.damage;
+        this.order;
 
         this.initialize();
 
@@ -58,7 +59,6 @@ export default class Submarine{
         this.vertex = this.gameMatrix.vertexList[index];
         this.vertex.enter(this);
         this.gameMatrix.initSubmarine(this);
-
 
         this.gameMatrix.updateMap();
         this.view.updateView();

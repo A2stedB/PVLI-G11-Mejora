@@ -14,7 +14,9 @@ export class GameManager{
         this.gameMatrix = new GameMatrix(this.scene)
         this.gameloopMachine = new GameLoopMachine(this.scene);
         this.playerActionMachine = new PlayerActionMachine(this.scene,this.gameloopMachine);
-        this.submarine = [];
+
+        // O derecha 1 izquierda, orden de ronda
+        this.order = [];
 
         this.submarineData = JSON.parse(JSON.stringify(SubmarineData));
         this.redSub = new Submarine({x:3,y:3,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.S,data:this.submarineData.japan,gamemanager:this})
@@ -25,7 +27,8 @@ export class GameManager{
         this.currentHUD = this.blueSub.hud;
         this.currentHUD.setVisible(true);
         this.blueSub.updateView();
-
+        
+        this.flipCoin();
         this.blueSub.removeHP(90);
 
         this.initialize();
@@ -58,10 +61,14 @@ export class GameManager{
         }).setOrigin(0.5,0.5)
 
         // this.scene.add.existing(roundText);
+
+        // Primero ejecuta todo lo que hay dentro del scope y luego ya cambia de la escena
+        // console.log(this.submarine)
     }
 
     flipCoin(){
-        
+        this.scene.scene.pause();
+        this.scene.scene.launch("RandomSide",{gameManager:this})
     }
 
     setSubmarineExit(submarine,x,y){
@@ -73,5 +80,10 @@ export class GameManager{
         EventDispatch.removeAllListeners(Event.MOVE)
         EventDispatch.removeAllListeners(Event.SHOOT)
         this.scene.scene.start("GameOver",{winner:sub,reason:reason})
+    }
+
+    setOrder(){
+        this.gameloopMachine.setOrder(this.order);
+        
     }
 }

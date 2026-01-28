@@ -23,6 +23,7 @@ export class Player1 extends PlayerState{
         // EventDispatch.emit(Event.UPDATE_PLAYER_TEXT,"rojo")
         // this.submarine = this.stateMachine.getCurrentSubmarine()
         this.stateMachine._gameManager.setCurrentSubmarine(this._id);
+        console.log(this.stateMachine.getCurrentSubmarine(this._id).name)
         // this.submarine.updateView();
     }
     onStateExit(){

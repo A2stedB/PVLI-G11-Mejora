@@ -35,7 +35,7 @@ export class MoveState extends State{
 
     constructor(stateMachine){
         super(stateMachine);
-        this._name = "Move State"
+        this._name = "Move"
 
     }
     onStateEnter(){

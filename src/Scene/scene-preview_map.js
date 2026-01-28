@@ -15,16 +15,18 @@ export class MapPreView extends Phaser.Scene{
         let matrix = config.matrix;
         this.matrix = config.matrix
         
+        this.matrix.submarines[0].setVisible(true);
+        this.matrix.submarines[1].setVisible(true);
+
         // Texto para continuar
         let confirmKey = this.input.keyboard.addKey("SPACE");
-
-        // Hacer que parpadee
-        this.confirmText = this.add.text(this.screenWidth/2,this.screenHeight - UIdata.top + 40,"Press SPACE to continue",{fontSize:20,fontFamily:"Inconsolata"}).setOrigin(0.5,0.5);
+        this.confirmText = this.add.text(this.screenWidth/2,this.screenHeight - UIdata.top + 40,"Press SPACE to continue",{fontSize:20,fontFamily:"Inconsolata"}).setOrigin(0.5,0.5).setAlpha(0);
 
         console.log("Previewing map")
 
         confirmKey.on("down",()=>{
             matrix.setVisible(false);
+            this.hideSubmarine();
             config.closeCallback();
             this.scene.stop();
             // Reanudar escena principal
@@ -38,17 +40,82 @@ export class MapPreView extends Phaser.Scene{
         matrix.setAlpha(1);
 
         this.createTween();
+        this.descriptiveText();
     }
 
     createTween(){
+
         this.add.tween({
+            delay:3000,
             targets:this.confirmText,
             duration:1000,
-            repeat:-1,
+            repeat:0,
             props:{
-                alpha:0
+                alpha:1
             },
-            yoyo:true,
+            yoyo:false,
         })
+
+        let blink = (submarineSprite) =>{
+            this.add.tween({
+                targets:submarineSprite,
+                duration:2000,
+                repeat:-1,
+                props:{
+                    alpha:0
+                },
+                yoyo:true,
+            })
+        }
+
+        blink(this.matrix.submarines[0])
+        blink(this.matrix.submarines[1])
+
+        let offSetX = this.screenWidth / 4;
+        let mult = 1.5
+        let right = this.matrix.submarines[0];
+        let rightSubmarine = this.add.image(this.screenWidth/2 + offSetX * mult,this.screenHeight / 2,"sTop").
+                            setTint(right.submarine.data.color).
+                            setScale(0.18).
+                            setRotation(Phaser.Math.DegToRad(right.submarine.orientation.degree));
+
+        let left = this.matrix.submarines[1];
+        let leftSubmarine = this.add.image(this.screenWidth/2 - offSetX * mult,this.screenHeight / 2,"sTop").
+                            setTint(left.submarine.data.color).
+                            setScale(0.18).
+                            setRotation(Phaser.Math.DegToRad(left.submarine.orientation.degree));
+    }
+
+    descriptiveText(){
+        let left = this.matrix.submarines[1];
+        let right = this.matrix.submarines[0];
+
+        this.titleText = this.add.text(this.screenWidth/2,UIdata.top - 50,"Orientacion inicial",
+        {
+            fontFamily:"Inconsolata",
+            fontSize:30,
+            color: 'rgb(255, 255, 255)'
+        }).setOrigin(0.5,0.5)
+
+        let offSetY = this.screenHeight / 4;
+        let offSetX = this.screenWidth / 4;
+        let multX = 1.5
+        let fontSize = 20
+
+        let directionLeft = this.add.text(this.screenWidth/2 - offSetX * multX,this.screenHeight / 2 - offSetY,
+                                          `${left.submarine.orientation.string}`,
+                                          {fontSize:fontSize,fontFamily:"Inconsolata"}
+                                        ).setOrigin(0.5,0.5)
+        let directionRight = this.add.text(this.screenWidth/2 + offSetX * multX,this.screenHeight / 2 - offSetY,
+                                          `${right.submarine.orientation.string}`,
+                                          {fontSize:fontSize,fontFamily:"Inconsolata"}
+                                        ).setOrigin(0.5,0.5)
+    }
+
+    hideSubmarine(){
+        this.matrix.submarines[0].setAlpha(1);
+        this.matrix.submarines[1].setAlpha(1);
+        this.matrix.submarines[0].setVisible(false);
+        this.matrix.submarines[1].setVisible(false);
     }
 }

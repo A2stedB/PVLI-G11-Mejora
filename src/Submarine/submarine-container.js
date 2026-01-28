@@ -99,6 +99,7 @@ export default class Submarine{
     }
 
     shoot(direction){
+        
         let nextX = this.position.x + direction.vector.x;
         let nextY = this.position.y + direction.vector.y;
         let boardWidth = this.boardConfig.boardWidth;

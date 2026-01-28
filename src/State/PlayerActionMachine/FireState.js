@@ -39,7 +39,7 @@ export class FireState extends State{
 
     constructor(stateMachine){
         super(stateMachine);
-        this._name = "Fire State"
+        this._name = "Fire"
         this.scene = this.stateMachine.scene;
     }
 

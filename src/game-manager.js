@@ -17,19 +17,18 @@ export class GameManager{
         this.order = config.order;
 
         this.submarineData = JSON.parse(JSON.stringify(SubmarineData));
-        this.redSub = new Submarine({x:3,y:3,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.S,data:this.submarineData.japan,gamemanager:this})
-        this.blueSub = new Submarine({x:4,y:3,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:this.submarineData.china,gamemanager:this})
+        this.redSub = new Submarine({x:3,y:3,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.E,data:this.submarineData.japan,gamemanager:this})
+        this.blueSub = new Submarine({x:4,y:3,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.W,data:this.submarineData.china,gamemanager:this})
 
         this.submarine = [this.blueSub, this.redSub]
 
         
         this.blueSub.removeHP(90);
-        // Hacer el 50 50 antes de cargar todo esto
         this.currentSubmarine = this.getSubmarineById(this.order[0]);
         this.currentView = this.currentSubmarine.view;
         this.currentHUD = this.currentSubmarine.hud;
 
-        this.gameloopMachine = new GameLoopMachine({scene:this.scene,gameManager:this,order:this.order,limit:3});
+        this.gameloopMachine = new GameLoopMachine({scene:this.scene,gameManager:this,order:this.order,limit:10});
         this.playerActionMachine = new PlayerActionMachine(this.scene,this.gameloopMachine);
         
         this.initialize();
@@ -50,14 +49,14 @@ export class GameManager{
         {
             fontFamily:"Outfit",
             fontSize:30,
-            color: 'rgb(72, 70, 163)'
+            color: 'rgb(255, 255, 255)'
         }).setOrigin(0.5,0.5)
         
         this.actionText = this.scene.add.text(centerX,centerY,"Accion",
         {
             fontFamily:"Outfit",
             fontSize:30,
-            color: 'rgb(72, 70, 163)'
+            color: 'rgb(255, 255, 255)'
         }).setOrigin(0.5,0.5)
 
         this.mapPreview();

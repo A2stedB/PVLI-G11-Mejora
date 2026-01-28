@@ -3,18 +3,22 @@ const Orientation = Object.freeze({
     N: {
         degree:0,
         vector: new Vector(0,-1),
+        string:"Norte"
     },
     E: {
         degree:90,
-        vector: new Vector(1,0)
+        vector: new Vector(1,0),
+        string:"Este"
     },
     S: {
         degree:180,
         vector: new Vector(0,1),
+        string:"Sur"
     },
     W:{
         degree:270,
         vector: new Vector(-1,0),
+        string:"Oeste"
     },
 
     getAvailableDirection(direction) {

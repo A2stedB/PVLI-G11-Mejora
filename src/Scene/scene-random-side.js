@@ -13,7 +13,6 @@ export class RandomSide extends Phaser.Scene{
 
         this.cameras.main.setBackgroundColor("#d5d5d5");
         let rnd = Phaser.Math.Between(0,1);
-        console.log(rnd);
         let width = this.cameras.main.width
         let height = this.cameras.main.height
         let arrow = this.add.image(width/2,height/2,"Arrow").setScale(0.5);
@@ -35,9 +34,6 @@ export class RandomSide extends Phaser.Scene{
         order.push(rnd);
         if(rnd == 1) order.push(0);
         else order.push(1);
-        console.log(order)
-
-        // console.log(order)
 
         this.time.delayedCall(2000,()=>{
             this.scene.stop();

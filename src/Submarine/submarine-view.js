@@ -50,10 +50,11 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         this.createWindowLayer();
 
         this.enemy = this.scene.add.image(this.centerX, this.centerY, "sLeft" ).setDisplaySize(250,250).setVisible(true);
-        this.enemy.setDepth(1);
+        this.enemy.setDepth(-3);
         this.setVisible(false)
         this.add(this.enemy);
 
+        
         this.torpedo = this.scene.add.circle(this.centerX,this.centerY,20,0x000000,1).setVisible(false).setDepth(-2);
         this.add(this.torpedo)
 
@@ -133,7 +134,6 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         view.moveEffect = null;
 
         let window = this.scene.add.container(x,y);
-        // console.log(window.x,window.y)
 
         //0 0 respecto del "centro" del container...
         let submarineWindow = this.scene.add.image(0,0,"SubWindow");
@@ -232,18 +232,18 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
     // Lo que funciona funciona, y se deja tal cual...
     checkRotations(me, enemy, side)
     {
-        let mod = (n, m) => (n % m + m) % m
-        const angles = { [Orientation.N]: 0, [Orientation.E]: 90, [Orientation.S]: 180, [Orientation.W]: 270 };
+        // El % no es %
+        let mod = (n, m) =>  {return (n % m + m) % m}
 
         const sideOffsets = [-90, 0, 90];
-        const myDirectionAngle = angles[me.orientation] + sideOffsets[side];
+        const myDirectionAngle = me.orientation.degree + sideOffsets[side]; // Poner la vista de "frente" respecto al enemigo
 
-        let diff = mod(angles[enemy.orientation] - myDirectionAngle + 360,360);
-        // console.log(diff);
+        let diff = mod(enemy.orientation.degree - myDirectionAngle + 360,360);
+
         if (diff === 0) this.changeSprite("back");
         else if (diff === 180) this.changeSprite("front");
-        else if (diff === 90) this.changeSprite("right");
-        else if (diff === 270) this.changeSprite("left");
+        else if (diff === 90) this.changeSprite("left");
+        else if (diff === 270) this.changeSprite("right");
 
         //48 IFS!!!!!
     }

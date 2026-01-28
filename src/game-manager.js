@@ -18,7 +18,7 @@ export class GameManager{
 
         this.submarineData = JSON.parse(JSON.stringify(SubmarineData));
         this.redSub = new Submarine({x:3,y:3,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.S,data:this.submarineData.japan,gamemanager:this})
-        this.blueSub = new Submarine({x:3,y:4,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:this.submarineData.china,gamemanager:this})
+        this.blueSub = new Submarine({x:4,y:3,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:this.submarineData.china,gamemanager:this})
 
         this.submarine = [this.blueSub, this.redSub]
 

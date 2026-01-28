@@ -20,10 +20,13 @@ export class Player1 extends PlayerState{
     }
 
     onStateEnter(){
-        EventDispatch.emit(Event.UPDATE_PLAYER_TEXT,"rojo")
+        // EventDispatch.emit(Event.UPDATE_PLAYER_TEXT,"rojo")
+        // this.submarine = this.stateMachine.getCurrentSubmarine()
+        this.stateMachine._gameManager.setCurrentSubmarine(this._id);
+        // this.submarine.updateView();
     }
     onStateExit(){
-        EventDispatch.emit(Event.END_TURN);
+        // EventDispatch.emit(Event.END_TURN);
     }
     
 

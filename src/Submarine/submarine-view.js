@@ -186,8 +186,8 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
                 let boardWidth = this.submarine.boardConfig.boardWidth;
                 let index = y * boardWidth + x;
                 let vertex = matrix.vertexList[index];
+                // console.log(vertex.position, vertex.submarine)
                 if(vertex.submarine != null){
-                    // console.log(this.submarine.position);
                     this.checkRotations(this.submarine,vertex.submarine,i)
                     this.enemy.setScale(0.2);
                     this.enemy.setPosition(window.container.x,window.container.y);

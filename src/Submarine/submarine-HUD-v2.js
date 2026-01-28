@@ -25,8 +25,10 @@ export class SubmarineHUDv2 extends Phaser.GameObjects.Container{
         this.background.setTint(this.submarine.data.color)
         this.add(this.background);
 
-        let top = this.scene.add.image(0,0,"Submarine HUD top").setOrigin(0,0).setDisplaySize(800,UIdata.top).setTint(this.submarine.data.color)
-        // this.add(this.top)
+        this.top = this.scene.add.image(0,0,"Submarine HUD top").setOrigin(0,0).setDisplaySize(800,UIdata.top).setTint(this.submarine.data.color)
+        let topY = 0 - height + UIdata.HUD.height;
+        this.top.setPosition(0,topY)
+        this.add(this.top)
         
         // La barra de vida
         this.healthBarContainer = this.scene.add.container(60,alignTop)
@@ -63,6 +65,5 @@ export class SubmarineHUDv2 extends Phaser.GameObjects.Container{
 
         // Update munition count
         this.munitionNum.setText(`${submarine.currentMunition} / ${submarine.maxMunition}`)
-        // console.log("HUD updated")
     }
 }

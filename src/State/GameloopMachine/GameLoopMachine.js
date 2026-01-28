@@ -19,14 +19,17 @@ import { CheckState } from "./CheckState.js";
  */
 export class GameLoopMachine extends StateMachine{
 
-    constructor(scene){
-        super(scene);
+    constructor(config){
+        super(config.scene);
+        
+        this._scenescene = config.scene;
+        this._gameManager = config.gameManager;
         this._round = 0;
         this._name = "Gameloop Machine";
-        this._player1 = new Player1(this,1);
-        this._player2 = new Player2(this,2);
+        this._player1 = new Player1(this,config.order[0]);
+        this._player2 = new Player2(this,config.order[1]);
         this._checkState = new CheckState(this);
-        this.playerList = [ this._player1, this._player2];
+        this.playerList = [this._player1, this._player2];
 
         this._currentState = this._checkState;
         this._currentState.onStateEnter();
@@ -62,6 +65,10 @@ export class GameLoopMachine extends StateMachine{
         for(let i = 0; i < 2;++i){
             this.playerList[i]._id = order[i]; 
         }
-        console.log("finish ordering")
+    }
+
+    getCurrentSubmarine() {
+        let currentId = this._currentState._id;
+        return this._gameManager.getSubmarineById(currentId);
     }
 }

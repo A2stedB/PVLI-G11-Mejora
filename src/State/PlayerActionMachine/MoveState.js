@@ -43,15 +43,17 @@ export class MoveState extends State{
         EventDispatch.emit(Event.UPDATE_PLAYER_ACTION_TEXT,"Move");
 
         let currentPlayer = this.stateMachine.context.currentState.id
+        let submarine = this.stateMachine.context.getCurrentSubmarine();
+        // console.log(submarine)
 
-        if(currentPlayer == 1){
+        if(currentPlayer == 0){
             //Enable player 1 key
             this.up = this.stateMachine.scene.input.keyboard.addKey("W")
             this.down = this.stateMachine.scene.input.keyboard.addKey('S');
             this.left = this.stateMachine.scene.input.keyboard.addKey('A');
             this.right = this.stateMachine.scene.input.keyboard.addKey('D');
         }
-        else if(currentPlayer == 2){
+        else if(currentPlayer == 1){
             this.up = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
             this.down = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
             this.left = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -59,25 +61,24 @@ export class MoveState extends State{
         }
 
         this.up.on("down",()=>{
-            EventDispatch.emit(Event.MOVE,currentPlayer,0);
+            EventDispatch.emit(Event.MOVE,submarine,0);
             this.transition();
         })
         this.down.on("down",()=>{
-            EventDispatch.emit(Event.MOVE,currentPlayer,null);
+            EventDispatch.emit(Event.MOVE,submarine,null);
             this.transition();
         })
         this.left.on("down",()=>{
-            EventDispatch.emit(Event.MOVE,currentPlayer,-90);
+            EventDispatch.emit(Event.MOVE,submarine,-90);
             this.transition();
         })
         this.right.on("down",()=>{
-            EventDispatch.emit(Event.MOVE,currentPlayer,90);
+            EventDispatch.emit(Event.MOVE,submarine,90);
             this.transition();
         })
     }
 
     onStateExit(){
-        EventDispatch.emit(Event.MOVE_DRAGON);
         EventDispatch.emit(Event.UPDATE_MAP);
         this.up.off("down");
         this.down.off("down");

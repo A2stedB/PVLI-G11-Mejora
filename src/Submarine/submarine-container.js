@@ -33,12 +33,14 @@ export default class Submarine{
         this.initialize();
 
         EventDispatch.on(Event.MOVE,(c,direction)=>{
-            let possibleDirection = Orientation.getAvailableDirection(this.orientation);
-            let dir;
-            if(direction == -90) dir = possibleDirection[0];
-            else if(direction == 0) dir = possibleDirection[1];
-            else if(direction == 90) dir = possibleDirection[2];
-            if(direction != null) this.move(dir);
+            if(c == this){
+                let possibleDirection = Orientation.getAvailableDirection(this.orientation);
+                let dir;
+                if(direction == -90) dir = possibleDirection[0];
+                else if(direction == 0) dir = possibleDirection[1];
+                else if(direction == 90) dir = possibleDirection[2];
+                if(direction != null) this.move(dir);
+            }
         })
 
         EventDispatch.on(Event.SHOOT,(c,direction)=>{

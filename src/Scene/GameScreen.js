@@ -42,7 +42,7 @@ export class GameScreen extends Phaser.Scene{
     }
     
     //La dimension de la tabla tiene que ser un numero impar
-    create(){
+    create(data){
 
         // this.instruction = new InstructionUI({scene:this,fontSize:20})
         // let roundText = this.add.text(370,550,"Round 0",
@@ -76,7 +76,7 @@ export class GameScreen extends Phaser.Scene{
         // this.gameloopMachine = new GameLoopMachine(this);
         // this.playerActionMachine = new PlayerActionMachine(this,this.gameloopMachine);
 
-        this.gameManager = new GameManager({scene:this});
+        this.gameManager = new GameManager({scene:this,order:data.order});
 
         // this.tablero = new GameBoard(this);
 

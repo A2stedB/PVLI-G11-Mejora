@@ -62,7 +62,7 @@ export class Menu2 extends Phaser.Scene {
             '▶ EMPEZAR PARTIDA',
             () => {
                 console.log("Iniciando juego...");
-                this.scene.start('GameScreen', {tutorial: false});
+                this.scene.start('RandomSide', {tutorial: false});
             },
             true,    // Botón primario
             'ENTER'  // Tecla

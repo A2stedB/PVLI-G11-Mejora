@@ -169,7 +169,7 @@ export class GameOverScene extends Phaser.Scene {
             '↻ REVANCHA',
             () => {
                 this.scene.stop(this);
-                this.scene.start("GameScreen")
+                this.scene.start("RandomSide")
                 },
             true,
             'R'

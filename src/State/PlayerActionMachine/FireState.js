@@ -48,36 +48,37 @@ export class FireState extends State{
         EventDispatch.emit(Event.UPDATE_PLAYER_ACTION_TEXT,"Fire");
         
         let currentPlayer = this.stateMachine.context.currentState.id
+        let submarine = this.stateMachine.context.getCurrentSubmarine();
         
-        if(currentPlayer == 1){
+        if(currentPlayer == 0){
             //Enable player 1 key
             this.up = this.stateMachine.scene.input.keyboard.addKey("W")
             this.down = this.stateMachine.scene.input.keyboard.addKey('S');
             this.left = this.stateMachine.scene.input.keyboard.addKey('A');
             this.right = this.stateMachine.scene.input.keyboard.addKey('D');
         }
-        else if(currentPlayer== 2){
+        else if(currentPlayer== 1){
             this.up = this.stateMachine.scene.input.keyboard.addKey("UP");
             this.down = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
             this.left = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
             this.right = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         }
 
-        this.confirmButton = [this.left.keyCode,this.right.keyCode];
+        // this.confirmButton = [this.left.keyCode,this.right.keyCode];
 
         this.setEvent();
 
         this.up.on("down",()=>{
-            EventDispatch.emit(Event.SHOOT,this.confirmButton,0);
+            EventDispatch.emit(Event.SHOOT,submarine,0);
         })
         this.down.on("down",()=>{
             this.transition();
         })
         this.left.on("down",()=>{
-            EventDispatch.emit(Event.SHOOT,this.confirmButton,-90);
+            EventDispatch.emit(Event.SHOOT,submarine,-90);
         })
         this.right.on("down",()=>{
-            EventDispatch.emit(Event.SHOOT,this.confirmButton,90);
+            EventDispatch.emit(Event.SHOOT,submarine,90);
         })
     }
 

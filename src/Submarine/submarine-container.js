@@ -44,12 +44,14 @@ export default class Submarine{
         })
 
         EventDispatch.on(Event.SHOOT,(c,direction)=>{
-            let possibleDirection = Orientation.getAvailableDirection(this.orientation);
-            let dir;
-            if(direction == -90) dir = possibleDirection[0];
-            else if(direction == 0) dir = possibleDirection[1];
-            else if(direction == 90) dir = possibleDirection[2];
-            if(direction != null) this.shoot(dir);
+            if(c == this){
+                let possibleDirection = Orientation.getAvailableDirection(this.orientation);
+                let dir;
+                if(direction == -90) dir = possibleDirection[0];
+                else if(direction == 0) dir = possibleDirection[1];
+                else if(direction == 90) dir = possibleDirection[2];
+                if(direction != null) this.shoot(dir);
+            }
         })
 
     }

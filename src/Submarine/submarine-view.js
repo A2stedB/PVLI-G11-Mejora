@@ -190,6 +190,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
                 if(vertex.submarine != null){
                     this.checkRotations(this.submarine,vertex.submarine,i)
                     this.enemy.setScale(0.2);
+                    this.enemy.setTint(vertex.submarine.data.color)
                     this.enemy.setPosition(window.container.x,window.container.y);
                     this.enemy.setVisible(true);
                 }

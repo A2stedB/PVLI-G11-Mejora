@@ -31,8 +31,8 @@ let config = {
     },
 
 	scene: [
-		GameScreen, 
 		RandomSide,
+		GameScreen, 
 		Menu2, 
 		Flappy_Dragon,          
 		FireStateWindow,       

@@ -21,7 +21,7 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         this.submarines = [];
         this.dragon;
 
-        this.toggleKey = this.scene.input.keyboard.addKey("P");
+        this.toggleKey = this.scene.input.keyboard.addKey("M");
         
         this.showingSubmarine = true
 

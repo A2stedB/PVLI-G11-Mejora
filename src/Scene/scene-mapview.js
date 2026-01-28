@@ -11,8 +11,8 @@ export class MapView extends Phaser.Scene{
         let matrix = config.matrix;
         this.matrix = config.matrix
         
-        let toggleKey = this.input.keyboard.addKey("P");
-        let toggleSubmarineViewKey = this.input.keyboard.addKey("O");
+        let toggleKey = this.input.keyboard.addKey("M");
+        let toggleSubmarineViewKey = this.input.keyboard.addKey("N");
 
         toggleKey.on("down",()=>{
             matrix.setVisible(false);

@@ -7,6 +7,7 @@ import { RepairMinigame } from "./Minigames/RepairMinigame.js";
 import { GameOverScene } from "./Scene/GameOverScene.js"; 
 import {MapView} from "./Scene/scene-mapview.js";
 import { RandomSide } from "./Scene/scene-random-side.js";
+import { MapPreView } from "./Scene/scene-preview_map.js";
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -39,7 +40,8 @@ let config = {
 		MinigameDialogScene,    
 		RepairMinigame,
 		GameOverScene,
-        MapView,      
+        MapView,
+		MapPreView,    
 	],
 };
 

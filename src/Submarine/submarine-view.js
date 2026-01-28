@@ -27,8 +27,8 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         this.show = true;
         this.view = {};
         this.viewArray = [];
-        this.toggleKey = this.scene.input.keyboard.addKey('M');
-        this.hideWater = this.scene.input.keyboard.addKey('H');
+        // this.toggleKey = this.scene.input.keyboard.addKey('M');
+        // this.hideWater = this.scene.input.keyboard.addKey('H');
         this.enemy = null;
 
         this.initialize();
@@ -58,10 +58,10 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         this.torpedo = this.scene.add.circle(this.centerX,this.centerY,20,0x000000,1).setVisible(false).setDepth(-2);
         this.add(this.torpedo)
 
-        this.toggleKey.on("down",()=>{
-            this.show = !this.show;
-            this.setVisible(this.show);
-        }) 
+        // this.toggleKey.on("down",()=>{
+        //     this.show = !this.show;
+        //     this.setVisible(this.show);
+        // }) 
 
         // this.hideWater.on("down",()=>{
         //     Object.entries(this.view).forEach(element => {

@@ -33,8 +33,7 @@ export class GameManager{
         this.playerActionMachine = new PlayerActionMachine(this.scene,this.gameloopMachine);
         
         this.initialize();
-        this.currentTurn = 0;
-  
+        this.currentTurn = 1;
     }
 
     initialize(){
@@ -61,6 +60,7 @@ export class GameManager{
             color: 'rgb(72, 70, 163)'
         }).setOrigin(0.5,0.5)
 
+        this.mapPreview();
         // this.scene.add.existing(roundText);
 
         // Primero ejecuta todo lo que hay dentro del scope y luego ya cambia de la escena
@@ -94,5 +94,11 @@ export class GameManager{
     getSubmarineById(id) {
         // console.log(this.submarine)
         return this.submarine[id];
+    }
+
+    mapPreview(){
+        let gameScreen = this.scene;
+        this.scene.scene.pause();
+        this.scene.scene.launch("MapPreview",{ matrix: this.gameMatrix , closeCallback:()=>{gameScreen.add.existing(this.gameMatrix);}})
     }
 }

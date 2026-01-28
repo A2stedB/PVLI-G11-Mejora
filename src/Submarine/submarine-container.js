@@ -150,14 +150,12 @@ export default class Submarine{
     removeHP(damage){
         this.currentHealth -= damage;
         if(this.currentHealth < 0) this.currentHealth = 0;
-        // Si ya esta hundido , entonces manda evento
     }
 
     checkExit(vertex){
         if(this == vertex.exit){
             console.log("Exit reached");
             this.gameManager.endOfGame(this,VictoryReason.exitReached);
-            // Mandar el evento de ganar
         }
     }
 

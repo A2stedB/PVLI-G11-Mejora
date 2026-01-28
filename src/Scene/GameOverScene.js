@@ -34,7 +34,6 @@ export class GameOverScene extends Phaser.Scene {
      * @param {Object} data - Datos del fin de juego
      * @param {string} data.winner - 'red' o 'blue'
      * @param {string} data.reason - 'elimination' o 'escape'
-     * @param {Object} data.stats - Estadísticas de la partida
      */
     init(data) {
         this.winner = data.winner;
@@ -48,18 +47,30 @@ export class GameOverScene extends Phaser.Scene {
         const w = this.cameras.main.width;
         const h = this.cameras.main.height;
         
-        // PASO 1: Fondo oscuro
         const overlay = createOverlay(this, 0.95);
         overlay.setDepth(1000);
         
-        // PASO 2: Determinar datos del ganador
-        const winnerColorHex = this.winner.color
-        const winnerName = this.winner.name
-        
-        // PASO 3: Título principal según razón de victoria
-        const titleText = this.reason === VictoryReason.defeatEnemy 
-            ? '¡SUBMARINO DESTRUIDO!' 
-            : '¡ZONA DE ESCAPE ALCANZADA!';
+        let winnerColorHex;
+        let winnerName;
+        if(this.winner != null){
+            winnerColorHex = this.winner.color
+            winnerName = this.winner.name
+        }
+
+        let titleText;
+        console.log(this.reason)
+        switch(this.reason){
+            case VictoryReason.exitReached:
+                titleText = "Ha llegado a la salida"
+                break;
+            case VictoryReason.defeatEnemy:
+                titleText = "Ha hundido al enenmigo"
+                break;
+            case VictoryReason.even:
+                titleText = "Paz en el mundo, oleee"
+                break;
+                
+        }
         
         const title = createStyledText(this, w/2, 100, titleText, 'title');
         title.setFontSize('42px');
@@ -69,31 +80,33 @@ export class GameOverScene extends Phaser.Scene {
         title.setDepth(1001);
         
         // PASO 4: Anuncio del ganador con efecto de brillo
-        const winnerText = this.add.text(
-            w/2, 180, 
-            `VICTORIA: ${winnerName}`, 
-            {
-                fontSize: '48px',
-                color: winnerColorHex,
-                fontFamily: 'Arial',
-                fontStyle: 'bold',
-                stroke: '#000000',
-                strokeThickness: 8,
-                align: 'center'
-            }
-        );
-        winnerText.setOrigin(0.5);
-        winnerText.setDepth(1001);
+        if(this.winner != null){
+            const winnerText = this.add.text(
+                w/2, 180, 
+                `VICTORIA: ${winnerName}`, 
+                {
+                    fontSize: '48px',
+                    color: winnerColorHex,
+                    fontFamily: 'Arial',
+                    fontStyle: 'bold',
+                    stroke: '#000000',
+                    strokeThickness: 8,
+                    align: 'center'
+                }
+            );
+            winnerText.setOrigin(0.5);
+            winnerText.setDepth(1001);
+        }
         
         // Animación de brillo del ganador
-        this.tweens.add({
-            targets: winnerText,
-            scale: 1.1,
-            duration: 1000,
-            yoyo: true,
-            repeat: -1,
-            ease: 'Sine.easeInOut'
-        });
+        // this.tweens.add({
+        //     targets: winnerText,
+        //     scale: 1.1,
+        //     duration: 1000,
+        //     yoyo: true,
+        //     repeat: -1,
+        //     ease: 'Sine.easeInOut'
+        // });
         
         // // PASO 5: Panel de estadísticas
         // this.createStatsPanel(w, h);
@@ -102,7 +115,7 @@ export class GameOverScene extends Phaser.Scene {
         this.createButtons(w, h);
         
         // // PASO 7: Efecto de celebración
-        this.createCelebrationEffect(w/2, h/2, winnerColorHex);
+        // this.createCelebrationEffect(w/2, h/2, winnerColorHex);
     }
     
     /**

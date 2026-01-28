@@ -36,23 +36,22 @@ export class CheckState extends State {
      */
     onStateEnter() {
         
-        // PASO 2: RESOLVER ATAQUES AÉREOS PENDIENTES
-        this.resolveAirAttacks();
+        // // PASO 2: RESOLVER ATAQUES AÉREOS PENDIENTES
+        // this.resolveAirAttacks();
 
-        // PASO 3: Actualizar ronda
         this.stateMachine.updateRound();
-        EventDispatch.emit(Event.UPDATE_ROUND, this.stateMachine.round);
+        EventDispatch.emit(Event.UPDATE_ROUND, this.stateMachine.round); // Quitar esto
         
         console.log(`\n=== RONDA ${this.stateMachine.round} ===`);
         
         // PASO 4: VERIFICAR CONDICIONES DE VICTORIA/DERROTA 
-        const gameEnded = this.checkGameEnd();
+        // const gameEnded = this.checkGameEnd();
         
-        if (gameEnded) {
-            // El juego terminó, no continuar al siguiente jugador
-            console.log(" Juego terminado");
-            return;
-        }
+        // if (gameEnded) {
+        //     // El juego terminó, no continuar al siguiente jugador
+        //     console.log(" Juego terminado");
+        //     return;
+        // }
         
         // PASO 5: Continuar con el siguiente turno
         this.transition();
@@ -78,81 +77,81 @@ export class CheckState extends State {
      * @returns {boolean} true si el juego terminó
      */
     checkGameEnd() {
-        let board = null;
+        // let board = null;
         
-        // Obtener el tablero
-        EventDispatch.emit(Event.GET_GAMEBOARD, {
-            boardCallback: (b) => { board = b; }
-        });
+        // // Obtener el tablero
+        // EventDispatch.emit(Event.GET_GAMEBOARD, {
+        //     boardCallback: (b) => { board = b; }
+        // });
         
-        if (!board) {
-            return false;
-        }
+        // if (!board) {
+        //     return false;
+        // }
         
-        const sub1 = board.submarines.red;
-        const sub2 = board.submarines.blue;
+        // const sub1 = board.submarines.red;
+        // const sub2 = board.submarines.blue;
         
-        // Logging de posiciones actuales
-        console.log(`\n === VERIFICACIÓN DE FIN DE JUEGO ===`);
-        console.log(`   Submarino Rojo: (${sub1.position.x}, ${sub1.position.y})`);
-        console.log(`   Submarino Azul: (${sub2.position.x}, ${sub2.position.y})`);
+        // // Logging de posiciones actuales
+        // console.log(`\n === VERIFICACIÓN DE FIN DE JUEGO ===`);
+        // console.log(`   Submarino Rojo: (${sub1.position.x}, ${sub1.position.y})`);
+        // console.log(`   Submarino Azul: (${sub2.position.x}, ${sub2.position.y})`);
         
-        //  1. VICTORIA POR ELIMINACIÓN 
-        if (sub1.isSunk()) {
-            console.log("¡Submarino ROJO destruido!");
-            this.endGame('blue', 'elimination', board);
-            return true;
-        }
+        // //  1. VICTORIA POR ELIMINACIÓN 
+        // if (sub1.isSunk()) {
+        //     console.log("¡Submarino ROJO destruido!");
+        //     this.endGame('blue', 'elimination', board);
+        //     return true;
+        // }
         
-        if (sub2.isSunk()) {
-            console.log("¡Submarino AZUL destruido!");
-            this.endGame('red', 'elimination', board);
-            return true;
-        }
+        // if (sub2.isSunk()) {
+        //     console.log("¡Submarino AZUL destruido!");
+        //     this.endGame('red', 'elimination', board);
+        //     return true;
+        // }
         
-        //  2. VICTORIA POR ESCAPE 
-        // Verificación robusta de la estructura de exitZones
-        let redZone = null;
-        let blueZone = null;
+        // //  2. VICTORIA POR ESCAPE 
+        // // Verificación robusta de la estructura de exitZones
+        // let redZone = null;
+        // let blueZone = null;
         
-        if (board.exitZones) {
-            // Intentar diferentes formas de acceso a las zonas
-            if (board.exitZones.red && board.exitZones.blue) {
-                // Acceso directo
-                redZone = board.exitZones.red;
-                blueZone = board.exitZones.blue;
-            } else if (board.exitZones.zones) {
-                // Acceso a través de propiedad 'zones'
-                redZone = board.exitZones.zones.red;
-                blueZone = board.exitZones.zones.blue;
-            } else if (board.exitZoneSystem && board.exitZoneSystem.zones) {
-                // Acceso a través del sistema
-                redZone = board.exitZoneSystem.zones.red;
-                blueZone = board.exitZoneSystem.zones.blue;
-            }
+        // if (board.exitZones) {
+        //     // Intentar diferentes formas de acceso a las zonas
+        //     if (board.exitZones.red && board.exitZones.blue) {
+        //         // Acceso directo
+        //         redZone = board.exitZones.red;
+        //         blueZone = board.exitZones.blue;
+        //     } else if (board.exitZones.zones) {
+        //         // Acceso a través de propiedad 'zones'
+        //         redZone = board.exitZones.zones.red;
+        //         blueZone = board.exitZones.zones.blue;
+        //     } else if (board.exitZoneSystem && board.exitZoneSystem.zones) {
+        //         // Acceso a través del sistema
+        //         redZone = board.exitZoneSystem.zones.red;
+        //         blueZone = board.exitZoneSystem.zones.blue;
+        //     }
             
-            if (redZone && blueZone) {
-            } else {
-                console.warn(`  No se encontraron las zonas de escape`);
-                console.log(`   Estructura de board.exitZones:`, board.exitZones);
-            }
-        } else {
-            console.warn(`  board.exitZones no existe`);
-        }
+        //     if (redZone && blueZone) {
+        //     } else {
+        //         console.warn(`  No se encontraron las zonas de escape`);
+        //         console.log(`   Estructura de board.exitZones:`, board.exitZones);
+        //     }
+        // } else {
+        //     console.warn(`  board.exitZones no existe`);
+        // }
         
-        // Verificar escape del submarino rojo
-        if (redZone && this.checkEscapeZone(sub1, redZone)) {
-            this.endGame('red', 'escape', board);
-            return true;
-        }
+        // // Verificar escape del submarino rojo
+        // if (redZone && this.checkEscapeZone(sub1, redZone)) {
+        //     this.endGame('red', 'escape', board);
+        //     return true;
+        // }
         
-        // Verificar escape del submarino azul
-        if (blueZone && this.checkEscapeZone(sub2, blueZone)) {
-            this.endGame('blue', 'escape', board);
-            return true;
-        }
-        //  No hay victoria, el juego continúa
-        return false;
+        // // Verificar escape del submarino azul
+        // if (blueZone && this.checkEscapeZone(sub2, blueZone)) {
+        //     this.endGame('blue', 'escape', board);
+        //     return true;
+        // }
+        // //  No hay victoria, el juego continúa
+        // return false;
     }
 
     /**
@@ -164,43 +163,43 @@ export class CheckState extends State {
      * @returns {boolean} true si el submarino está en la zona
      */
     checkEscapeZone(submarine, zone) {
-        // Verificación de null/undefined
-        if (!zone) {
-            console.error(`Zona de escape null para submarino ${submarine ? submarine.name : 'unknown'}`);
-            return false;
-        }
+        // // Verificación de null/undefined
+        // if (!zone) {
+        //     console.error(`Zona de escape null para submarino ${submarine ? submarine.name : 'unknown'}`);
+        //     return false;
+        // }
         
-        if (!submarine || !submarine.position) {
-            console.error(`Submarino o posición null`);
-            return false;
-        }
+        // if (!submarine || !submarine.position) {
+        //     console.error(`Submarino o posición null`);
+        //     return false;
+        // }
         
-        // Convertir a números para asegurar comparación correcta
-        const subX = Number(submarine.position.x);
-        const subY = Number(submarine.position.y);
-        const zoneX = Number(zone.x);
-        const zoneY = Number(zone.y);
+        // // Convertir a números para asegurar comparación correcta
+        // const subX = Number(submarine.position.x);
+        // const subY = Number(submarine.position.y);
+        // const zoneX = Number(zone.x);
+        // const zoneY = Number(zone.y);
         
-        // Verificar que las conversiones funcionaron
-        if (isNaN(subX) || isNaN(subY) || isNaN(zoneX) || isNaN(zoneY)) {
-            console.error(` Error al convertir coordenadas a números`);
-            console.error(` Sub: (${submarine.position.x}, ${submarine.position.y})`);
-            console.error(` Zone: (${zone.x}, ${zone.y})`);
-            return false;
-        }
+        // // Verificar que las conversiones funcionaron
+        // if (isNaN(subX) || isNaN(subY) || isNaN(zoneX) || isNaN(zoneY)) {
+        //     console.error(` Error al convertir coordenadas a números`);
+        //     console.error(` Sub: (${submarine.position.x}, ${submarine.position.y})`);
+        //     console.error(` Zone: (${zone.x}, ${zone.y})`);
+        //     return false;
+        // }
         
-        // Verificación de coincidencia
-        const xMatch = subX === zoneX;
-        const yMatch = subY === zoneY;
-        const isInZone = xMatch && yMatch;
+        // // Verificación de coincidencia
+        // const xMatch = subX === zoneX;
+        // const yMatch = subY === zoneY;
+        // const isInZone = xMatch && yMatch;
 
-        if (isInZone) {
-            console.log(` ¡${submarine.name.toUpperCase()} ESTÁ EN LA ZONA DE ESCAPE!`);
-        } else {
-            console.log(` No está en la zona de escape`);
-        }
+        // if (isInZone) {
+        //     console.log(` ¡${submarine.name.toUpperCase()} ESTÁ EN LA ZONA DE ESCAPE!`);
+        // } else {
+        //     console.log(` No está en la zona de escape`);
+        // }
         
-        return isInZone;
+        // return isInZone;
     }
 
     /**
@@ -211,41 +210,41 @@ export class CheckState extends State {
      * @param {GameBoard} board - El tablero del juego
      */
     endGame(winner, reason, board) {
-        console.log(`\n=== FIN DEL JUEGO ===`);
-        console.log(`   Ganador: ${winner.toUpperCase()}`);
-        console.log(`   Razón: ${reason === 'escape' ? 'Llegó a la salida' : 'Eliminó al enemigo'}`);
-        console.log(`====================\n`);
+        // console.log(`\n=== FIN DEL JUEGO ===`);
+        // console.log(`   Ganador: ${winner.toUpperCase()}`);
+        // console.log(`   Razón: ${reason === 'escape' ? 'Llegó a la salida' : 'Eliminó al enemigo'}`);
+        // console.log(`====================\n`);
         
-        const stats = this.collectStats(board);
+        // const stats = this.collectStats(board);
         
-        const phaserScene = this.stateMachine.scene;
+        // const phaserScene = this.stateMachine.scene;
         
-        if (!phaserScene) {
-            console.error(" ERROR: No se pudo acceder a la escena de Phaser");
-            return;
-        }
+        // if (!phaserScene) {
+        //     console.error(" ERROR: No se pudo acceder a la escena de Phaser");
+        //     return;
+        // }
         
-        if (!phaserScene.scene) {
-            console.error(" ERROR: phaserScene no tiene propiedad 'scene'");
-            return;
-        }
+        // if (!phaserScene.scene) {
+        //     console.error(" ERROR: phaserScene no tiene propiedad 'scene'");
+        //     return;
+        // }
         
-        console.log(" Lanzando pantalla de Game Over");
+        // console.log(" Lanzando pantalla de Game Over");
         
-        try {
-            //Desubscribir todos los eventos
-            EventDispatch.shutdown()
-            phaserScene.scene.stop(phaserScene.scene);
+        // try {
+        //     //Desubscribir todos los eventos
+        //     EventDispatch.shutdown()
+        //     phaserScene.scene.stop(phaserScene.scene);
             
-            phaserScene.scene.launch('GameOver', {
-                winner: winner,
-                reason: reason,
-                stats: stats
-            });
+        //     phaserScene.scene.launch('GameOver', {
+        //         winner: winner,
+        //         reason: reason,
+        //         stats: stats
+        //     });
             
-        } catch (error) {
-            console.error("ERROR al lanzar Game Over:", error);
-        }
+        // } catch (error) {
+        //     console.error("ERROR al lanzar Game Over:", error);
+        // }
     }
 
     /**
@@ -255,21 +254,21 @@ export class CheckState extends State {
      * @returns {Object} Objeto con las estadísticas
      */
     collectStats(board) {
-        const stats = {
-            totalTurns: this.stateMachine.round * 2, // 2 turnos por ronda
-            hits: 0, // TODO: Implementar tracking de hits
-            resourcesCollected: 0,
-            duration: this.formatDuration()
-        };
+        // const stats = {
+        //     totalTurns: this.stateMachine.round * 2, // 2 turnos por ronda
+        //     hits: 0, // TODO: Implementar tracking de hits
+        //     resourcesCollected: 0,
+        //     duration: this.formatDuration()
+        // };
         
-        // Contar recursos recogidos
-        if (board.resourceManager) {
-            const remainingResources = board.resourceManager.getAvailableResources().length;
-            const totalResources = board.resourceManager.resources.length;
-            stats.resourcesCollected = totalResources - remainingResources;
-        }
+        // // Contar recursos recogidos
+        // if (board.resourceManager) {
+        //     const remainingResources = board.resourceManager.getAvailableResources().length;
+        //     const totalResources = board.resourceManager.resources.length;
+        //     stats.resourcesCollected = totalResources - remainingResources;
+        // }
         
-        return stats;
+        // return stats;
     }
 
     /**
@@ -278,50 +277,50 @@ export class CheckState extends State {
      * @returns {string} Duración en formato MM:SS
      */
     formatDuration() {
-        // Estimación simple: ~30 segundos por ronda
-        const totalSeconds = this.stateMachine.round * 30;
-        const mins = Math.floor(totalSeconds / 60);
-        const secs = totalSeconds % 60;
-        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        // // Estimación simple: ~30 segundos por ronda
+        // const totalSeconds = this.stateMachine.round * 30;
+        // const mins = Math.floor(totalSeconds / 60);
+        // const secs = totalSeconds % 60;
+        // return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
     }
 
     /**
      *  Resuelve los ataques aéreos pendientes
      */
     resolveAirAttacks() {
-        let board = null;
-        EventDispatch.emit(Event.GET_GAMEBOARD, {
-            boardCallback: (b) => { board = b; }
-        });
+        // let board = null;
+        // EventDispatch.emit(Event.GET_GAMEBOARD, {
+        //     boardCallback: (b) => { board = b; }
+        // });
         
-        if (!board) return;
+        // if (!board) return;
         
-        // Buscar casillas con ataques pendientes
-        board.matrix.logic.matrix.forEach(row => {
-            row.forEach(cell => {
-                if (cell && cell.pendingAirAttack) {
+        // // Buscar casillas con ataques pendientes
+        // board.matrix.logic.matrix.forEach(row => {
+        //     row.forEach(cell => {
+        //         if (cell && cell.pendingAirAttack) {
                     
-                    // Explotar en los 4 vértices
-                    cell.nextPoint.forEach(vertex => {
-                        if (vertex && vertex.submarine) {
-                            vertex.submarine.loseHealth(cell.pendingAirAttack.damage);
-                        }
-                    });
+        //             // Explotar en los 4 vértices
+        //             cell.nextPoint.forEach(vertex => {
+        //                 if (vertex && vertex.submarine) {
+        //                     vertex.submarine.loseHealth(cell.pendingAirAttack.damage);
+        //                 }
+        //             });
                     
-                    // Efecto visual de explosión
-                    this.showExplosionEffect(cell, board);
+        //             // Efecto visual de explosión
+        //             this.showExplosionEffect(cell, board);
                     
-                    // Limpiar ataque pendiente
-                    delete cell.pendingAirAttack;
-                }
-            });
-        });
+        //             // Limpiar ataque pendiente
+        //             delete cell.pendingAirAttack;
+        //         }
+        //     });
+        // });
         
-        // Actualizar HUDs
-        if (board.huds) {
-            board.huds.red.update();
-            board.huds.blue.update();
-        }
+        // // Actualizar HUDs
+        // if (board.huds) {
+        //     board.huds.red.update();
+        //     board.huds.blue.update();
+        // }
     }
 
     /**
@@ -331,27 +330,27 @@ export class CheckState extends State {
      * @param {GameBoard} board - El tablero del juego
      */
     showExplosionEffect(cell, board) {
-        const cellSize = board.config.cellSize;
-        const x = cell.position.x * cellSize;
-        const y = cell.position.y * cellSize;
+        // const cellSize = board.config.cellSize;
+        // const x = cell.position.x * cellSize;
+        // const y = cell.position.y * cellSize;
         
-        // Explosión grande
-        const explosion = this.stateMachine.scene.add.circle(x, y, cellSize * 2, 0xff0000, 0.8);
-        board.add(explosion);
-        explosion.setDepth(500);
+        // // Explosión grande
+        // const explosion = this.stateMachine.scene.add.circle(x, y, cellSize * 2, 0xff0000, 0.8);
+        // board.add(explosion);
+        // explosion.setDepth(500);
         
-        // Animar explosión
-        this.stateMachine.scene.tweens.add({
-            targets: explosion,
-            scale: 3,
-            alpha: 0,
-            duration: 1000,
-            ease: 'Cubic.easeOut',
-            onComplete: () => explosion.destroy()
-        });
+        // // Animar explosión
+        // this.stateMachine.scene.tweens.add({
+        //     targets: explosion,
+        //     scale: 3,
+        //     alpha: 0,
+        //     duration: 1000,
+        //     ease: 'Cubic.easeOut',
+        //     onComplete: () => explosion.destroy()
+        // });
         
-        // Shake y flash de cámara
-        this.stateMachine.scene.cameras.main.shake(500, 0.02);
-        this.stateMachine.scene.cameras.main.flash(300, 255, 0, 0);
+        // // Shake y flash de cámara
+        // this.stateMachine.scene.cameras.main.shake(500, 0.02);
+        // this.stateMachine.scene.cameras.main.flash(300, 255, 0, 0);
     }
 }

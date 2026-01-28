@@ -29,7 +29,7 @@ export class GameManager{
         this.currentView = this.currentSubmarine.view;
         this.currentHUD = this.currentSubmarine.hud;
 
-        this.gameloopMachine = new GameLoopMachine({scene:this.scene,gameManager:this,order:this.order});
+        this.gameloopMachine = new GameLoopMachine({scene:this.scene,gameManager:this,order:this.order,limit:3});
         this.playerActionMachine = new PlayerActionMachine(this.scene,this.gameloopMachine);
         
         this.initialize();
@@ -47,7 +47,7 @@ export class GameManager{
         let centerX = screenWidth / 2;
         let centerXdr = screenWidth - screenWidth / 6
 
-        this.roundText = this.scene.add.text(centerXiz,centerY,"Round 0",
+        this.roundText = this.scene.add.text(centerXiz,centerY,"Round 1",
         {
             fontFamily:"Outfit",
             fontSize:30,
@@ -77,11 +77,6 @@ export class GameManager{
         EventDispatch.removeAllListeners(Event.SHOOT)
         this.scene.scene.start("GameOver",{winner:sub,reason:reason})
     }
-
-    // setOrder(){
-    //     this.gameloopMachine._gameManager = this;
-    //     this.gameloopMachine.setOrder(this.order);
-    // }
 
     setCurrentSubmarine(id){
         this.currentHUD.setVisible(false);

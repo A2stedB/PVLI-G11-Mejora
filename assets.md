@@ -7,3 +7,5 @@ Todos los assets han sido generados por nosotos como modelos en 3D de Blender de
 - Panel para la UI: Iria DOcampo
 
 El resto de elementos visuales han sido creados y animados directamente desde Phaser. 
+
+Las imagenes de los personajes de submarino pertenece al juego de Azur Lane

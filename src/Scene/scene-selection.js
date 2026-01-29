@@ -34,13 +34,13 @@ export class SelectionMenu extends Phaser.Scene{
 
         // Se haria para que comienze una vez que ambos hayan confirmado, pero me da pereza
         let confirmKey = this.input.keyboard.addKey("SPACE");
-        this.confirmText = this.add.text(this.screenWidth/2,this.screenHeight/2,"Press SPACE   to continue",{fontSize:20,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5).setDepth(3);
+        this.confirmText = this.add.text(this.screenWidth/2,UIdata.top,"Press SPACE to continue",{fontSize:20,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5).setDepth(3);
         confirmKey.on("down",()=>{
             this.scene.stop();
             this.scene.launch("RandomSide",{leftConfig:this.leftContainer.data,rightConfig:this.rightContainer.data});
         })
 
-        let split = this.add.rectangle(centerX,0,10,this.screenHeight - UIdata.top,"0x000000",1).setDepth(2).setOrigin(0.5,0);
+        // let split = this.add.rectangle(centerX,0,10,this.screenHeight - UIdata.top,"0x000000",1).setDepth(2).setOrigin(0.5,0);
         this.initialize();
     }
 

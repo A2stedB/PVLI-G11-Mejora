@@ -1,19 +1,5 @@
-/**
- * GameOverScene
- * 
- * Escena de fin de juego
- * 
- *  CORRECCIÓN: Ahora usa el sistema unificado de estilos (UIStyles.js)
- *  y tiene soporte completo de teclado + ratón
- * 
- * CONTROLES:
- * - R: Revancha (reiniciar partida)
- * - ESC: Volver al menú
- * - Click en botones
- */
 import VictoryReason from '../game-victoryCondition.js';
 
-// IMPORTAR sistema de estilos unificado
 import { 
     UIStyles, 
     createOverlay, 
@@ -121,53 +107,6 @@ export class GameOverScene extends Phaser.Scene {
     }
     
     /**
-     * Crea el panel de estadísticas
-     * 
-     * @param {Number} w - Ancho de la pantalla
-     * @param {Number} h - Alto de la pantalla
-     */
-    createStatsPanel(w, h) {
-        // const panelY = 280;
-        
-        // // Panel semi-transparente
-        // const panel = createStyledPanel(this, w/2, panelY + 80, 500, 180);
-        // panel.setDepth(1001);
-        
-        // // Título de estadísticas
-        // const statsTitle = createStyledText(
-        //     this, w/2, panelY, 
-        //     'ESTADÍSTICAS DE LA PARTIDA',
-        //     'subtitle'
-        // );
-        // statsTitle.setColor('#00ff88');
-        // statsTitle.setOrigin(0.5);
-        // statsTitle.setDepth(1002);
-        
-        // // Mostrar estadísticas (usando datos reales)
-        // const stats = [
-        //     `Duración: ${this.stats.duration || '5:30'}`,
-        //     `Total de turnos: ${this.stats.totalTurns || 0}`,
-        //     `Disparos realizados: ${this.stats.totalShots || 'N/A'}`,
-        //     `Impactos: ${this.stats.hits || 0}`,
-        //     `Recursos recogidos: ${this.stats.resourcesCollected || 0}`,
-        //     `Daño total: ${this.stats.totalDamage || 0} HP`
-        // ];
-        
-        // stats.forEach((stat, index) => {
-        //     const statText = createStyledText(
-        //         this, 
-        //         w/2, 
-        //         panelY + 30 + (index * 25), 
-        //         stat, 
-        //         'body'
-        //     );
-        //     statText.setFontSize('16px');
-        //     statText.setOrigin(0.5);
-        //     statText.setDepth(1002);
-        // });
-    }
-    
-    /**
      * Crea los botones de acción
      * 
      * @param {Number} w - Ancho de la pantalla
@@ -260,37 +199,5 @@ export class GameOverScene extends Phaser.Scene {
         );
         helpText.setOrigin(0.5);
         helpText.setDepth(1002);
-    }
-    
-    /**
-     *  Crea efecto de celebración con partículas
-     * 
-     * @param {Number} x - Posición X
-     * @param {Number} y - Posición Y
-     * @param {Number} color - Color de las partículas
-     */
-    createCelebrationEffect(x, y, color) {
-        
-        // Partículas que caen desde arriba
-        for (let i = 0; i < 30; i++) {
-            this.time.delayedCall(i * 100, () => {
-                const particle = this.add.circle(
-                    Phaser.Math.Between(0, this.cameras.main.width),
-                    0,
-                    Phaser.Math.Between(3, 8),
-                    color,
-                    0.8
-                );
-                particle.setDepth(2000);
-                
-                this.tweens.add({
-                    targets: particle,
-                    y: this.cameras.main.height + 50,
-                    duration: Phaser.Math.Between(2000, 4000),
-                    ease: 'Sine.easeIn',
-                    onComplete: () => particle.destroy()
-                });
-            });
-        }
     }
 }

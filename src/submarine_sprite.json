@@ -11,6 +11,18 @@
         {
             "key": "U-81",
             "path": "assets/al/U-81.png"
+        },
+        {
+            "key": "U-96",
+            "path": "assets/al/U-96.png"
+        },
+        {
+            "key": "U-552",
+            "path": "assets/al/U-552.png"
+        },
+        {
+            "key": "I-13",
+            "path": "assets/al/I-13.png"
         }
     ]
 }

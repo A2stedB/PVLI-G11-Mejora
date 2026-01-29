@@ -19,7 +19,9 @@ export class GameManager{
         this.order = config.order;
 
         this.submarineData = JSON.parse(JSON.stringify(SubmarineData));
-        this.leftSub = new Submarine({x:1,y:0,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.W,data:config.leftConfig,gamemanager:this})
+        // this.leftSub = new Submarine({x:1,y:0,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.W,data:config.leftConfig,gamemanager:this})
+        // this.rightSub = new Submarine({x:5,y:4,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:config.rightConfig,gamemanager:this})
+        this.leftSub = new Submarine({x:4,y:4,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.E,data:config.leftConfig,gamemanager:this})
         this.rightSub = new Submarine({x:5,y:4,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:config.rightConfig,gamemanager:this})
 
         this.submarine = [this.leftSub, this.rightSub]

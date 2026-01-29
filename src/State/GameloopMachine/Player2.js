@@ -17,9 +17,11 @@ export class Player2 extends PlayerState{
     constructor(stateMachine,id){
         super(stateMachine,id);
         this._name = "Player 2"
+        this.isTransitioning = false;
     }
 
     onStateEnter(){
+        this.isTransitioning = false;
         this.stateMachine._gameManager.setCurrentSubmarine(this._id);
         let player = this.stateMachine.getCurrentSubmarine(this._id).data.country
         console.log(player);
@@ -35,6 +37,8 @@ export class Player2 extends PlayerState{
     }
 
     transition(){
+        if (this.isTransitioning) return;
+        this.isTransitioning = true;
         let camera = this.stateMachine._scene.cameras.main;
         camera.fadeOut(2000);
         camera.once("camerafadeoutcomplete",()=>{

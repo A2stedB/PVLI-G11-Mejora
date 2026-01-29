@@ -40,7 +40,7 @@ export class FireState extends State{
     constructor(stateMachine){
         super(stateMachine);
         this._name = "Fire"
-        this.scene = this.stateMachine.scene;
+        this.scene = this.stateMachine._scene;
     }
 
     onStateEnter(){
@@ -96,27 +96,12 @@ export class FireState extends State{
     setEvent(){
         EventDispatch.on(Event.SHOOT,(confirmButton,direction)=>{
             this.shoot();
-            // this.scene.scene.pause();
-
-            // this.scene.scene.launch("fireStateWindow",{
-
-            //     //Teclas del jugador correspondiente
-            //     confirmButton:confirmButton, 
-
-            //     //cuando ya sabe la distancia que quiere disparar
-            //     distanceCallback: (distance)=>{
-            //         let range = distance;
-            //         this.shoot(range,direction);
-                    
-            //     },
-
-            //     //El id del jugador actual
-            //     currentPlayer:this.stateMachine.context.currentState.id
-            // })
         })
     }
 
     shoot(distance, direction){
-        this.transition();
+        this.scene.time.delayedCall(2 * 1000,()=>{
+            this.transition();
+        })
     }
 }

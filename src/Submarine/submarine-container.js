@@ -111,6 +111,11 @@ export default class Submarine{
             this.scene.sound.play("Fire")
             if(enemy != null){
                 enemy.removeHP(this.damage)
+                this.scene.time.delayedCall(2 * 1000,()=>{
+                    this.scene.sound.stopAll();
+                    this.scene.sound.play("Fire hit")
+                    this.scene.cameras.main.shake(2000,0.02)
+                })
                 if(enemy.currentHealth <= 0) {
                     this.gameManager.endOfGame(this,VictoryReason.defeatEnemy);
                 }

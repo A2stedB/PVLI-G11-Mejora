@@ -17,25 +17,29 @@ export class Player1 extends PlayerState{
     constructor(stateMachine,id){
         super(stateMachine,id);
         this._name = "Player 1"
+        this.isTransitioning = false;
     }
 
     onStateEnter(){
-        // this.submarine = this.stateMachine.getCurrentSubmarine()
+        this.isTransitioning = false;
         this.stateMachine._gameManager.setCurrentSubmarine(this._id);
         let player = this.stateMachine.getCurrentSubmarine(this._id).data.country
         console.log(player);
         EventDispatch.emit(Event.UPDATE_CURRENT_PLAYER,player)
 
         // CurrentState??
-        let playerActionMachine = this.stateMachine._gameManager.playerActionMachine
-        playerActionMachine.currentState.transition()
+        this.stateMachine._gameManager.playerActionMachine.transition(
+            this.stateMachine._gameManager.playerActionMachine.stateList.moveState
+        );
     }
     onStateExit(){
-        // EventDispatch.emit(Event.END_TURN);
+        
     }
     
 
     transition(){
+        if (this.isTransitioning) return;
+        this.isTransitioning = true;
         let camera = this.stateMachine._scene.cameras.main;
         camera.fadeOut(2000);
         camera.once("camerafadeoutcomplete",()=>{

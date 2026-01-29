@@ -83,10 +83,10 @@ export class FireState extends State{
     }
 
     onStateExit(){
-        this.up.off("down");
-        this.down.off("down");
-        this.left.off("down");
-        this.right.off("down");
+        if (this.up) this.up.removeAllListeners("down");
+        if (this.down) this.down.removeAllListeners("down");
+        if (this.left) this.left.removeAllListeners("down");
+        if (this.right) this.right.removeAllListeners("down");
     }
 
     transition(){

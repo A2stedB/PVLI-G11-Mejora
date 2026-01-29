@@ -76,6 +76,7 @@ export class GameScreen extends Phaser.Scene{
         // this.gameloopMachine = new GameLoopMachine(this);
         // this.playerActionMachine = new PlayerActionMachine(this,this.gameloopMachine);
 
+        console.log(data.left == data.right);
         this.gameManager = new GameManager({scene:this,order:data.order,leftConfig:data.left,rightConfig:data.right});
 
         // this.tablero = new GameBoard(this);

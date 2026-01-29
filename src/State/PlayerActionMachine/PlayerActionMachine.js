@@ -19,8 +19,8 @@ export class PlayerActionMachine extends StateMachine{
         this._fireState = new FireState(this);
         this._endState = new EndState(this);
 
-        this._currentState = this._moveState;
-        this._currentState.onStateEnter();
+        this._currentState = this._endState;
+        // this._currentState.onStateEnter();
     }
 
     get stateList(){

@@ -35,7 +35,8 @@ export class CheckState extends State {
      *  Método ejecutado al entrar en este estado
      */
     onStateEnter() {
-        
+        // A veces ejecuta el updateRound() varias veces y se salta rondas, por ejemplo de 3 a 7
+        // Pero no consigo replicar de todo...
         // // PASO 2: RESOLVER ATAQUES AÉREOS PENDIENTES
         // this.resolveAirAttacks();
 

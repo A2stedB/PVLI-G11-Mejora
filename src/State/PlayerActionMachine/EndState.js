@@ -16,22 +16,9 @@ export class EndState extends State {
 
     onStateEnter() {
         // Obtener el submarino actual
-        const currentPlayer = this.stateMachine.context.currentState;
-        let currentSubmarine = null;
-        
-        EventDispatch.emit(Event.GET_SUBMARINE, currentPlayer.id === 1 ? "red" : "blue", {
-            callBack: (sub) => {
-                currentSubmarine = sub;
-            }
-        });
-        
-        // Verificar colisión con dragón
-        if (currentSubmarine) {
-            this.checkDragonCollision(currentSubmarine);
-        }
+        this.stateMachine.context.currentState.transition();
         
         // Continuar con la transición normal
-        this.transition();
     }
     
     /**
@@ -43,27 +30,11 @@ export class EndState extends State {
             dragonPosition: null
         };
         
-        // Preguntar al dragón si hay colisión
-        EventDispatch.emit(Event.CHECK_DRAGON_COLLISION, submarine, collisionData);
-        
-        if (collisionData.collision) {
-            console.log('¡Submarino cerca del dragón!');
-            
-            // Pausar la escena actual
-            this.stateMachine.scene.scene.pause();
-            
-            // Activar diálogo del minijuego
-            this.stateMachine.scene.scene.launch('MinigameDialog', {
-                submarine: submarine,
-                dragonPosition: collisionData.dragonPosition,
-                callingScene: 'GameScreen'
-            });
-        }
+        this.stateMachine.context.currentState.transition();
     }
     
     onStateExit() {
         // Pasar al siguiente jugador
-        this.stateMachine.context.currentState.transition();
     }
     
     transition() {

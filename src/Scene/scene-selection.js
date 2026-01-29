@@ -1,5 +1,6 @@
 import UIdata from "../UI-data.json" with {type:"json"}
 import SubmarineData from "../Submarine/submarine-data.json" with {type:"json"}
+import al_assets from "../submarine_sprite.json" with {type:"json"}
 export class SelectionMenu extends Phaser.Scene{
 
     constructor(){
@@ -7,6 +8,11 @@ export class SelectionMenu extends Phaser.Scene{
     }
 
     init(){}
+
+    preload(){
+        this.loadImage();
+        this.addLoadScreen();
+    }
 
     create(){
         this.screenWidth = this.cameras.main.width;   // 800
@@ -104,22 +110,26 @@ export class SelectionMenu extends Phaser.Scene{
         let damage = submarine[1].damage
         container.damage = this.add.text(centerX,centerY + baseOffSetY + offSetY * 2,`Damage: ${damage}`,{fontSize:fontSize - 10,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5);
         container.container.add(container.damage);
+
+        let sprite = model;
+        container.sprite = this.add.image(centerX,centerY,model).setScale(0.2);
+        container.container.add(container.sprite);
     }
 
     updateInfo(container, index){
-        let submarine = this.dataList[index];
-        let model = submarine[0];
-        let color = submarine[1].color;
-        let country = submarine[1].country;
-        let health = submarine[1].health;
-        let munition = submarine[1].munition;
-        let damage = submarine[1].damage;
+        // let submarine = this.dataList[index];
+        // let model = submarine[0];
+        // let color = submarine[1].color;
+        // let country = submarine[1].country;
+        // let health = submarine[1].health;
+        // let munition = submarine[1].munition;
+        // let damage = submarine[1].damage;
 
-        container.background.fillColor(color);
-        container.sub.setText(`${model} - ${country}`);
-        container.health.setText(`Health: ${health}`)
-        container.munition.setText(`Munition: ${munition}`)
-        container.damage.setText(`Damage: ${damage}`);
+        // container.background.fillColor(color);
+        // container.sub.setText(`${model} - ${country}`);
+        // container.health.setText(`Health: ${health}`)
+        // container.munition.setText(`Munition: ${munition}`)
+        // container.damage.setText(`Damage: ${damage}`);
     }
 
     updateInfoWithTween(container,index, lr){
@@ -193,6 +203,72 @@ export class SelectionMenu extends Phaser.Scene{
             onComplete:()=>{
                 this.rightContainer = actual;  // a saber que hace la memoria con el actual
             }
+        })
+    }
+
+     loadImage(){
+        al_assets.image.forEach(element => {
+            this.load.image(element.key,element.path)
+        });
+    }
+
+    addLoadScreen(){
+        let progressBar = this.add.graphics();
+        let progressBox = this.add.graphics();
+        progressBox.fillStyle(0x222222, 0.8);
+        progressBox.fillRect(240, 270, 320, 50);
+        let width = this.cameras.main.width;
+        let height = this.cameras.main.height;
+        let loadingText = this.make.text({
+            x: width / 2,
+            y: height / 2 - 50,
+            text: 'Loading...',
+            style: {
+                font: '20px monospace',
+                fill: '#ffffff'
+            }
+        });
+        loadingText.setOrigin(0.5, 0.5);
+
+        let percentText = this.make.text({
+            x: width / 2,
+            y: height / 2 - 5,
+            text: '0%',
+            style: {
+                font: '18px monospace',
+                fill: '#ffffff'
+            }
+        });
+        percentText.setOrigin(0.5, 0.5);
+
+        
+        let assetText = this.make.text({
+            x: width / 2,
+            y: height / 2 + 50,
+            text: '',
+            style: {
+                font: '18px monospace',
+                fill: '#ffffff'
+            }
+        });
+        assetText.setOrigin(0.5, 0.5);
+
+        this.load.on('progress', function (value) {
+            progressBar.clear();
+            progressBar.fillStyle(0xffffff, 1);
+            progressBar.fillRect(250, 280, 300 * value, 30);
+            percentText.setText(parseInt(value * 100) + '%');
+        });
+                    
+        this.load.on('fileprogress', function (file) {
+            assetText.setText('Loading asset: ' + file.key);
+        });
+        this.load.on('complete', function () {
+            progressBar.destroy();
+            progressBox.destroy();
+            loadingText.destroy();
+            percentText.destroy();
+            assetText.destroy();
         })
     }
 

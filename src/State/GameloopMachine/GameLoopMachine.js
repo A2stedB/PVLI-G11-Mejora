@@ -36,7 +36,7 @@ export class GameLoopMachine extends StateMachine{
         this.playerList = [this._player1, this._player2];
 
         this._currentState = this._checkState;
-        this._currentState.onStateEnter();
+        // this._currentState.onStateEnter();
     }
 
     get stateList(){
@@ -78,5 +78,15 @@ export class GameLoopMachine extends StateMachine{
     getCurrentSubmarine() {
         let currentId = this._currentState._id;
         return this._gameManager.getSubmarineById(currentId);
+    }
+
+    getCamera(){
+        return this._scene.cameras.main
+    }
+
+    start() {
+        if (this._currentState) {
+            this._currentState.onStateEnter();
+        }
     }
 }

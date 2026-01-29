@@ -1,18 +1,26 @@
 {
-    "japan": {
+    "U-37": {
         "health": 100,
         "color": "0xee6b6e",
         "munition": 7,
         "damage": 10,
         "country": "japan",
-        "name":""
+        "name": ""
     },
-    "china": {
+    "U-81": {
         "health": 95,
         "color": "0x32788A",
         "munition": 9,
         "damage": 12,
         "country": "china",
-        "name":""
+        "name": ""
+    },
+    "I-19": {
+        "health": 10,
+        "color": "0xfc0352",
+        "munition": 100,
+        "damage": 30,
+        "country": "korea",
+        "name": ""
     }
 }

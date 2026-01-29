@@ -69,7 +69,9 @@ export class GameOverScene extends Phaser.Scene {
             case VictoryReason.even:
                 titleText = "Paz en el mundo, oleee"
                 break;
-                
+            case VictoryReason.sameCountry:
+                titleText = `Guerra civil, a tomar por el culo el pais`
+                break;
         }
         
         const title = createStyledText(this, w/2, 100, titleText, 'title');
@@ -182,7 +184,7 @@ export class GameOverScene extends Phaser.Scene {
             '↻ REVANCHA',
             () => {
                 this.scene.stop(this);
-                this.scene.start("RandomSide")
+                this.scene.start("SelectionMenu")
                 },
             true,
             'R'

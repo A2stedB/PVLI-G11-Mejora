@@ -45,8 +45,6 @@ export class MoveState extends State{
         let currentPlayer = this.stateMachine.context.currentState.id
         let submarine = this.stateMachine.context.getCurrentSubmarine();
 
-        // Esperar al fade in fade out
-        console.log(currentPlayer)
         // console.log(submarine)
 
         if(currentPlayer == 0){
@@ -83,10 +81,10 @@ export class MoveState extends State{
 
     onStateExit(){
         EventDispatch.emit(Event.UPDATE_MAP);
-        this.up.off("down");
-        this.down.off("down");
-        this.left.off("down");
-        this.right.off("down");
+        if (this.up) this.up.removeAllListeners("down");
+        if (this.down) this.down.removeAllListeners("down");
+        if (this.left) this.left.removeAllListeners("down");
+        if (this.right) this.right.removeAllListeners("down");
     }
 
     transition(){

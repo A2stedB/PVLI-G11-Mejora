@@ -7,6 +7,7 @@ import EventDispatch from "./Event/EventDispatch.js";
 import SubmarineData from "./Submarine/submarine-data.json" with {type:"json"}
 import UIdata from "./UI-data.json" with {type:"json"}
 import Event from "./Event/Event.js";
+import VictoryReason from "./game-victoryCondition.js";
 
 export class GameManager{
     constructor(config){
@@ -32,8 +33,10 @@ export class GameManager{
 
         this.gameloopMachine = new GameLoopMachine({scene:this.scene,gameManager:this,order:this.order,limit:10});
         this.playerActionMachine = new PlayerActionMachine(this.scene,this.gameloopMachine);
+        this.gameloopMachine.start();
         
         this.currentTurn = 1;
+        this.checkSameCoutry(config);
     }
 
     initialize(){
@@ -94,6 +97,9 @@ export class GameManager{
 
     endOfGame(sub,reason){
         this.scene.scene.stop();
+        EventDispatch.removeAllListeners(Event.UPDATE_ROUND)
+        EventDispatch.removeAllListeners(Event.UPDATE_ACTION)
+        EventDispatch.removeAllListeners(Event.UPDATE_CURRENT_PLAYER)
         EventDispatch.removeAllListeners(Event.MOVE)
         EventDispatch.removeAllListeners(Event.SHOOT)
         this.scene.scene.start("GameOver",{winner:sub,reason:reason})
@@ -125,6 +131,12 @@ export class GameManager{
     setSubmarineID(){
         for(let i = 0; i < 2;++i){
             this.submarine[i].id = i;
+        }
+    }
+
+    checkSameCoutry(data){
+        if(data.leftConfig.country == data.rightConfig.country){
+            this.endOfGame(null,VictoryReason.sameCountry);
         }
     }
 }

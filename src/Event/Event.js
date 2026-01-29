@@ -12,6 +12,8 @@ const Event = Object.freeze({
     DISABLE_KEY:Symbol("Disable key"),
     ENABLE_KEY:Symbol("Enable key"),
     UPDATE_ROUND:Symbol("Update round"),
+    UPDATE_ACTION:Symbol("Update the current action"),
+    UPDATE_CURRENT_PLAYER:Symbol("Update the current player"),
     UPDATE_PLAYER_TEXT:Symbol("Update player text"),
     UPDATE_PLAYER_ACTION_TEXT:Symbol("Update player action text"),
     AIR_ATTACK:Symbol("Air attack"),

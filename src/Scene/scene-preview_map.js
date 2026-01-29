@@ -73,13 +73,14 @@ export class MapPreView extends Phaser.Scene{
 
         let offSetX = this.screenWidth / 4;
         let mult = 1.5
-        let right = this.matrix.submarines[0];
+        
+        let right = this.matrix.submarines.find(s => s.submarine.id === 1);
         let rightSubmarine = this.add.image(this.screenWidth/2 + offSetX * mult,this.screenHeight / 2,"sTop").
                             setTint(right.submarine.data.color).
                             setScale(0.18).
                             setRotation(Phaser.Math.DegToRad(right.submarine.orientation.degree));
 
-        let left = this.matrix.submarines[1];
+        let left = this.matrix.submarines.find(s => s.submarine.id === 0);
         let leftSubmarine = this.add.image(this.screenWidth/2 - offSetX * mult,this.screenHeight / 2,"sTop").
                             setTint(left.submarine.data.color).
                             setScale(0.18).
@@ -87,8 +88,13 @@ export class MapPreView extends Phaser.Scene{
     }
 
     descriptiveText(){
-        let left = this.matrix.submarines[1];
-        let right = this.matrix.submarines[0];
+        let left = this.matrix.submarines.find(s => s.submarine.id === 0);
+        let right = this.matrix.submarines.find(s => s.submarine.id === 1);
+
+        if (!left || !right) {
+            console.error("No se encontraron los submarinos por ID");
+            return;
+        }
 
         this.titleText = this.add.text(this.screenWidth/2,UIdata.top - 50,"Orientacion inicial",
         {

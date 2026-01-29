@@ -52,7 +52,7 @@ export class GameScreen extends Phaser.Scene{
         //     color: '#412e1fff'
         // })
 
-        this.roundTextAnimation = this.add.text(-150,300,"Round 0",{fontFamily:"Outfit",fontSize:25})
+        // this.roundTextAnimation = this.add.text(-150,300,"Round 0",{fontFamily:"Outfit",fontSize:25})
 
         // let playerText = this.add.text(5,5,"Turno de China",
         // {
@@ -70,13 +70,13 @@ export class GameScreen extends Phaser.Scene{
 
         // this.toggleKey = this.input.keyboard.addKey('M');
 
-        this.createTextTween();
+        // this.createTextTween();
 
         // Maquina de estados y objetos del juego
         // this.gameloopMachine = new GameLoopMachine(this);
         // this.playerActionMachine = new PlayerActionMachine(this,this.gameloopMachine);
 
-        this.gameManager = new GameManager({scene:this,order:data.order});
+        this.gameManager = new GameManager({scene:this,order:data.order,leftConfig:data.left,rightConfig:data.right});
 
         // this.tablero = new GameBoard(this);
 

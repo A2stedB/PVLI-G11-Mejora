@@ -40,7 +40,6 @@ export class CheckState extends State {
         // this.resolveAirAttacks();
 
         this.stateMachine.updateRound();
-        EventDispatch.emit(Event.UPDATE_ROUND, this.stateMachine.round); // Quitar esto
         
         console.log(`\n=== RONDA ${this.stateMachine.round} ===`);
         

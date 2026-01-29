@@ -8,6 +8,7 @@ import { GameOverScene } from "./Scene/GameOverScene.js";
 import {MapView} from "./Scene/scene-mapview.js";
 import { RandomSide } from "./Scene/scene-random-side.js";
 import { MapPreView } from "./Scene/scene-preview_map.js";
+import { SelectionMenu } from "./Scene/scene-selection.js";
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -32,9 +33,10 @@ let config = {
     },
 
 	scene: [
-		RandomSide,
-		GameScreen, 
 		Menu2, 
+		SelectionMenu,
+		RandomSide,
+		GameScreen,
 		Flappy_Dragon,          
 		FireStateWindow,       
 		MinigameDialogScene,    

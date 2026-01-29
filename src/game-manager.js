@@ -6,6 +6,7 @@ import Orientation from "./Submarine/submarine-orientation-v2.js";
 import EventDispatch from "./Event/EventDispatch.js";
 import SubmarineData from "./Submarine/submarine-data.json" with {type:"json"}
 import UIdata from "./UI-data.json" with {type:"json"}
+import Event from "./Event/Event.js";
 
 export class GameManager{
     constructor(config){
@@ -17,27 +18,29 @@ export class GameManager{
         this.order = config.order;
 
         this.submarineData = JSON.parse(JSON.stringify(SubmarineData));
-        this.redSub = new Submarine({x:3,y:3,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.E,data:this.submarineData.japan,gamemanager:this})
-        this.blueSub = new Submarine({x:4,y:3,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.W,data:this.submarineData.china,gamemanager:this})
+        this.leftSub = new Submarine({x:1,y:0,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.W,data:config.leftConfig,gamemanager:this})
+        this.rightSub = new Submarine({x:5,y:4,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:config.rightConfig,gamemanager:this})
 
-        this.submarine = [this.blueSub, this.redSub]
+        this.submarine = [this.leftSub, this.rightSub]
 
         
-        this.blueSub.removeHP(90);
         this.currentSubmarine = this.getSubmarineById(this.order[0]);
         this.currentView = this.currentSubmarine.view;
         this.currentHUD = this.currentSubmarine.hud;
 
+        this.initialize();
+
         this.gameloopMachine = new GameLoopMachine({scene:this.scene,gameManager:this,order:this.order,limit:10});
         this.playerActionMachine = new PlayerActionMachine(this.scene,this.gameloopMachine);
         
-        this.initialize();
         this.currentTurn = 1;
     }
 
     initialize(){
-        this.setSubmarineExit(this.redSub,4,5);
-        // this.setSubmarineExit(this.redSub,4,5);
+        this.setSubmarineExit(this.leftSub,5,5);
+        this.setSubmarineExit(this.rightSub,0,0);
+
+        this.setSubmarineID();
 
         let centerY = UIdata.top / 2;
         let screenWidth = this.scene.cameras.main.width;
@@ -51,6 +54,10 @@ export class GameManager{
             fontSize:30,
             color: 'rgb(255, 255, 255)'
         }).setOrigin(0.5,0.5)
+
+        EventDispatch.on(Event.UPDATE_ROUND,(round)=>{
+            this.roundText.setText(`Round ${round}`)
+        })
         
         this.actionText = this.scene.add.text(centerX,centerY,"Accion",
         {
@@ -58,6 +65,21 @@ export class GameManager{
             fontSize:30,
             color: 'rgb(255, 255, 255)'
         }).setOrigin(0.5,0.5)
+
+        EventDispatch.on(Event.UPDATE_ACTION,(action)=>{
+            this.actionText.setText(`${action}`)
+        })
+
+        this.countryText = this.scene.add.text(centerXdr,centerY,"",
+        {
+            fontFamily:"Outfit",
+            fontSize:30,
+            color: 'rgb(255, 255, 255)'
+        }).setOrigin(0.5,0.5)
+
+        EventDispatch.on(Event.UPDATE_CURRENT_PLAYER,(player)=>{
+            this.countryText.setText(`${player}`)
+        })
 
         this.mapPreview();
         // this.scene.add.existing(roundText);
@@ -91,13 +113,18 @@ export class GameManager{
     }
 
     getSubmarineById(id) {
-        // console.log(this.submarine)
         return this.submarine[id];
     }
 
     mapPreview(){
         let gameScreen = this.scene;
         this.scene.scene.pause();
-        this.scene.scene.launch("MapPreview",{ matrix: this.gameMatrix , closeCallback:()=>{gameScreen.add.existing(this.gameMatrix);}})
+        this.scene.scene.launch("MapPreview",{ matrix: this.gameMatrix , closeCallback:()=>{gameScreen.add.existing(this.gameMatrix);},gameManager:this})
+    }
+
+    setSubmarineID(){
+        for(let i = 0; i < 2;++i){
+            this.submarine[i].id = i;
+        }
     }
 }

@@ -40,7 +40,7 @@ export class MoveState extends State{
     }
     onStateEnter(){
 
-        EventDispatch.emit(Event.UPDATE_PLAYER_ACTION_TEXT,"Move");
+        EventDispatch.emit(Event.UPDATE_ACTION,this._name);
 
         let currentPlayer = this.stateMachine.context.currentState.id
         let submarine = this.stateMachine.context.getCurrentSubmarine();

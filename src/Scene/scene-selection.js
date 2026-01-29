@@ -2,22 +2,198 @@ import UIdata from "../UI-data.json" with {type:"json"}
 import SubmarineData from "../Submarine/submarine-data.json" with {type:"json"}
 export class SelectionMenu extends Phaser.Scene{
 
-    constructor(config){
+    constructor(){
         super({key:"SelectionMenu"})
-        this.config = config;
     }
 
     init(){}
 
-    create(config){
+    create(){
         this.screenWidth = this.cameras.main.width;   // 800
         this.screenHeight = this.cameras.main.height; // 600
 
-        let data = JSON.parse(JSON.stringify(SubmarineData));
+        this.data = JSON.parse(JSON.stringify(SubmarineData))
+        this.dataList = Object.entries(JSON.parse(JSON.stringify(SubmarineData)));
+        
+        let centerY = this.screenHeight / 2;
+        let centerX = this.screenWidth / 2
+        this.leftIndex = 0;
+        this.rightIndex = 1;
 
-        this.leftBG = this.add.rectangle(0,0,this.screenWidth,this.screenHeight,0x1c2e4a,1).setOrigin(0,0).setDepth(-1);
-        this.add.existing(matrix);
-        matrix.setVisible(true);   
-        matrix.setAlpha(1);
+        this.leftKey = this.input.keyboard.addKey("A")
+        this.rightKey = this.input.keyboard.addKey("RIGHT")
+        
+        this.leftContainer = {};
+        this.rightContainer = {};
+
+        // Se haria para que comienze una vez que ambos hayan confirmado, pero me da pereza
+        let confirmKey = this.input.keyboard.addKey("SPACE");
+        this.confirmText = this.add.text(this.screenWidth/2,this.screenHeight/2,"Press SPACE   to continue",{fontSize:20,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5).setDepth(3);
+        confirmKey.on("down",()=>{
+            this.scene.stop();
+            this.scene.launch("RandomSide",{leftConfig:this.leftContainer.data,rightConfig:this.rightContainer.data});
+        })
+
+        let split = this.add.rectangle(centerX,0,10,this.screenHeight - UIdata.top,"0x000000",1).setDepth(2).setOrigin(0.5,0);
+        this.initialize();
     }
+
+    initialize(){
+        let fontSize = 20
+        this.leftKey.on("down",()=>{
+            let mod = (n, m) => {return (n % m + m) % m}
+            this.leftIndex = mod(++this.leftIndex,this.dataList.length);
+            this.updateInfoWithTween(this.leftContainer,this.leftIndex,0);
+
+        })
+
+        this.rightKey.on("down",()=>{
+            let mod = (n, m) => {return (n % m + m) % m}
+            this.rightIndex = mod(++this.rightIndex,this.dataList.length);
+            this.updateInfoWithTween(this.rightContainer,this.rightIndex,1);
+        })
+        let centerX = this.screenWidth / 2
+
+        this.leftContainer = {};
+        this.leftContainer.container = this.add.container(0,0)
+        this.initializeInfo(this.leftContainer,this.leftIndex)
+        this.add.text(centerX/2,this.screenHeight - 30,"Press A to change",{fontSize:fontSize,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5).setDepth(3)
+        
+        this.rightContainer = {};
+        this.rightContainer.container = this.add.container(centerX,0)
+        this.initializeInfo(this.rightContainer,this.rightIndex)
+        this.add.text(centerX + centerX/2,this.screenHeight - 30,"Press \u2192 to change",{fontSize:fontSize,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5).setDepth(3)
+    }
+
+    initializeInfo(container,index){
+
+        // Meter aqui el objeto real tb
+        let submarine = this.dataList[index];
+        let model = submarine[0];
+        container.data = this.data[model];
+        // console.log(container.data)
+        let centerX = this.screenWidth / 4
+        let centerY = this.screenHeight / 2
+        let fontSize = 30
+
+        let color = submarine[1].color;
+        let background = this.add.rectangle(0,0,this.screenWidth/2,this.screenHeight,color,1).setOrigin(0,0).setDepth(-1);
+        container.background = background;
+        container.container.add(container.background)
+
+        
+        let country = submarine[1].country;
+        let nameHeight = 50;
+        container.sub = this.add.text(centerX,nameHeight,`${model} - ${country}`,{fontSize:fontSize,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5);
+        container.container.add(container.sub);
+        
+        // health
+        let health = submarine[1].health
+        let baseOffSetY = 200;
+        let offSetY = 20
+        container.health = this.add.text(centerX,centerY + baseOffSetY,`Health: ${health}`,{fontSize:fontSize - 10,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5);
+        container.container.add(container.health);
+
+        // munition
+        let healthTextHeight = container.health.displayHeight
+        let munition = submarine[1].munition
+        container.munition = this.add.text(centerX,centerY + baseOffSetY + offSetY,`Munition: ${munition}`,{fontSize:fontSize - 10,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5);
+        container.container.add(container.munition);
+
+        // damage 
+        let damage = submarine[1].damage
+        container.damage = this.add.text(centerX,centerY + baseOffSetY + offSetY * 2,`Damage: ${damage}`,{fontSize:fontSize - 10,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5);
+        container.container.add(container.damage);
+    }
+
+    updateInfo(container, index){
+        let submarine = this.dataList[index];
+        let model = submarine[0];
+        let color = submarine[1].color;
+        let country = submarine[1].country;
+        let health = submarine[1].health;
+        let munition = submarine[1].munition;
+        let damage = submarine[1].damage;
+
+        container.background.fillColor(color);
+        container.sub.setText(`${model} - ${country}`);
+        container.health.setText(`Health: ${health}`)
+        container.munition.setText(`Munition: ${munition}`)
+        container.damage.setText(`Damage: ${damage}`);
+    }
+
+    updateInfoWithTween(container,index, lr){
+        let aux_container = {}
+        aux_container.container = this.add.container(container.container.x,-this.screenHeight);
+
+        this.initializeInfo(aux_container,index);
+        if(lr == 0) this.changeLeft(container,aux_container);
+        else this.changeRight(container,aux_container);
+        
+    }
+
+
+    // left and right seperated
+    // arriba a abajo
+    changeLeft(old,actual){
+        let screenHeight = this.screenHeight;
+        this.add.tween({
+            targets:old.container,
+            repeat:0,
+            yoyo:false,
+            duration:500,
+            props:{
+                y: screenHeight
+            },
+            onComplete:()=>{
+                old.container.destroy();
+            }
+        })
+
+        this.add.tween({
+            targets:actual.container,
+            repeat:0,
+            yoyo:false,
+            duration:500,
+            props:{
+                y: 0
+            },
+            onComplete:()=>{
+                this.leftContainer = actual;  // a saber que hace la memoria con el actual
+            }
+        })
+    }
+
+    // abajo a arriba
+    changeRight(old,actual){
+        let screenHeight = this.screenHeight;
+        // console.log(actual)
+        actual.container.setPosition(actual.container.x,screenHeight);
+        this.add.tween({
+            targets:old.container,
+            repeat:0,
+            yoyo:false,
+            duration:500,
+            props:{
+                y: -screenHeight
+            },
+            onComplete:()=>{
+                old.container.destroy();
+            }
+        })
+
+        this.add.tween({
+            targets:actual.container,
+            repeat:0,
+            yoyo:false,
+            duration:500,
+            props:{
+                y: 0
+            },
+            onComplete:()=>{
+                this.rightContainer = actual;  // a saber que hace la memoria con el actual
+            }
+        })
+    }
+
 }

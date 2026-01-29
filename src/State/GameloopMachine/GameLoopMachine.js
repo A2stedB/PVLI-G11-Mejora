@@ -14,6 +14,8 @@ import { Player1 } from "./Player1.js";
 import { Player2 } from "./Player2.js";
 import { CheckState } from "./CheckState.js";
 import VictoryReason from "../../game-victoryCondition.js";
+import EventDispatch from "../../Event/EventDispatch.js";
+import Event from "../../Event/Event.js";
 
 /**
  * La maquina del estado que controla el bucle del juego principal
@@ -52,6 +54,7 @@ export class GameLoopMachine extends StateMachine{
      */
     updateRound(){
         ++this._round;
+        EventDispatch.emit(Event.UPDATE_ROUND, this._round);
         if(this._round >= this._roundLimit){
             this._gameManager.endOfGame(null,VictoryReason.even);
         }

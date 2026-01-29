@@ -20,9 +20,9 @@ export class Player2 extends PlayerState{
     }
 
     onStateEnter(){
-        // EventDispatch.emit(Event.UPDATE_PLAYER_TEXT,"azul")
         this.stateMachine._gameManager.setCurrentSubmarine(this._id);
-        console.log(this.stateMachine.getCurrentSubmarine(this._id).name)
+        let player = this.stateMachine.getCurrentSubmarine(this._id).data.country
+        EventDispatch.emit(Event.UPDATE_CURRENT_PLAYER,player)
     }
     onStateExit(){
         EventDispatch.emit(Event.END_TURN);

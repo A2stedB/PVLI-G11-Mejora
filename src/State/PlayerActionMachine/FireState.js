@@ -45,7 +45,7 @@ export class FireState extends State{
 
     onStateEnter(){
 
-        EventDispatch.emit(Event.UPDATE_PLAYER_ACTION_TEXT,"Fire");
+        EventDispatch.emit(Event.UPDATE_ACTION,this._name)
         
         let currentPlayer = this.stateMachine.context.currentState.id
         let submarine = this.stateMachine.context.getCurrentSubmarine();

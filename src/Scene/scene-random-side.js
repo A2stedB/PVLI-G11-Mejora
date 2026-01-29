@@ -8,7 +8,7 @@ export class RandomSide extends Phaser.Scene{
         this.load.image("Arrow","assets/up arrow.png")
     }
 
-    create(){
+    create(config){
         // Si es 0 empieza izquierda, si es 1 entonces derecha
 
         this.cameras.main.setBackgroundColor("#d5d5d5");
@@ -34,7 +34,7 @@ export class RandomSide extends Phaser.Scene{
 
         confirmKey.on("down",()=>{
             this.scene.stop();
-            this.scene.launch("GameScreen",{order:order});
+            this.scene.launch("GameScreen",{order:order,left:config.leftConfig,right:config.rightConfig});
         })
 
         this.createTween(arrow)

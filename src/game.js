@@ -33,8 +33,8 @@ let config = {
     },
 
 	scene: [
-		Menu2, 
 		SelectionMenu,
+		Menu2, 
 		RandomSide,
 		GameScreen,
 		Flappy_Dragon,          

@@ -25,7 +25,7 @@ export class GameLoopMachine extends StateMachine{
     constructor(config){
         super(config.scene);
         
-        this._scenescene = config.scene;
+        this._scene = config.scene;
         this._gameManager = config.gameManager;
         this._roundLimit = config.limit;
         this._round = 0;

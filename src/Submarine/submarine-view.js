@@ -1,3 +1,20 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Refactorizado
+// 
+// Description:
+// 
+// Objeto que representa las vistas del submarino
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version:
+// 
+// HE QUITADO LOS 48 IFS QUE HABIA
+// HE QUITADO LOS 48 IFS QUE HABIA
+// HE QUITADO LOS 48 IFS QUE HABIA
+// 
+// 
+// 
+//------------------------------------------------------------------------
 import Orientation  from "./submarine-orientation-v2.js";
 import EventDispatch from "../Event/EventDispatch.js";
 import Event from "../Event/Event.js";
@@ -58,22 +75,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         this.torpedo = this.scene.add.circle(this.centerX,this.centerY,20,0x000000,1).setVisible(false).setDepth(-2);
         this.add(this.torpedo)
 
-        // this.toggleKey.on("down",()=>{
-        //     this.show = !this.show;
-        //     this.setVisible(this.show);
-        // }) 
-
-        // this.hideWater.on("down",()=>{
-        //     Object.entries(this.view).forEach(element => {
-        //         element[1].list.forEach(element => {
-        //             if(element.name == "water"){
-        //                 element.setVisible(!element.visible);
-        //             }
-        //         });
-        //     });
-        // })
-
-
+        // Animacion de mover
         EventDispatch.on(Event.MOVE,(sub,direction)=>{
             if(direction == null) return;
             Object.entries(this.view).forEach(view => {
@@ -88,6 +90,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
                 });
             });
 
+        // Animacion de disparar
         EventDispatch.on(Event.SHOOT,(c,direction)=>{
             let view;
             if(direction == 0) view = this.view.center.container;
@@ -112,10 +115,11 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         })
     }
 
+    // Crear las vistas
     createWindowLayer(){
         let viewWidth = this.screenWidth / 3;
         let viewHeight = this.screenHeight - UIdata.top - UIdata.HUD.height;
-        // console.log(viewHeight)
+
         this.centerY = viewHeight / 2;
         this.view.left = this.createSingleWindow(this.centerXiz,this.centerY,viewWidth,viewHeight);
         
@@ -126,6 +130,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         this.viewArray.push(this.view.left,this.view.center,this.view.right);
     }
     
+    // Crear una vista
     createSingleWindow(x,y,width,height){
 
         let view = {}
@@ -165,6 +170,7 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         return view;
     }
 
+    // Refresh de las vistas
     updateView(){
         let directions = Orientation.getAvailableDirection(this.submarine.orientation)
         this.enemy.setVisible(false);
@@ -196,20 +202,23 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
                 }
             }
         }
-    }
+    }   
 
+    // Cambiar el fondo de una vista a la tierra(borde)
     switchToLand(view){
         let viewWidth = this.screenWidth / 3;
         let viewHeight = this.screenHeight - UIdata.top - UIdata.HUD.height;
         view.bg.setTexture("Land").setDisplaySize(viewWidth,viewHeight);
     }
 
+    // Cambiar el fondo de una vista a la agua
     switchToWater(view){
         let viewWidth = this.screenWidth / 3;
         let viewHeight = this.screenHeight - UIdata.top - UIdata.HUD.height;
         view.bg.setTexture("BG").setDisplaySize(viewWidth,viewHeight);
     }
 
+    // Metodo auxiliar para cambiar el sprite del enemigo
     changeSprite(rotation)
     {
         switch (rotation) {
@@ -228,8 +237,9 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         }
     }
 
-
-    // Lo que funciona funciona, y se deja tal cual...
+    /**
+     * Dado tu y otro submarino rival, averiguar como se ve el rival desde tu punto de vista
+     */
     checkRotations(me, enemy, side)
     {
         // El % no es %
@@ -245,6 +255,8 @@ export default class SubmarineView2 extends Phaser.GameObjects.Container{
         else if (diff === 90) this.changeSprite("left");
         else if (diff === 270) this.changeSprite("right");
 
+        //48 IFS!!!!!
+        //48 IFS!!!!!
         //48 IFS!!!!!
     }
 }

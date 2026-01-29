@@ -1,5 +1,13 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: refactorizado
+// 
+// Description: Objeto que representa un cuadrado de la matriz del juego
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version: He juntado la logica y la grafica
+// 
+//------------------------------------------------------------------------
 import { Position } from "../vector.js";
-
 export class Square extends Phaser.GameObjects.Image{
     constructor(scene,x,y,config){
         super(scene,x,y,"Square");
@@ -22,7 +30,6 @@ export class Square extends Phaser.GameObjects.Image{
         let x = (this.position.x * this.container.config.cellSize);
         let y = (this.position.y * this.container.config.cellSize);
         this.setPosition(x,y);
-        
     }
 
     dragonEnter(dragon){

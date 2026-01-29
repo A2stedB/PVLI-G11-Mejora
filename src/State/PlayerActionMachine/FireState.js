@@ -1,3 +1,16 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Modificado
+// 
+// Description:
+// 
+// 
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version:
+// 
+// Ahora y un delay por la animacion y el sonido
+// 
+//------------------------------------------------------------------------
 import EventDispatch from "../../Event/EventDispatch.js";
 import State from "../State.js";
 import Event from "../../Event/Event.js";
@@ -63,8 +76,6 @@ export class FireState extends State{
             this.left = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
             this.right = this.stateMachine.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         }
-
-        // this.confirmButton = [this.left.keyCode,this.right.keyCode];
 
         this.setEvent();
 

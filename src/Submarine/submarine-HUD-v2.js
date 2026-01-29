@@ -1,3 +1,16 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Nuevo
+// 
+// Description:
+// 
+// Objeto que representa el HUD del submarino. Cada submarino tiene su propio HUD
+// 
+// Comentario:
+// 
+// Es lo mas simple que ha podido ser xD
+// 
+//------------------------------------------------------------------------
 import UIdata from "../UI-data.json" with {type:"json"}
 export class SubmarineHUDv2 extends Phaser.GameObjects.Container{
 
@@ -55,6 +68,7 @@ export class SubmarineHUDv2 extends Phaser.GameObjects.Container{
         this.setVisible(false);
     }
 
+    // Refrescar el HUD
     updateHUD(){
 
         let submarine = this.submarine

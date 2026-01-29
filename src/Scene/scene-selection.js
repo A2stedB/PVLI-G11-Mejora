@@ -1,6 +1,20 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Nuevo
+// 
+// Description:
+// 
+// Un menu para la seleccion de los "personajes"
+// 
+// Comentario:
+// Esto es lo que tenia mas claro de hacer desde hace 14 dias,
+// y termino haciendo 2 dias antes de la entrega LOL.
+// 
+//------------------------------------------------------------------------
 import UIdata from "../UI-data.json" with {type:"json"}
 import SubmarineData from "../Submarine/submarine-data.json" with {type:"json"}
 import al_assets from "../submarine_sprite.json" with {type:"json"}
+
 export class SelectionMenu extends Phaser.Scene{
 
     constructor(){
@@ -46,6 +60,8 @@ export class SelectionMenu extends Phaser.Scene{
 
     initialize(){
         let fontSize = 20
+
+        // switch izquierdo
         this.leftKey.on("down",()=>{
             let mod = (n, m) => {return (n % m + m) % m}
             this.leftIndex = mod(++this.leftIndex,this.dataList.length);
@@ -53,6 +69,7 @@ export class SelectionMenu extends Phaser.Scene{
 
         })
 
+        // switch derecho
         this.rightKey.on("down",()=>{
             let mod = (n, m) => {return (n % m + m) % m}
             this.rightIndex = mod(++this.rightIndex,this.dataList.length);
@@ -60,6 +77,7 @@ export class SelectionMenu extends Phaser.Scene{
         })
         let centerX = this.screenWidth / 2
 
+        // Inicializar la informacion de los personajes en ambos lados
         this.leftContainer = {};
         this.leftContainer.container = this.add.container(0,0)
         this.initializeInfo(this.leftContainer,this.leftIndex)
@@ -71,6 +89,9 @@ export class SelectionMenu extends Phaser.Scene{
         this.add.text(centerX + centerX/2,this.screenHeight - 30,"Press \u2192 to change",{fontSize:fontSize,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5).setDepth(3)
     }
 
+    /**
+     * Inicializar la informacion de un "personaje"
+     */
     initializeInfo(container,index){
 
         // Meter aqui el objeto real tb
@@ -82,12 +103,13 @@ export class SelectionMenu extends Phaser.Scene{
         let centerY = this.screenHeight / 2
         let fontSize = 30
 
+        // El fondo
         let color = submarine[1].color;
         let background = this.add.rectangle(0,0,this.screenWidth/2,this.screenHeight,color,1).setOrigin(0,0).setDepth(-1);
         container.background = background;
         container.container.add(container.background)
 
-        
+        // El pais
         let country = submarine[1].country;
         let nameHeight = 50;
         container.sub = this.add.text(centerX,nameHeight,`${model} - ${country}`,{fontSize:fontSize,fontFamily:"Inconsolata",color:"0x000000"}).setOrigin(0.5,0.5);
@@ -116,22 +138,6 @@ export class SelectionMenu extends Phaser.Scene{
         container.container.add(container.sprite);
     }
 
-    updateInfo(container, index){
-        // let submarine = this.dataList[index];
-        // let model = submarine[0];
-        // let color = submarine[1].color;
-        // let country = submarine[1].country;
-        // let health = submarine[1].health;
-        // let munition = submarine[1].munition;
-        // let damage = submarine[1].damage;
-
-        // container.background.fillColor(color);
-        // container.sub.setText(`${model} - ${country}`);
-        // container.health.setText(`Health: ${health}`)
-        // container.munition.setText(`Munition: ${munition}`)
-        // container.damage.setText(`Damage: ${damage}`);
-    }
-
     updateInfoWithTween(container,index, lr){
         let aux_container = {}
         aux_container.container = this.add.container(container.container.x,-this.screenHeight);
@@ -145,6 +151,9 @@ export class SelectionMenu extends Phaser.Scene{
 
     // left and right seperated
     // arriba a abajo
+    /**
+     * Para la animacion de cambio del lado izquierdo
+     */
     changeLeft(old,actual){
         let screenHeight = this.screenHeight;
         this.add.tween({
@@ -175,6 +184,9 @@ export class SelectionMenu extends Phaser.Scene{
     }
 
     // abajo a arriba
+    /**
+     * Para la animacion de cambio del lado derecho
+     */
     changeRight(old,actual){
         let screenHeight = this.screenHeight;
         // console.log(actual)
@@ -206,12 +218,18 @@ export class SelectionMenu extends Phaser.Scene{
         })
     }
 
-     loadImage(){
+    /**
+     * Cargar los assets
+     */
+    loadImage(){
         al_assets.image.forEach(element => {
             this.load.image(element.key,element.path)
         });
     }
 
+    /**
+     * Pantalla de carga
+     */
     addLoadScreen(){
         let progressBar = this.add.graphics();
         let progressBox = this.add.graphics();

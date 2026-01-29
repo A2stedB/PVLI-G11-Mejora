@@ -1,3 +1,17 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Refactorizado
+// 
+// Description:
+// 
+// Un objeto que representa un submarino
+// Tiene su propio HUD y las vistas.
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version:
+// 
+// 
+// 
+//------------------------------------------------------------------------
 import SubmarineView2 from "./submarine-view.js";
 import Orientation from "./submarine-orientation-v2.js";
 import EventDispatch from "../Event/EventDispatch.js";
@@ -69,19 +83,21 @@ export default class Submarine{
         this.hud.updateHUD();
     }
 
+    /**
+     * Mover
+     */
     move(direction){
         let nextX = this.position.x + direction.vector.x;
         let nextY = this.position.y + direction.vector.y;
         let boardWidth = this.boardConfig.boardWidth;
         let index = nextY * boardWidth + nextX;
 
-
         // Cambias de direccion de todas formas, se vera reflejado en las vistas
         this.orientation = direction;
+
         if(this.canMoveTo(nextX,nextY,index)){
             this.position.x = nextX;
             this.position.y = nextY;
-            // this.orientation = direction;
 
             this.exitCurrent();
 
@@ -98,14 +114,17 @@ export default class Submarine{
         this.view.updateView();
     }
 
+    /**
+     * Disparar
+     */
     shoot(direction){
-        
+        --this.currentMunition;
         let nextX = this.position.x + direction.vector.x;
         let nextY = this.position.y + direction.vector.y;
         let boardWidth = this.boardConfig.boardWidth;
         let index = nextY * boardWidth + nextX;
 
-        if(this.canMoveToWithoutEnemy(nextX,nextY)){
+        if(this.canMoveToWithoutEnemy(nextX,nextY) && this.currentMunition >= 0){
             let enemy = this.gameMatrix.vertexList[index].submarine;
             this.scene.sound.stopAll();
             this.scene.sound.play("Fire")
@@ -127,6 +146,7 @@ export default class Submarine{
         this.hud.updateHUD();
     }
 
+    // Ver si se puede mover a una direccion dada
     canMoveTo(newX, newY, index) {
         return (
             newX >= 0 &&
@@ -137,6 +157,7 @@ export default class Submarine{
         );
     }
 
+    // Ver si se puede mover a una direccion dada sin comprobar el enemigo
     canMoveToWithoutEnemy(newX, newY) {
         return (
             newX >= 0 &&
@@ -145,19 +166,23 @@ export default class Submarine{
             newY <= this.boardConfig.boardHeight - 1)
     }
 
+    // Salir del vertice actual
     exitCurrent(){
         this.vertex.submarine = null
     }
 
+    // Refrescar las vistas
     updateView(){
         this.view.updateView();
     }
 
+    // Quitar vida
     removeHP(damage){
         this.currentHealth -= damage;
         if(this.currentHealth < 0) this.currentHealth = 0;
     }
 
+    // Mirar si su salida correspondiente
     checkExit(vertex){
         if(this == vertex.exit){
             console.log("Exit reached");

@@ -1,3 +1,17 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Sin tocar
+// 
+// Description:
+// 
+// 
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version:
+// 
+// Comentario:
+// Haria un refactor pero no me ha dado la vida...
+// 
+//------------------------------------------------------------------------
 import VictoryReason from '../game-victoryCondition.js';
 
 import { 
@@ -14,13 +28,6 @@ export class GameOverScene extends Phaser.Scene {
         super({ key: 'GameOver' });
     }
 
-    /**
-     * Inicialización - Recibe datos del resultado de la partida
-     * 
-     * @param {Object} data - Datos del fin de juego
-     * @param {string} data.winner - 'red' o 'blue'
-     * @param {string} data.reason - 'elimination' o 'escape'
-     */
     init(data) {
         this.winner = data.winner;
         this.reason = data.reason;

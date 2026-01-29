@@ -1,3 +1,12 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Nuebo
+// 
+// Description:
+// 
+// Una escena que sirve para decidir quien empieza jugando
+// 
+//------------------------------------------------------------------------
 import UIdata from "../UI-data.json" with {type:"json"}
 export class RandomSide extends Phaser.Scene{
     constructor(){
@@ -41,6 +50,10 @@ export class RandomSide extends Phaser.Scene{
 
     }
 
+    /**
+     * Tween de los textos
+     * Que aesthetic LMAO
+     */
     createTween(arrow){
 
         let showText = (text,delay)=>{

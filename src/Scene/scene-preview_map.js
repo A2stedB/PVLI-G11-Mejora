@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Nuevo
+// 
+// Description:
+// 
+// Una escena para la visualizacion de la posicion y de la orientacion antes de
+// comenzar a jugar
+//
+//------------------------------------------------------------------------
 import UIdata from "../UI-data.json" with {type:"json"}
 export class MapPreView extends Phaser.Scene{
 
@@ -43,6 +53,9 @@ export class MapPreView extends Phaser.Scene{
         this.descriptiveText();
     }
 
+    /**
+     * Crear los parpadeos de los sprites
+     */
     createTween(){
 
         this.add.tween({
@@ -87,6 +100,9 @@ export class MapPreView extends Phaser.Scene{
                             setRotation(Phaser.Math.DegToRad(left.submarine.orientation.degree));
     }
 
+    /**
+     * Poner los textos que describe la orientacion
+     */
     descriptiveText(){
         let left = this.matrix.submarines.find(s => s.submarine.id === 0);
         let right = this.matrix.submarines.find(s => s.submarine.id === 1);
@@ -118,6 +134,9 @@ export class MapPreView extends Phaser.Scene{
                                         ).setOrigin(0.5,0.5)
     }
 
+    /**
+     * Esconder los sprites de nuevo para comenzar a jugar
+     */
     hideSubmarine(){
         this.matrix.submarines[0].setAlpha(1);
         this.matrix.submarines[1].setAlpha(1);

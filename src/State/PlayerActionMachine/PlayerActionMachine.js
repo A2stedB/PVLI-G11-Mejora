@@ -1,9 +1,20 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Modificado
+// 
+// Description:
+// 
+// 
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version:
+// 
+// Ya no existe la fase de curar y de ataque aereo
+//
+//------------------------------------------------------------------------
 import {StateMachine} from "../StateMachine.js";
 import { MoveState } from "./MoveState.js"
 import { FireState } from "./FireState.js"
-import { AirAttackState } from "./AirAttackState.js"
 import { EndState } from "./EndState.js";
-import { HealState } from "./HealState.js";
 
 /**
  * La maquina de estado de las acciones del jugador en su turno

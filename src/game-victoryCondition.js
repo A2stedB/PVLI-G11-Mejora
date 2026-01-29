@@ -1,4 +1,12 @@
-
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Nuevo
+// 
+// Description:
+// 
+// Un enum de las condiciones para finalizar el juego
+// 
+//------------------------------------------------------------------------
 const VictoryReason = Object.freeze({
     exitReached:"ha llegado a la salida",
     defeatEnemy:"ha hundido al enemigo",

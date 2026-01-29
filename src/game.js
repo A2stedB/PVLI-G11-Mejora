@@ -1,7 +1,6 @@
 import { GameScreen } from "./Scene/GameScreen.js";
 import { Menu2 } from "./Scene/MenuV2.js";
 import { Flappy_Dragon } from "./Minigames/MGFlappyDragon.js";
-import { FireStateWindow } from "./Scene/FireStateWindow.js";
 import { MinigameDialogScene } from "./Scene/MinigameDialogScene.js";
 import { RepairMinigame } from "./Minigames/RepairMinigame.js";
 import { GameOverScene } from "./Scene/GameOverScene.js"; 
@@ -33,59 +32,18 @@ let config = {
     },
 
 	scene: [
-		SelectionMenu,
 		Menu2, 
+		SelectionMenu,
 		RandomSide,
 		GameScreen,
-		Flappy_Dragon,          
-		FireStateWindow,       
-		MinigameDialogScene,    
-		RepairMinigame,
-		GameOverScene,
         MapView,
 		MapPreView,    
+		GameOverScene,
+		Flappy_Dragon,               
+		MinigameDialogScene,    
+		RepairMinigame,
 	],
 };
 
 // Crear el juego
 const game = new Phaser.Game(config);
-
-//wtf is this LMAO
-// // Escuchar la tecla P para el minijuego del dragón (testing)
-// document.addEventListener('keydown', (event) => {
-//     if (event.key === 'p' || event.key === 'P') {
-//         console.log("Tecla P presionada - Iniciando minijuego del dragón");
-        
-//         const activeScenes = game.scene.getScenes(true);
-        
-//         if (activeScenes.length > 0) {
-//             const currentScene = activeScenes[0];
-            
-//             if (currentScene.scene.key !== 'FlappyDragon') {
-//                 currentScene.scene.start('FlappyDragon', {
-//                     submarine: null,
-//                     returnScene: currentScene.scene.key
-//                 });
-//             }
-//         }
-//     }
-    
-//     // Escuchar la tecla B para el minijuego de reparación (testing)
-//     if (event.key === 'b' || event.key === 'B') {
-//         console.log("Tecla B presionada - Iniciando minijuego de reparación");
-        
-//         const activeScenes = game.scene.getScenes(true);
-        
-//         if (activeScenes.length > 0) {
-//             const currentScene = activeScenes[0];
-            
-//             if (currentScene.scene.key !== 'RepairMinigame') {
-//                 currentScene.scene.start('RepairMinigame', {
-//                     submarine: null,
-//                     returnScene: currentScene.scene.key,
-//                     healAmount: 30
-//                 });
-//             }
-//         }
-//     }
-// });

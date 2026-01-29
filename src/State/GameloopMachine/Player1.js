@@ -1,3 +1,19 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Modificado
+// 
+// Description:
+// 
+// El estado para el primero que empieza
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version:
+// 
+// Ahora hay efecto de fade in fade out, guay.
+//
+// Esta el booleano de isTransitioning porque no sabia que se puede stackear llamadas
+// y habia casos en el que se llama muchas veces al onStateEnter()
+// 
+//------------------------------------------------------------------------
 import { PlayerState } from "./PlayerState.js";
 import EventDispatch from "../../Event/EventDispatch.js";
 import Event from "../../Event/Event.js";

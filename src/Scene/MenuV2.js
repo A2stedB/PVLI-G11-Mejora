@@ -1,9 +1,16 @@
-/**
- * MenuV2
- * 
- * Menú principal del juego
- * 
- */
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Sin tocar
+// 
+// Description:
+// 
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version:
+// 
+// Comentario:
+// Haria un refactor pero no me ha dado la vida
+// 
+//------------------------------------------------------------------------
 
 // IMPORTAR sistema de estilos
 import { 

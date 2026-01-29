@@ -1,4 +1,13 @@
-
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Nuevo
+// 
+// Description:
+// 
+// Un objeto que es la representacion del submarino en el mapa
+// 
+// 
+//------------------------------------------------------------------------
 export class SubmarineSprite extends Phaser.GameObjects.Image{
 
     constructor(config){
@@ -10,6 +19,7 @@ export class SubmarineSprite extends Phaser.GameObjects.Image{
         this.setScale(0.07)
     }
 
+    // Refrescar la posicion
     updateView(){
         let position = this.submarine.vertex;
         this.setPosition(position.x,position.y);

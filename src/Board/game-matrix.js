@@ -1,3 +1,19 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: refactorizado
+// 
+// Description:
+// 
+// Objeto que representa la matriz del juego
+// 
+//
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version:
+// 
+// No se la verdad xD, ya no actua de "Game Manager" como antes, solo tiene
+// una "funcionalidad"
+// Esta mucho más organizado
+// 
+//------------------------------------------------------------------------
 import board_config from "./config.json" with {type:"json"}
 import { Square } from "./game-matrix-square.js";
 import { Vertex } from "./game-matrix-vertex.js";
@@ -42,11 +58,6 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         let x = centerX - (this.boardDisplayWidth/2)
         let y = centerY - (this.boardDisplayHeight/2)
         this.setPosition(x,y);
-
-        // this.scene.add.circle(this.x,this.y,10,0xFFFFFF,1);
-        // this.scene.add.circle(this.x+this.boardDisplayWidth,this.y,10,0xFFFFFF,1);
-        // this.scene.add.circle(this.x,this.y + this.boardDisplayHeight,10,0xFFFFFF,1);
-        // this.scene.add.circle(this.x+this.boardDisplayWidth,this.y+  this.boardDisplayHeight,10,0xFFFFFF,1);
         
         let background = this.scene.add.image(0,0,"BG").
                          setDisplaySize(this.boardDisplayWidth,this.boardDisplayHeight).setOrigin(0,0)
@@ -66,6 +77,7 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
 
         this.getVertexForSquare();
 
+        // Cambiar a la vista del "mapa" 
         this.toggleKey.on("down",()=>{
             let gameScreen = this.scene;
             this.scene.scene.pause();
@@ -75,6 +87,13 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         this.setVisible(false);
     }
 
+
+    /**
+     * Metodo auxiliar para la creacion de la matriz
+     * @param {*} matrix 
+     * @param {*} x 
+     * @param {*} y 
+     */
     matrixCreation(matrix,x,y){
         if(!(x%2) && !(y%2)){
             matrix[y][x] = new Vertex(this.scene,x,y,{style:this.style,container:this,cellSize:board_config.cellSize});
@@ -90,6 +109,10 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         }
     }
 
+    /**
+     * Metodo que averigua los cuatro vertices que forma un cuadrado para todos los cuadrados que hay en la matriz
+     * Esto al final ni lo he usado...
+     */
     getVertexForSquare(){
         this.squareList.forEach(square => {
             let x = square.position.x; let y = square.position.y
@@ -102,21 +125,33 @@ export default class GameMatrix extends Phaser.GameObjects.Container{
         });
     }
 
+    /**
+     * Actualizar las vistas de los submarinos
+     */
     updateMap(){
         this.submarines.forEach(submarines => {
             submarines.updateView();
         });
     }
 
+    /**
+     * Inicializar el sprite que se ve en la matriz con el submarino correspondiente
+     * @param {Submarine} submarine 
+     */
     initSubmarine(submarine){
         let newSubmarine = new SubmarineSprite({scene:this.scene,submarine:submarine}).setVisible(this.showingSubmarine)
         this.submarines.push(newSubmarine);
         this.add(newSubmarine);
     }
 
+    /**
+     * Imponer la salida para el submarino
+     * @param {Submarine} submarine 
+     * @param {Number} x 
+     * @param {Number} y 
+     */
     setExit(submarine,x,y){
         let index = y * board_config.boardWidth + x;
-        // console.log(index)
         this.vertexList[index].setExit(submarine);
         this.exits.push(this.vertexList[index])
     }

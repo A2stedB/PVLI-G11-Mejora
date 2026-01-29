@@ -1,12 +1,12 @@
 //------------------------------------------------------------------------
 // 
-// Estado del archivo: 
+// Estado del archivo: Modificado
 // 
 // Cosas añadidas, nuevas, modificadas o quitadas: 
-// 
-// Commentarios: 
-// 
-// TODO: Añadir una lista de observadores y "avisarles" cuando este cambia de estado
+//
+// He añadido algunas cosas de utilidad, y ahora no entra
+// en el primer estado tras su construccion porque da algunos
+// problemas. Tambien esta la condicion de fin de juego cuando ha pasado muchas rondas.
 // 
 //------------------------------------------------------------------------
 import {StateMachine} from "../StateMachine.js";
@@ -36,7 +36,6 @@ export class GameLoopMachine extends StateMachine{
         this.playerList = [this._player1, this._player2];
 
         this._currentState = this._checkState;
-        // this._currentState.onStateEnter();
     }
 
     get stateList(){
@@ -69,21 +68,26 @@ export class GameLoopMachine extends StateMachine{
         return this._round;
     }
     
+    // Orden del jugador
     setOrder(order){
         for(let i = 0; i < 2;++i){
             this.playerList[i]._id = order[i]; 
         }
     }
 
+
+    // Coger el submarino actual del jugador
     getCurrentSubmarine() {
         let currentId = this._currentState._id;
         return this._gameManager.getSubmarineById(currentId);
     }
 
+    // Coger la camara
     getCamera(){
         return this._scene.cameras.main
     }
 
+    // Empzar la maquina de estado
     start() {
         if (this._currentState) {
             this._currentState.onStateEnter();

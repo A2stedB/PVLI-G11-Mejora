@@ -1,13 +1,24 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Nuevo
+// 
+// Description:
+// 
+// Objeto que controla el juego, un game manager de toda la vida
+// Se encarga de iniciar y finalizar el juego, cambiar el UI al jugador actual
+// 
+// 
+//------------------------------------------------------------------------
 import { GameLoopMachine } from "./State/GameloopMachine/GameLoopMachine.js";
 import { PlayerActionMachine } from "./State/PlayerActionMachine/PlayerActionMachine.js";
 import Submarine from "./Submarine/submarine-container.js";
 import GameMatrix from "./Board/game-matrix.js";
 import Orientation from "./Submarine/submarine-orientation-v2.js";
 import EventDispatch from "./Event/EventDispatch.js";
-import SubmarineData from "./Submarine/submarine-data.json" with {type:"json"}
-import UIdata from "./UI-data.json" with {type:"json"}
 import Event from "./Event/Event.js";
 import VictoryReason from "./game-victoryCondition.js";
+import SubmarineData from "./Submarine/submarine-data.json" with {type:"json"}
+import UIdata from "./UI-data.json" with {type:"json"}
 
 export class GameManager{
     constructor(config){
@@ -19,6 +30,8 @@ export class GameManager{
         this.order = config.order;
 
         this.submarineData = JSON.parse(JSON.stringify(SubmarineData));
+
+        // Este es el bueno, el que esta puesto ahora es para probar
         // this.leftSub = new Submarine({x:1,y:0,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.W,data:config.leftConfig,gamemanager:this})
         // this.rightSub = new Submarine({x:5,y:4,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.N,data:config.rightConfig,gamemanager:this})
         this.leftSub = new Submarine({x:4,y:4,scene:this.scene,gameMatrix:this.gameMatrix,orientation:Orientation.E,data:config.leftConfig,gamemanager:this})
@@ -26,7 +39,6 @@ export class GameManager{
 
         this.submarine = [this.leftSub, this.rightSub]
 
-        
         this.currentSubmarine = this.getSubmarineById(this.order[0]);
         this.currentView = this.currentSubmarine.view;
         this.currentHUD = this.currentSubmarine.hud;
@@ -87,10 +99,8 @@ export class GameManager{
         })
 
         this.mapPreview();
-        // this.scene.add.existing(roundText);
 
         // Primero ejecuta todo lo que hay dentro del scope y luego ya cambia de la escena
-        // console.log(this.submarine)
     }
 
     setSubmarineExit(submarine,x,y){

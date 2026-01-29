@@ -1,3 +1,16 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Refactorizado
+// 
+// Description:
+// 
+// Objeto enum que representa las 4 orientaciones
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version:
+// 
+// Ahora tambien esta el vector y el string de la orientacion
+// 
+//------------------------------------------------------------------------
 import { Vector } from "../vector.js";
 const Orientation = Object.freeze({
     N: {
@@ -32,6 +45,7 @@ const Orientation = Object.freeze({
         return [left,direction,right];
     },
 
+    // El % hace no es modulo como tal WTF
      mod:(n, m) => (n % m + m) % m
 });
 

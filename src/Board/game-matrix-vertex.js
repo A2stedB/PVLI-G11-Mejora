@@ -1,3 +1,14 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: refactorizado
+// 
+// Description:
+// Objeto que representa un vertice de la matriz del juego
+// 
+// Cosas añadidas, nuevas, modificadas o quitadas respecto a la antigua version:
+// He juntado la parte logica y la grafica
+// 
+//------------------------------------------------------------------------
 import { Position } from "../vector.js";
 
 export class Vertex extends Phaser.GameObjects.Graphics{

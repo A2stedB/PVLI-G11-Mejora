@@ -1,3 +1,8 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Sin tocar
+//
+//------------------------------------------------------------------------
 import State from "../State.js";
 
 export class PlayerState extends State{

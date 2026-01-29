@@ -1,3 +1,8 @@
+//------------------------------------------------------------------------
+// 
+// Estado del archivo: Sin tocar
+// 
+//------------------------------------------------------------------------
 import EventDispatch from "../../Event/EventDispatch.js";
 import State from "../State.js";
 import Event from "../../Event/Event.js";
@@ -80,7 +85,6 @@ export class MoveState extends State{
     }
 
     onStateExit(){
-        EventDispatch.emit(Event.UPDATE_MAP);
         if (this.up) this.up.removeAllListeners("down");
         if (this.down) this.down.removeAllListeners("down");
         if (this.left) this.left.removeAllListeners("down");

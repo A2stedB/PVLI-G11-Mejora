@@ -8,7 +8,7 @@
 // 
 // Comentario:
 // Esto es lo que tenia mas claro de hacer desde hace 14 dias,
-// y termino haciendo 2 dias antes de la entrega LOL.
+// y termino haciendolo 2 dias antes de la entrega LOL.
 // 
 //------------------------------------------------------------------------
 import UIdata from "../UI-data.json" with {type:"json"}

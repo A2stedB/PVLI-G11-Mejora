@@ -23,6 +23,7 @@ import UIdata from "./UI-data.json" with {type:"json"}
 export class GameManager{
     constructor(config){
         this.scene = config.scene;
+        this.config = config;
 
         this.gameMatrix = new GameMatrix(this.scene)
         
@@ -50,7 +51,6 @@ export class GameManager{
         this.gameloopMachine.start();
         
         this.currentTurn = 1;
-        this.checkSameCoutry(config);
     }
 
     initialize(){
@@ -98,7 +98,8 @@ export class GameManager{
             this.countryText.setText(`${player}`)
         })
 
-        this.mapPreview();
+        if(this.checkSameCoutry(this.config)){}
+        else this.mapPreview();
 
         // Primero ejecuta todo lo que hay dentro del scope y luego ya cambia de la escena
     }
@@ -149,6 +150,8 @@ export class GameManager{
     checkSameCoutry(data){
         if(data.leftConfig.country == data.rightConfig.country){
             this.endOfGame(null,VictoryReason.sameCountry);
+            return true;
         }
+        return false
     }
 }
